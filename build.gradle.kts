@@ -185,3 +185,5 @@ spotless {
         indentWithSpaces()
     }
 }
+
+tasks.named("spotlessKotlin").configure { dependsOn("generateGrammarSource") }
