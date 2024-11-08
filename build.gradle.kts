@@ -36,9 +36,9 @@ dependencies {
     testImplementation(libs.junit)
 
     implementation("org.antlr:antlr4-intellij-adaptor:0.1")
-    antlr("org.antlr:antlr4:4.13.2") { // use ANTLR version 4
-        exclude("group:'com.ibm.icu', module:'icu4j'")
-    }
+    antlr("org.antlr:antlr4:4.13.2") // use ANTLR version 4
+
+
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {

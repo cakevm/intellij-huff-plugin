@@ -24,20 +24,15 @@ import org.antlr.v4.runtime.Parser
 import org.antlr.v4.runtime.tree.ParseTree
 
 class HuffParserDefinition : ParserDefinition {
-  private val file = IFileElementType(HuffLanguage)
+  private val file = IFileElementType(HuffLanguage.INSTANCE)
 
   override fun createLexer(project: Project?): Lexer =
-    ANTLRLexerAdaptor(HuffLanguage, HuffLexer(null))
+    ANTLRLexerAdaptor(HuffLanguage.INSTANCE, HuffLexer(null))
 
-  override fun createParser(project: Project?): PsiParser {
-    val parser = HuffParser(null)
-    return object : ANTLRParserAdaptor(HuffLanguage, parser) {
-      override fun parse(parser: Parser, root: IElementType?): ParseTree? {
-        return if (root is IFileElementType) {
-          (parser as HuffParser).huffFileRoot()
-        } else {
-          (parser as HuffParser).identifier()
-        }
+  override fun createParser(p0: Project?): PsiParser {
+    return object : ANTLRParserAdaptor(HuffLanguage.INSTANCE, HuffParser(null)) {
+      override fun parse(parser: Parser, root: IElementType): ParseTree {
+        return (parser as HuffParser).huffFileRoot()
       }
     }
   }
@@ -46,7 +41,7 @@ class HuffParserDefinition : ParserDefinition {
 
   override fun getCommentTokens(): TokenSet =
     PSIElementTypeFactory.createTokenSet(
-      HuffLanguage,
+      HuffLanguage.INSTANCE,
       HuffLexer.LINE_COMMENT,
       HuffLexer.BLOCK_COMMENT,
       HuffLexer.NATSPEC_DOCBLOCK,
@@ -54,27 +49,33 @@ class HuffParserDefinition : ParserDefinition {
     )
 
   override fun getWhitespaceTokens(): TokenSet =
-    PSIElementTypeFactory.createTokenSet(HuffLanguage, HuffLexer.WHITESPACE)
+    PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.WHITESPACE)
 
   override fun getStringLiteralElements(): TokenSet =
-    PSIElementTypeFactory.createTokenSet(HuffLanguage, HuffLexer.IDENTIFIER)
+    PSIElementTypeFactory.createTokenSet(
+      HuffLanguage.INSTANCE,
+      HuffLexer.NON_EMPTY_STRING_LITERAL,
+      HuffLexer.EMPTY_STRING_LITERAL,
+    )
 
   override fun createElement(node: ASTNode): PsiElement = HuffPsiBuilder.from(node)
 
   override fun createFile(viewProvider: FileViewProvider): PsiFile = HuffFile(viewProvider)
 
   companion object {
-    var ID: TokenIElementType
-
     init {
+      val vocabulary = HuffParser.VOCABULARY
       PSIElementTypeFactory.defineLanguageIElementTypes(
-        HuffLanguage,
-        HuffParser.tokenNames,
+        HuffLanguage.INSTANCE,
+        (0..vocabulary.maxTokenType)
+          .map { vocabulary.getLiteralName(it) ?: (vocabulary.getSymbolicName(it) ?: "<INVALID>") }
+          .toTypedArray(),
         HuffParser.ruleNames,
       )
-      val tokenIElementTypes: List<TokenIElementType> =
-        PSIElementTypeFactory.getTokenIElementTypes(HuffLanguage)
-      ID = tokenIElementTypes[HuffLexer.IDENTIFIER]
     }
+
+    val tokenIElementTypes: List<TokenIElementType> =
+      PSIElementTypeFactory.getTokenIElementTypes(HuffLanguage.INSTANCE)
+    val ID = tokenIElementTypes[HuffLexer.IDENTIFIER]
   }
 }

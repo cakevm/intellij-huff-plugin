@@ -15,7 +15,7 @@ class HuffMacroFoldingBuilder : FoldingBuilderEx() {
     document: Document,
     quick: Boolean,
   ): Array<FoldingDescriptor> {
-    return XPath.findAll(HuffLanguage, root, "//macroDefinition//macroBody")
+    return XPath.findAll(HuffLanguage.INSTANCE, root, "//macroDefinition//macroBody")
       .filter { it.textLength > 0 }
       .map {
         FoldingDescriptor(

@@ -3,8 +3,8 @@ package com.github.com.cakevm.intellij_huff_plugin.language
 import com.intellij.openapi.fileTypes.LanguageFileType
 import javax.swing.Icon
 
-object HuffFileType : LanguageFileType(HuffLanguage) {
-  override fun getName(): String = "Huff"
+object HuffFileType : LanguageFileType(HuffLanguage.INSTANCE) {
+  override fun getName(): String = HuffLanguage.NAME
 
   override fun getDescription(): String = "Huff source file"
 

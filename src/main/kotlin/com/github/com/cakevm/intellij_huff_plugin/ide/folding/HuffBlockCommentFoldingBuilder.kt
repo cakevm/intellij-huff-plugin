@@ -15,7 +15,7 @@ class HuffBlockCommentFoldingBuilder : FoldingBuilderEx() {
     document: Document,
     quick: Boolean,
   ): Array<FoldingDescriptor> {
-    return XPath.findAll(HuffLanguage, root, "//blockComment")
+    return XPath.findAll(HuffLanguage.INSTANCE, root, "//blockComment")
       .filter { it.textLength > 0 }
       .map {
         FoldingDescriptor(
