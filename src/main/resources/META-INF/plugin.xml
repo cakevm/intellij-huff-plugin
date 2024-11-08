@@ -1,0 +1,38 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.github.com.cakevm.intellij_huff_plugin</id>
+    <name>Huff Language</name>
+    <vendor url="https://github.com/cakevm/intellij-huff-plugin">cakevm</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <resource-bundle>messages.HuffBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Huff"
+                  language="Huff"
+                  implementationClass="com.github.com.cakevm.intellij_huff_plugin.language.HuffFileType"
+                  extensions="huff"
+                  fieldName="INSTANCE"/>
+
+        <lang.parserDefinition language="Huff" implementationClass="com.github.com.cakevm.intellij_huff_plugin.language.parser.HuffParserDefinition"/>
+
+        <lang.syntaxHighlighter language="Huff"
+                                implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffHighlighter"/>
+
+
+        <lang.foldingBuilder language="Huff"
+                             implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.folding.HuffMacroFoldingBuilder" />
+        <lang.foldingBuilder language="Huff"
+                             implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.folding.HuffBlockCommentFoldingBuilder" />
+
+        <lang.commenter language="Huff"
+                        implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.commenter.HuffCommenter"/>
+
+        <externalAnnotator language="Huff"
+                           implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffAnnotator" />
+
+        <colorSettingsPage implementation="com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColorSettingsPage"/>
+
+    </extensions>
+</idea-plugin>
