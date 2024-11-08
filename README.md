@@ -1,3 +1,10 @@
+<div align="center">
+
+[![Build](https://github.com/cakevm/intellij-huff-plugin/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/cakevm/intellij-huff-plugin/actions/workflows/build.yml)
+[![IntelliJ Huff plugins](https://img.shields.io/jetbrains/plugin/v/25782-huff-language.svg)](https://plugins.jetbrains.com/plugin/25782-huff-language)
+
+</div>
+
 # IntelliJ Huff Plugin
 <!-- Plugin description -->
 This plugin adds support for the [Huff Language](https://huff.sh) to IntelliJ IDEA. It provides currently only syntax highlighting.
@@ -6,7 +13,7 @@ This plugin adds support for the [Huff Language](https://huff.sh) to IntelliJ ID
 ![IDE example](./.github/ide_example.png)
 
 ## Installation
-
+The plugin is available in the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/25782-huff-language). You can install it directly from the IDE by searching for "Huff Language". As alternative, you can download the latest release from the [releases page](https://github.com/cakevm/intellij-huff-plugin/releases) and install it manually.
 
 ## Status of development
 Lexing and parsing of Huff files and basic syntax highlighting is working.
