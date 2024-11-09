@@ -2,8 +2,8 @@
 # IntelliJ Huff Plugin Changelog
 
 ## [Unreleased]
-- WIP 
-- 
+- Fix folding for block comments
+
 ## [0.0.2] - 2024-11-08
 - Add plugin icon
 - Adapt description

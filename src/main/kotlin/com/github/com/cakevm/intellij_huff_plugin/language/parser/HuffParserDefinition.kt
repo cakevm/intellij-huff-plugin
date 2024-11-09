@@ -43,8 +43,6 @@ class HuffParserDefinition : ParserDefinition {
     PSIElementTypeFactory.createTokenSet(
       HuffLanguage.INSTANCE,
       HuffLexer.LINE_COMMENT,
-      HuffLexer.BLOCK_COMMENT,
-      HuffLexer.NATSPEC_DOCBLOCK,
       HuffLexer.NATSPEC_SINGLELINE,
     )
 

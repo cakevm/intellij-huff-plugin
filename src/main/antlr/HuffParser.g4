@@ -1,7 +1,7 @@
 parser grammar HuffParser;
 options { tokenVocab=HuffLexer; }
 
-// Start for the root of the huff file
+// Root of the huff file
 huffFileRoot: (lineComment | blockComment | defineDefinition | includeDefinition | macroDefinition)* EOF;
 
 blockComment: BLOCK_COMMENT | NATSPEC_DOCBLOCK;

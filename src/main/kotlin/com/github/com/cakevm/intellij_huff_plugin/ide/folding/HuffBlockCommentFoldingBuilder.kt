@@ -15,7 +15,7 @@ class HuffBlockCommentFoldingBuilder : FoldingBuilderEx() {
     document: Document,
     quick: Boolean,
   ): Array<FoldingDescriptor> {
-    return XPath.findAll(HuffLanguage.INSTANCE, root, "//blockComment")
+    return XPath.findAll(HuffLanguage.INSTANCE, root, "/huffFileRoot/blockComment")
       .filter { it.textLength > 0 }
       .map {
         FoldingDescriptor(
@@ -30,7 +30,7 @@ class HuffBlockCommentFoldingBuilder : FoldingBuilderEx() {
   }
 
   override fun getPlaceholderText(node: ASTNode): String {
-    return node.firstChildNode.text + "..." + node.lastChildNode.text
+    return "/* ... */"
   }
 
   override fun isCollapsedByDefault(node: ASTNode): Boolean {
