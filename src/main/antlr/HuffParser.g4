@@ -30,7 +30,7 @@ tableBody: L_BRACE HEXCODE+ R_BRACE;
 tableDefinition: TABLE identifier tableBody;
 
 // #define macro
-macroIdentifier: (MAIN | CONSTRUCTOR | identifier) L_PAREN (identifier (COMMA identifier)*)? R_PAREN; // [MACRO_NAME]
+macroIdentifier: (MAIN | CONSTRUCTOR | FALLBACK | identifier) L_PAREN (identifier (COMMA identifier)*)? R_PAREN; // [MACRO_NAME]
 macroTakesParameters: TAKES L_PAREN parameter=DECIMAL R_PAREN; // takes(1)
 macroReturnsParameters: RETURNS L_PAREN parameter=DECIMAL R_PAREN; // returns(1)
 bodyDefinition: L_BRACK identifier R_BRACK;

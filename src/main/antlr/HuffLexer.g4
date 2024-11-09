@@ -34,6 +34,7 @@ FREE_STORAGE_POINTER: 'FREE_STORAGE_POINTER()';
 // reserved macro names
 MAIN: 'MAIN';
 CONSTRUCTOR: 'CONSTRUCTOR';
+FALLBACK: 'FALLBACK';
 
 // macro optioal returns
 TAKES: 'takes';
