@@ -2,6 +2,9 @@
 # IntelliJ Huff Plugin Changelog
 
 ## [Unreleased]
+- TBD
+
+## [0.0.3] - 2024-11-09
 - Fix folding for block comments
 - Highlight opcode names
 - Opcode names completion
