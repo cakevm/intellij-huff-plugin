@@ -10,20 +10,14 @@ import com.intellij.psi.PsiElement
 import org.antlr.intellij.adaptor.xpath.XPath
 
 class HuffBlockCommentFoldingBuilder : FoldingBuilderEx() {
-  override fun buildFoldRegions(
-    root: PsiElement,
-    document: Document,
-    quick: Boolean,
-  ): Array<FoldingDescriptor> {
+  override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array<FoldingDescriptor> {
     return XPath.findAll(HuffLanguage.INSTANCE, root, "/huffFileRoot/blockComment")
       .filter { it.textLength > 0 }
       .map {
         FoldingDescriptor(
           it.node,
           it.textRange,
-          FoldingGroup.newGroup(
-            "huff-block-comment-" + it.textRange.startOffset + "-" + it.textRange.endOffset
-          ),
+          FoldingGroup.newGroup("huff-block-comment-" + it.textRange.startOffset + "-" + it.textRange.endOffset),
         )
       }
       .toTypedArray()

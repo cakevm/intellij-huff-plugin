@@ -27,8 +27,7 @@ import org.antlr.v4.runtime.tree.ParseTree
 class HuffParserDefinition : ParserDefinition {
   private val file = IFileElementType(HuffLanguage.INSTANCE)
 
-  override fun createLexer(project: Project?): Lexer =
-    ANTLRLexerAdaptor(HuffLanguage.INSTANCE, HuffLexer(null))
+  override fun createLexer(project: Project?): Lexer = ANTLRLexerAdaptor(HuffLanguage.INSTANCE, HuffLexer(null))
 
   override fun createParser(p0: Project?): PsiParser {
     return object : ANTLRParserAdaptor(HuffLanguage.INSTANCE, HuffParser(null)) {
@@ -44,21 +43,12 @@ class HuffParserDefinition : ParserDefinition {
   override fun getFileNodeType(): IFileElementType = file
 
   override fun getCommentTokens(): TokenSet =
-    PSIElementTypeFactory.createTokenSet(
-      HuffLanguage.INSTANCE,
-      HuffLexer.LINE_COMMENT,
-      HuffLexer.NATSPEC_SINGLELINE,
-    )
+    PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.LINE_COMMENT, HuffLexer.NATSPEC_SINGLELINE)
 
-  override fun getWhitespaceTokens(): TokenSet =
-    PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.WHITESPACE)
+  override fun getWhitespaceTokens(): TokenSet = PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.WHITESPACE)
 
   override fun getStringLiteralElements(): TokenSet =
-    PSIElementTypeFactory.createTokenSet(
-      HuffLanguage.INSTANCE,
-      HuffLexer.NON_EMPTY_STRING_LITERAL,
-      HuffLexer.EMPTY_STRING_LITERAL,
-    )
+    PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.NON_EMPTY_STRING_LITERAL, HuffLexer.EMPTY_STRING_LITERAL)
 
   override fun createElement(node: ASTNode): PsiElement = HuffPsiFactory.createNode(node)
 
@@ -76,9 +66,7 @@ class HuffParserDefinition : ParserDefinition {
       )
     }
 
-    val tokens: List<TokenIElementType> =
-      PSIElementTypeFactory.getTokenIElementTypes(HuffLanguage.INSTANCE)
-    val rules: List<RuleIElementType> =
-      PSIElementTypeFactory.getRuleIElementTypes(HuffLanguage.INSTANCE)
+    val tokens: List<TokenIElementType> = PSIElementTypeFactory.getTokenIElementTypes(HuffLanguage.INSTANCE)
+    val rules: List<RuleIElementType> = PSIElementTypeFactory.getRuleIElementTypes(HuffLanguage.INSTANCE)
   }
 }

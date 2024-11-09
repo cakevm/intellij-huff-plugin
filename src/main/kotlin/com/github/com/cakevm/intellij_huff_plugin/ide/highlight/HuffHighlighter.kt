@@ -12,8 +12,7 @@ import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
 import org.antlr.intellij.adaptor.lexer.TokenIElementType
 
 class HuffHighlighter : SyntaxHighlighterBase() {
-  override fun getHighlightingLexer(): Lexer =
-    ANTLRLexerAdaptor(HuffLanguage.INSTANCE, HuffLexer(null))
+  override fun getHighlightingLexer(): Lexer = ANTLRLexerAdaptor(HuffLanguage.INSTANCE, HuffLexer(null))
 
   override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
     return pack(map(tokenType)?.textAttributesKey)

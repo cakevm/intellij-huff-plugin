@@ -179,7 +179,11 @@ intellijPlatformTesting {
 spotless {
     kotlin {
         target("**/src/**/*.kt")
-        ktfmt("0.53").googleStyle()
+        ktfmt("0.53").googleStyle().configure {
+            it.setMaxWidth(140)
+            it.setRemoveUnusedImports(true)
+            it.setManageTrailingCommas(true)
+        }
         trimTrailingWhitespace()
         endWithNewline()
         indentWithSpaces()

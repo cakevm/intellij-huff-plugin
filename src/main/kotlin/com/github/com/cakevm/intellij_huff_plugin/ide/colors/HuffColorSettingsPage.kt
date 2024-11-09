@@ -25,13 +25,10 @@ class HuffColorSettingsPage : ColorSettingsPage {
   override fun getDemoText() = DEMO_TEXT
 }
 
-private val ATTRS: Array<AttributesDescriptor> =
-  HuffColor.entries.map { it.attributesDescriptor }.toTypedArray()
-private val ANNOTATOR_TAGS: Map<String, TextAttributesKey> =
-  HuffColor.entries.associateBy({ it.name }, { it.textAttributesKey })
+private val ATTRS: Array<AttributesDescriptor> = HuffColor.entries.map { it.attributesDescriptor }.toTypedArray()
+private val ANNOTATOR_TAGS: Map<String, TextAttributesKey> = HuffColor.entries.associateBy({ it.name }, { it.textAttributesKey })
 private val DEMO_TEXT: String by lazy {
-  val stream =
-    HuffColorSettingsPage::class.java.classLoader.getResourceAsStream("highlighterDemoText.huff")
+  val stream = HuffColorSettingsPage::class.java.classLoader.getResourceAsStream("highlighterDemoText.huff")
   val reader = stream?.bufferedReader()
   val text = reader?.readText() ?: ""
   StreamUtil.convertSeparators(text)

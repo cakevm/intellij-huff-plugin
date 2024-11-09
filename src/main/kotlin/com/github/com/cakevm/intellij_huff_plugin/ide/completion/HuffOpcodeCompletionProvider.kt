@@ -7,11 +7,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 import com.intellij.util.ProcessingContext
 
 class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() {
-  override fun addCompletions(
-    parameters: CompletionParameters,
-    context: ProcessingContext,
-    result: CompletionResultSet,
-  ) {
+  override fun addCompletions(parameters: CompletionParameters, context: ProcessingContext, result: CompletionResultSet) {
     result.addAllElements(opcodeNames)
   }
 
