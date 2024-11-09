@@ -7,7 +7,7 @@
 
 # IntelliJ Huff Plugin
 <!-- Plugin description -->
-This plugin adds support for the [Huff Language](https://huff.sh) to IntelliJ IDEA. It provides currently only syntax highlighting.
+This plugin adds [Huff Language](https://huff.sh) support to IntelliJ IDEs. It provides currently only syntax highlighting.
 <!-- Plugin description end -->
 
 ![IDE example](./.github/ide_example.png)

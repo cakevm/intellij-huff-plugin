@@ -3,6 +3,8 @@
 
 ## [Unreleased]
 - Fix folding for block comments
+- Highlight opcode names
+- Opcode names completion
 
 ## [0.0.2] - 2024-11-08
 - Add plugin icon

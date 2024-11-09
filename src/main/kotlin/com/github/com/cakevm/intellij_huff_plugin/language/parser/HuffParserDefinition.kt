@@ -4,7 +4,7 @@ import HuffLexer
 import HuffParser
 import com.github.com.cakevm.intellij_huff_plugin.language.HuffLanguage
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffFile
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffPsiBuilder
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffPsiFactory
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.lang.PsiParser
@@ -18,6 +18,7 @@ import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
 import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
+import org.antlr.intellij.adaptor.lexer.RuleIElementType
 import org.antlr.intellij.adaptor.lexer.TokenIElementType
 import org.antlr.intellij.adaptor.parser.ANTLRParserAdaptor
 import org.antlr.v4.runtime.Parser
@@ -32,7 +33,10 @@ class HuffParserDefinition : ParserDefinition {
   override fun createParser(p0: Project?): PsiParser {
     return object : ANTLRParserAdaptor(HuffLanguage.INSTANCE, HuffParser(null)) {
       override fun parse(parser: Parser, root: IElementType): ParseTree {
-        return (parser as HuffParser).huffFileRoot()
+        if (root is IFileElementType) {
+          return (parser as HuffParser).huffFileRoot()
+        }
+        throw UnsupportedOperationException("Unsupported root: ${root.javaClass.name}")
       }
     }
   }
@@ -56,7 +60,7 @@ class HuffParserDefinition : ParserDefinition {
       HuffLexer.EMPTY_STRING_LITERAL,
     )
 
-  override fun createElement(node: ASTNode): PsiElement = HuffPsiBuilder.from(node)
+  override fun createElement(node: ASTNode): PsiElement = HuffPsiFactory.createNode(node)
 
   override fun createFile(viewProvider: FileViewProvider): PsiFile = HuffFile(viewProvider)
 
@@ -72,8 +76,9 @@ class HuffParserDefinition : ParserDefinition {
       )
     }
 
-    val tokenIElementTypes: List<TokenIElementType> =
+    val tokens: List<TokenIElementType> =
       PSIElementTypeFactory.getTokenIElementTypes(HuffLanguage.INSTANCE)
-    val ID = tokenIElementTypes[HuffLexer.IDENTIFIER]
+    val rules: List<RuleIElementType> =
+      PSIElementTypeFactory.getRuleIElementTypes(HuffLanguage.INSTANCE)
   }
 }

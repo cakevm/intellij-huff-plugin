@@ -7,9 +7,9 @@ class HuffCommenter : Commenter {
 
   override fun getLineCommentPrefix(): String = "//"
 
-  override fun getBlockCommentPrefix(): String? = null
+  override fun getBlockCommentPrefix(): String = "/*"
 
-  override fun getBlockCommentSuffix(): String? = null
+  override fun getBlockCommentSuffix(): String = "*/"
 
   override fun getCommentedBlockCommentPrefix(): String? = null
 

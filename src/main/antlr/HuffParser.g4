@@ -37,7 +37,7 @@ bodyDefinition: L_BRACK identifier R_BRACK;
 bodyLabel: identifier COLON;
 macroCall: (buildinFnSignature | identifier) L_PAREN (HEXCODE | stringLiteral | identifier) R_PAREN;
 bodyMacroParameter: LESS_THAN identifier GREATER_THAN;
-bodyStatement: ( HEXCODE | opcode | bodyDefinition | macroIdentifier | macroCall | bodyLabel | bodyMacroParameter | identifier )+;
+bodyStatement: ( HEXCODE | opcodeName | bodyDefinition | macroIdentifier | macroCall | bodyLabel | bodyMacroParameter | identifier )+;
 macroBody: L_BRACE ( LINE_COMMENT | bodyStatement )* R_BRACE;
 buildinFnSignature: (BUILDIN_FN_TABLESIZE | BUILDIN_FN_CODESIZE | BUILDIN_FN_TABLESTART | BUILDIN_FN_FUNC_SIG | BUILDIN_FN_EVENT_HASH | BUILDIN_FN_ERROR | BUILDIN_FN_RIGHTPAD | BUILDIN_FN_CODECOPY_DYN_ARG | BUILDIN_FN_VERBATIM);
 macroDefinition: macroDecorator? DEFINE (MACRO |TEST) macroIdentifier EQUAL macroTakesParameters? macroReturnsParameters? body=macroBody;
@@ -45,8 +45,8 @@ macroDefinition: macroDecorator? DEFINE (MACRO |TEST) macroIdentifier EQUAL macr
 macroDecorator: DECORATOR_START (macroCall (COMMA macroCall)*)? R_BRACK;
 
 
-// ALL OPCODES
-opcode
+// All opcode names
+opcodeName
     : stackManagement
     | arithmeticAndLogic
     | environmentalInformation
@@ -117,7 +117,7 @@ stringLiteral: (NON_EMPTY_STRING_LITERAL | EMPTY_STRING_LITERAL)+;
 
 // MODIFIED FROM: https://github.com/ethereum/solidity/blob/fca0bd31c4915c2022e697f0217c6982c078d41c/docs/grammar/SolidityParser.g4
 // SEE Abi spec for details: https://docs.soliditylang.org/en/latest/abi-spec.html
-identifier: IDENTIFIER | FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | opcode;
+identifier: IDENTIFIER | FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | opcodeName;
 
 eventDefinition:
 	Event name=identifier

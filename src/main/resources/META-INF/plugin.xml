@@ -15,24 +15,30 @@
                   extensions="huff"
                   fieldName="INSTANCE"/>
 
-        <lang.parserDefinition language="Huff" implementationClass="com.github.com.cakevm.intellij_huff_plugin.language.parser.HuffParserDefinition"/>
+        <lang.parserDefinition language="Huff"
+                               implementationClass="com.github.com.cakevm.intellij_huff_plugin.language.parser.HuffParserDefinition"/>
 
         <lang.syntaxHighlighter language="Huff"
                                 implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffHighlighter"/>
 
+        <annotator language="Huff" implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.HuffAnnotator"/>
 
         <lang.foldingBuilder language="Huff"
-                             implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.folding.HuffMacroFoldingBuilder" />
+                             implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.folding.HuffMacroFoldingBuilder"/>
         <lang.foldingBuilder language="Huff"
-                             implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.folding.HuffBlockCommentFoldingBuilder" />
+                             implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.folding.HuffBlockCommentFoldingBuilder"/>
 
         <lang.commenter language="Huff"
                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.commenter.HuffCommenter"/>
 
-        <externalAnnotator language="Huff"
-                           implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffAnnotator" />
+        <completion.contributor language="Huff"
+                                implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.completion.HuffOpcodeNameCompletionContributor"/>
 
-        <colorSettingsPage implementation="com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColorSettingsPage"/>
+        <externalAnnotator language="Huff"
+                           implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffAnnotator"/>
+
+        <colorSettingsPage
+                implementation="com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColorSettingsPage"/>
 
     </extensions>
 </idea-plugin>
