@@ -9,8 +9,8 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
-    antlr // ANTLRv4 Grammar Plugin
     id("com.diffplug.spotless") version "7.0.0.BETA4" // Spotless Plugin
+    id("org.jetbrains.grammarkit") version "2022.3.2.2" // JetBrains Grammarkit Gradle Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -31,14 +31,18 @@ repositories {
     }
 }
 
+// Include the generated files in the source set
+sourceSets {
+    main {
+        java {
+            srcDirs("src/main/gen")
+        }
+    }
+}
+
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
     testImplementation(libs.junit)
-
-    implementation("org.antlr:antlr4-intellij-adaptor:0.1")
-    antlr("org.antlr:antlr4:4.13.2") // use ANTLR version 4
-
-
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
@@ -136,21 +140,25 @@ tasks {
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
-
+    generateLexer {
+        sourceFile.set(file("$projectDir/src/main/grammars/HuffLexer.flex"))
+        targetOutputDir.set(file("$projectDir/src/main/gen/com/github/com/cakevm/intellij_huff_plugin/language/lexer/"))
+        targetFile("HuffLexer")
+        skeleton.set(file("$projectDir/src/main/grammars/idea-flex.skeleton"))
+        purgeOldFiles.set(true)
+    }
+    generateParser {
+        sourceFile.set(file("$projectDir/src/main/grammars/HuffParser.bnf"))
+        pathToParser.set("/com/github/com/cakevm/intellij_huff_plugin/language/parser/HuffParserDefinition.kt")
+        pathToPsiRoot.set("/com/github/com/cakevm/intellij_huff_plugin/language/psi")
+        targetRootOutputDir.set(file("$projectDir/src/main/gen"))
+        purgeOldFiles.set(true)
+    }
+    compileKotlin {
+        dependsOn(generateLexer, generateParser)
+    }
     publishPlugin {
         dependsOn(patchChangelog)
-    }
-
-    sourceSets {
-        main {
-            java {
-                srcDir(generateGrammarSource)
-            }
-        }
-    }
-
-    generateGrammarSource {
-        outputDirectory = file("src/main/java/generated-antlr")
     }
 }
 
@@ -189,5 +197,4 @@ spotless {
         indentWithSpaces()
     }
 }
-
-tasks.named("spotlessKotlin").configure { dependsOn("generateGrammarSource") }
+tasks.named("spotlessKotlin").configure { dependsOn("generateLexer", "generateParser") }
