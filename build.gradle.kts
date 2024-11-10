@@ -141,17 +141,17 @@ tasks {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
     generateLexer {
-        sourceFile.set(file("src/main/grammars/HuffLexer.flex"))
-        targetOutputDir.set(file("src/main/gen/com/github/com/cakevm/intellij_huff_plugin/language"))
+        sourceFile.set(file("$projectDir/src/main/grammars/HuffLexer.flex"))
+        targetOutputDir.set(file("$projectDir/src/main/gen/com/github/com/cakevm/intellij_huff_plugin/language/lexer/"))
         targetFile("HuffLexer")
-        skeleton.set(file("src/main/grammars/idea-flex.skeleton"))
+        skeleton.set(file("$projectDir/src/main/grammars/idea-flex.skeleton"))
         purgeOldFiles.set(true)
     }
     generateParser {
-        sourceFile.set(file("src/main/grammars/HuffParser.bnf"))
+        sourceFile.set(file("$projectDir/src/main/grammars/HuffParser.bnf"))
         pathToParser.set("/com/github/com/cakevm/intellij_huff_plugin/language/parser/HuffParserDefinition.kt")
         pathToPsiRoot.set("/com/github/com/cakevm/intellij_huff_plugin/language/psi")
-        targetRootOutputDir.set(file("src/main/gen"))
+        targetRootOutputDir.set(file("$projectDir/src/main/gen"))
         purgeOldFiles.set(true)
     }
     compileKotlin {

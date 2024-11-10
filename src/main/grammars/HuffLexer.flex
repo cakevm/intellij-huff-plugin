@@ -1,5 +1,5 @@
 // based on: https://github.com/intellij-solidity/intellij-solidity/blob/1d66fde5/src/main/grammars/_SolidityLexer.flex
-package com.github.com.cakevm.intellij_huff_plugin.lexer;
+package com.github.com.cakevm.intellij_huff_plugin.language.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
