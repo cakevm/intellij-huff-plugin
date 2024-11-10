@@ -1,10 +1,9 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.parser
 
-import HuffLexer
-import HuffParser
 import com.github.com.cakevm.intellij_huff_plugin.language.HuffLanguage
+import com.github.com.cakevm.intellij_huff_plugin.language.HuffLexer
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffFile
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffPsiFactory
 import com.intellij.lang.ASTNode
 import com.intellij.lang.ParserDefinition
 import com.intellij.lang.PsiParser
@@ -13,60 +12,31 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.FileViewProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
-import com.intellij.psi.tree.IElementType
+import com.intellij.psi.TokenType
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
-import org.antlr.intellij.adaptor.lexer.ANTLRLexerAdaptor
-import org.antlr.intellij.adaptor.lexer.PSIElementTypeFactory
-import org.antlr.intellij.adaptor.lexer.RuleIElementType
-import org.antlr.intellij.adaptor.lexer.TokenIElementType
-import org.antlr.intellij.adaptor.parser.ANTLRParserAdaptor
-import org.antlr.v4.runtime.Parser
-import org.antlr.v4.runtime.tree.ParseTree
 
 class HuffParserDefinition : ParserDefinition {
   private val file = IFileElementType(HuffLanguage.INSTANCE)
 
-  override fun createLexer(project: Project?): Lexer = ANTLRLexerAdaptor(HuffLanguage.INSTANCE, HuffLexer(null))
+  override fun createParser(project: Project?): PsiParser = HuffParser()
 
-  override fun createParser(p0: Project?): PsiParser {
-    return object : ANTLRParserAdaptor(HuffLanguage.INSTANCE, HuffParser(null)) {
-      override fun parse(parser: Parser, root: IElementType): ParseTree {
-        if (root is IFileElementType) {
-          return (parser as HuffParser).huffFileRoot()
-        }
-        throw UnsupportedOperationException("Unsupported root: ${root.javaClass.name}")
-      }
-    }
-  }
+  override fun createLexer(project: Project?): Lexer = HuffLexer()
 
   override fun getFileNodeType(): IFileElementType = file
 
-  override fun getCommentTokens(): TokenSet =
-    PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.LINE_COMMENT, HuffLexer.NATSPEC_SINGLELINE)
+  override fun getCommentTokens(): TokenSet = COMMENTS
 
-  override fun getWhitespaceTokens(): TokenSet = PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.WHITESPACE)
+  override fun getWhitespaceTokens(): TokenSet = WHITESPACES
 
-  override fun getStringLiteralElements(): TokenSet =
-    PSIElementTypeFactory.createTokenSet(HuffLanguage.INSTANCE, HuffLexer.NON_EMPTY_STRING_LITERAL, HuffLexer.EMPTY_STRING_LITERAL)
+  override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
 
-  override fun createElement(node: ASTNode): PsiElement = HuffPsiFactory.createNode(node)
+  override fun createElement(node: ASTNode): PsiElement = HuffElementTypes.Factory.createElement(node)
 
   override fun createFile(viewProvider: FileViewProvider): PsiFile = HuffFile(viewProvider)
 
   companion object {
-    init {
-      val vocabulary = HuffParser.VOCABULARY
-      PSIElementTypeFactory.defineLanguageIElementTypes(
-        HuffLanguage.INSTANCE,
-        (0..vocabulary.maxTokenType)
-          .map { vocabulary.getLiteralName(it) ?: (vocabulary.getSymbolicName(it) ?: "<INVALID>") }
-          .toTypedArray(),
-        HuffParser.ruleNames,
-      )
-    }
-
-    val tokens: List<TokenIElementType> = PSIElementTypeFactory.getTokenIElementTypes(HuffLanguage.INSTANCE)
-    val rules: List<RuleIElementType> = PSIElementTypeFactory.getRuleIElementTypes(HuffLanguage.INSTANCE)
+    val WHITESPACES: TokenSet = TokenSet.create(TokenType.WHITE_SPACE)
+    val COMMENTS: TokenSet = TokenSet.create(HuffElementTypes.COMMENT)
   }
 }

@@ -1,6 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java") // Java support
@@ -9,8 +10,8 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
-    antlr // ANTLRv4 Grammar Plugin
     id("com.diffplug.spotless") version "7.0.0.BETA4" // Spotless Plugin
+    id("org.jetbrains.grammarkit") version "2022.3.2.2" // JetBrains Grammarkit Gradle Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -31,14 +32,18 @@ repositories {
     }
 }
 
+// Include the generated files in the source set
+sourceSets {
+    main {
+        java {
+            srcDirs("src/main/gen")
+        }
+    }
+}
+
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
     testImplementation(libs.junit)
-
-    implementation("org.antlr:antlr4-intellij-adaptor:0.1")
-    antlr("org.antlr:antlr4:4.13.2") // use ANTLR version 4
-
-
 
     // IntelliJ Platform Gradle Plugin Dependencies Extension - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
     intellijPlatform {
@@ -136,21 +141,25 @@ tasks {
     wrapper {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
-
+    generateLexer {
+        sourceFile.set(file("src/main/grammars/Huff.flex"))
+        targetOutputDir.set(file("src/main/gen/com/github/com/cakevm/intellij_huff_plugin/language"))
+        targetFile("HuffLexer")
+        skeleton.set(file("src/main/grammars/idea-flex.skeleton"))
+        purgeOldFiles.set(true)
+    }
+    generateParser {
+        sourceFile.set(file("src/main/grammars/Huff.bnf"))
+        pathToParser.set("/com/github/com/cakevm/intellij_huff_plugin/language/parser/HuffParserDefinition.kt")
+        pathToPsiRoot.set("/com/github/com/cakevm/intellij_huff_plugin/language/psi")
+        targetRootOutputDir.set(file("src/main/gen"))
+        purgeOldFiles.set(false)
+    }
+    withType<KotlinCompile> {
+        dependsOn(generateLexer, generateParser)
+    }
     publishPlugin {
         dependsOn(patchChangelog)
-    }
-
-    sourceSets {
-        main {
-            java {
-                srcDir(generateGrammarSource)
-            }
-        }
-    }
-
-    generateGrammarSource {
-        outputDirectory = file("src/main/java/generated-antlr")
     }
 }
 
@@ -176,6 +185,7 @@ intellijPlatformTesting {
     }
 }
 
+
 spotless {
     kotlin {
         target("**/src/**/*.kt")
@@ -189,5 +199,3 @@ spotless {
         indentWithSpaces()
     }
 }
-
-tasks.named("spotlessKotlin").configure { dependsOn("generateGrammarSource") }
