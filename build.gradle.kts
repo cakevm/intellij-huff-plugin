@@ -197,3 +197,4 @@ spotless {
         indentWithSpaces()
     }
 }
+tasks.named("spotlessKotlin").configure { dependsOn("generateLexer", "generateParser") }

@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+- Refactor to JetBrains Grammar-Kit
+- Limit autocomplete for opcode names to macro body
+
 ## [0.0.3] - 2024-11-09
 
 - Fix folding for block comments
