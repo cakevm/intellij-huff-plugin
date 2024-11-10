@@ -1,7 +1,6 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java") // Java support
@@ -142,20 +141,20 @@ tasks {
         gradleVersion = providers.gradleProperty("gradleVersion").get()
     }
     generateLexer {
-        sourceFile.set(file("src/main/grammars/Huff.flex"))
+        sourceFile.set(file("src/main/grammars/HuffLexer.flex"))
         targetOutputDir.set(file("src/main/gen/com/github/com/cakevm/intellij_huff_plugin/language"))
         targetFile("HuffLexer")
         skeleton.set(file("src/main/grammars/idea-flex.skeleton"))
         purgeOldFiles.set(true)
     }
     generateParser {
-        sourceFile.set(file("src/main/grammars/Huff.bnf"))
+        sourceFile.set(file("src/main/grammars/HuffParser.bnf"))
         pathToParser.set("/com/github/com/cakevm/intellij_huff_plugin/language/parser/HuffParserDefinition.kt")
         pathToPsiRoot.set("/com/github/com/cakevm/intellij_huff_plugin/language/psi")
         targetRootOutputDir.set(file("src/main/gen"))
-        purgeOldFiles.set(false)
+        purgeOldFiles.set(true)
     }
-    withType<KotlinCompile> {
+    compileKotlin {
         dependsOn(generateLexer, generateParser)
     }
     publishPlugin {
@@ -184,7 +183,6 @@ intellijPlatformTesting {
         }
     }
 }
-
 
 spotless {
     kotlin {

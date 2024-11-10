@@ -21,28 +21,37 @@ class HuffHighlighter : SyntaxHighlighterBase() {
         DEFINE to HuffColor.DEFINE,
         HEXCODE to HuffColor.HEXCODE,
         STRING to HuffColor.STRING,
+        DECIMAL to HuffColor.DECIMAL,
         INCLUDE to HuffColor.INCLUDE,
         L_BRACE to HuffColor.BRACES,
         R_BRACE to HuffColor.BRACES,
       )
-      .plus(buildinFns().map { it to HuffColor.BUILDIN_FN })
+      .plus(buildInFns().map { it to HuffColor.BUILD_IN_FN })
+      .plus(opcodeNamesStackManagement().map { it to HuffColor.STACK_MANAGEMENT })
+      .plus(opcodeNamesEnvironmentalInformation().map { it to HuffColor.ENVIRONMENTAL_INFORMATION })
+      .plus(opcodeNamesStorageAndMemoryAccess().map { it to HuffColor.STORAGE_AND_MEMORY_ACCESS })
+      .plus(opcodeNamesFlowControl().map { it to HuffColor.FLOW_CONTROL })
+      .plus(opcodeNamesSystemAndCallRelated().map { it to HuffColor.SYSTEM_AND_CALL })
+      .plus(opcodeNamesLogging().map { it to HuffColor.LOGGING })
+      .plus(opcodeNamesMiscellaneous().map { it to HuffColor.MISCELLANEOUS })
+      .plus(opcodeNamesGasAndCostManagement().map { it to HuffColor.GAS_AND_COST_MANAGEMENT })
       .mapValues { it.value.textAttributesKey }
 
-  private fun buildinFns() =
+  private fun buildInFns() =
     setOf<IElementType>(
-      BUILDIN_FN_TABLESIZE,
-      BUILDIN_FN_CODESIZE,
-      BUILDIN_FN_TABLESTART,
-      BUILDIN_FN_FUNC_SIG,
-      BUILDIN_FN_EVENT_HASH,
-      BUILDIN_FN_ERROR,
-      BUILDIN_FN_RIGHTPAD,
-      BUILDIN_FN_CODECOPY_DYN_ARG,
-      BUILDIN_FN_VERBATIM,
+      BUILD_IN_FN_TABLESIZE,
+      BUILD_IN_FN_CODESIZE,
+      BUILD_IN_FN_TABLESTART,
+      BUILD_IN_FN_FUNC_SIG,
+      BUILD_IN_FN_EVENT_HASH,
+      BUILD_IN_FN_ERROR,
+      BUILD_IN_FN_RIGHTPAD,
+      BUILD_IN_FN_CODECOPY_DYN_ARG,
+      BUILD_IN_FN_VERBATIM,
       FREE_STORAGE_POINTER,
     )
 
-  private fun opcodeNames() =
+  private fun opcodeNamesStackManagement() =
     setOf<IElementType>(
       // Stack Management Opcodes
       PUSH1,
@@ -136,7 +145,10 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       SHL,
       SHR,
       SAR,
+    )
 
+  private fun opcodeNamesEnvironmentalInformation() =
+    setOf<IElementType>(
       // Environmental Information Opcodes
       ADDRESS,
       BALANCE,
@@ -160,7 +172,10 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       NUMBER,
       DIFFICULTY,
       GASLIMIT,
+    )
 
+  private fun opcodeNamesStorageAndMemoryAccess() =
+    setOf<IElementType>(
       // Storage and Memory Access Opcodes
       SLOAD,
       SSTORE,
@@ -168,13 +183,19 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       MSTORE,
       MSTORE8,
       MSIZE,
+    )
 
+  private fun opcodeNamesFlowControl() =
+    setOf<IElementType>(
       // Flow Control Opcodes
       JUMP,
       JUMPI,
       PC,
       JUMPDEST,
+    )
 
+  private fun opcodeNamesSystemAndCallRelated() =
+    setOf<IElementType>(
       // System and Call-Related Opcodes
       CALL,
       CALLCODE,
@@ -183,21 +204,30 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       CREATE,
       CREATE2,
       SELFDESTRUCT,
+    )
 
+  private fun opcodeNamesLogging() =
+    setOf<IElementType>(
       // Logging Opcodes
       LOG0,
       LOG1,
       LOG2,
       LOG3,
       LOG4,
+    )
 
+  private fun opcodeNamesMiscellaneous() =
+    setOf<IElementType>(
       // Miscellaneous Opcodes
       STOP,
       RETURN,
       REVERT,
       INVALID,
+    )
 
+  private fun opcodeNamesGasAndCostManagement() =
+    setOf<IElementType>(
       // Gas and Cost Management Opcodes
-      GAS,
+      GAS
     )
 }
