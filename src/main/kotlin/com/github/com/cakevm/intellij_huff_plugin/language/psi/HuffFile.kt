@@ -7,5 +7,5 @@ import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.FileViewProvider
 
 class HuffFile(viewProvider: FileViewProvider) : PsiFileBase(viewProvider, HuffLanguage.INSTANCE) {
-  override fun getFileType(): FileType = HuffFileType
+  override fun getFileType(): FileType = HuffFileType.INSTANCE
 }

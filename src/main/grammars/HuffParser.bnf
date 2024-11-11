@@ -91,7 +91,7 @@
     COMMENT='regexp:(//.*)|(/\\*(?:.|[\\n\\r])*?\\*/)'
     NAT_SPEC_TAG='regexp:@[a-zA-Z_0-9:]*'
 
-    QUOTED_STRING='regexp:("([^"\r\n\\]|\\.)*")|unicode("([^"])*")'
+    QUOTED_STRING_REGEX='regexp:("([^"\r\n\\]|\\.)*")|unicode("([^"])*")'
     DECIMAL='regexp:[0-9]+'
     HEXCODE='regexp:0x[0-9a-fA-F]+'
 
@@ -114,7 +114,13 @@ HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_
 
 Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | OpcodeName | STRING_IDENTIFIER
 
-IncludeDirective ::= INCLUDE QUOTED_STRING
+QuotedString ::= QUOTED_STRING_REGEX {
+    mixin="com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffQuotedStringMixin"
+}
+
+IncludeDirective ::= INCLUDE QuotedString {
+  mixin="com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludeDirectiveMixin"
+}
 
 DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition | TableDefinition)
 
@@ -139,7 +145,7 @@ MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK  Identifier R_BRACK
 
-MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | Identifier
+MacroCallParameter ::= HEXCODE | QuotedString | MacroParameterReference | Identifier
 MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
 MacroLabel ::= Identifier COLON

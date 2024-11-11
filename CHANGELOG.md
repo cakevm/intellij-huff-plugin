@@ -10,6 +10,7 @@
 - Fix NatSpec parsing
 - Add `jumptable__packed` parsing
 - Parse macro statement syntax sugar `false`/`true`
+- Follow include references
 
 ## [0.0.5] - 2024-11-11
 

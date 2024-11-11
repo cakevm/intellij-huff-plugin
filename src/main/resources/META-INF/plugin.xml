@@ -36,6 +36,8 @@
 
         <completion.contributor language="Huff"
                                 implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.completion.HuffOpcodeNameCompletionContributor"/>
+
+        <include.provider implementation="com.github.com.cakevm.intellij_huff_plugin.language.index.HuffFileIncludeProvider"/>
     </extensions>
 
     <actions>

@@ -37,7 +37,7 @@ import static com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElemen
 EOL=\R
 WHITESPACE=\s+
 DECIMAL=[0-9]+
-QUOTED_STRING=(\"([^\"\r\n\\]|\\.)*\")|(\'([^\'\r\n\\]|\\.)*\')|unicode(\"([^\"])*\")|unicode(\'([^\'])*\')
+QUOTED_STRING_REGEX=(\"([^\"\r\n\\]|\\.)*\")|(\'([^\'\r\n\\]|\\.)*\')|unicode(\"([^\"])*\")|unicode(\'([^\'])*\')
 STRING_IDENTIFIER=[a-zA-Z_$][a-zA-Z_$0-9]*
 
 HEXCODE=0x[0-9a-fA-F]+
@@ -323,7 +323,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
 // generic
   {HEXCODE}                  { return HEXCODE; }
   {DECIMAL}                  { return DECIMAL; }
-  {QUOTED_STRING}           { return QUOTED_STRING; }
+  {QUOTED_STRING_REGEX}           { return QUOTED_STRING_REGEX; }
   {STRING_IDENTIFIER}        { return STRING_IDENTIFIER; }
 }
 

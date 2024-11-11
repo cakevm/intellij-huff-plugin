@@ -19,7 +19,7 @@ The plugin is available in the [JetBrains Marketplace](https://plugins.jetbrains
 Lexing and parsing of Huff files and basic syntax highlighting is working.
 
 ## Acknowledgements
-The Lexer and Parser is bases on [intellij-solidity](https://github.com/intellij-solidity/intellij-solidity). Thank you! The foundation for this plugin is the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template). The icon is taken from [vscode-huff](https://github.com/huff-language/vscode-huff/blob/master/resources/huff.png).
+The Lexer and Parser is bases on [intellij-solidity](https://github.com/intellij-solidity/intellij-solidity). Thank you! The foundation for this plugin is the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template). The include parsing is heavily inspired by [candid-intellij-plugin](https://github.com/Alaanor/candid-intellij-plugin). The icon is taken from [vscode-huff](https://github.com/huff-language/vscode-huff/blob/master/resources/huff.png).
 
 ## Licence
 This project is dual licensed under the [Apache 2.0](./LICENSE-APACHE) or [MIT](./LICENSE-MIT) licenses.
