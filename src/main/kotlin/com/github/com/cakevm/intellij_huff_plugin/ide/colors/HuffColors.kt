@@ -31,7 +31,8 @@ enum class HuffColor(humanName: Supplier<@AttributeDescriptor String>, default: 
   // rule based highlighting
   MACRO_CONSTANT_REFERENCE(HuffBundle.messagePointer("settings.huff.color.macro_constant_reference"), Default.TEMPLATE_LANGUAGE_COLOR),
   MACRO_LABEL(HuffBundle.messagePointer("settings.huff.color.macro_label"), Default.KEYWORD),
-  MACRO_LABEL_REFERENCE(HuffBundle.messagePointer("settings.huff.color.macro_label_reference"), Default.TEMPLATE_LANGUAGE_COLOR);
+  MACRO_LABEL_REFERENCE(HuffBundle.messagePointer("settings.huff.color.macro_label_reference"), Default.TEMPLATE_LANGUAGE_COLOR),
+  IDENTIFIER(HuffBundle.messagePointer("settings.huff.color.identifier"), Default.IDENTIFIER);
 
   val textAttributesKey = TextAttributesKey.createTextAttributesKey("run.huff.$name", default)
   val attributesDescriptor = AttributesDescriptor(humanName, textAttributesKey)

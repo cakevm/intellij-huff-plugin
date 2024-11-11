@@ -5,6 +5,7 @@ import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes.
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.elementType
 
@@ -32,6 +33,20 @@ class HuffAnnotator : Annotator {
           .range(psiElement.textRange)
           .textAttributes(HuffColor.MACRO_LABEL_REFERENCE.textAttributesKey)
           .create()
+      }
+      // Remove highlighting of lexer tokens for identifiers / parameters
+      IDENTIFIER -> {
+        holder
+          .newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(psiElement.textRange)
+          .enforcedTextAttributes(TextAttributes.ERASE_MARKER)
+          .create()
+      }
+      PARAMETER_DEF -> {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(psiElement.textRange).create()
+      }
+      else -> {
+        // do nothing
       }
     }
   }
