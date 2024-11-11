@@ -94,6 +94,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "macro"                    { return MACRO; }
   "constant"                 { return CONSTANT; }
   "jumptable"                { return JUMPTABLE; }
+  "jumptable__packed"        { return JUMPTABLE_PACKED; }
   "table"                    { return TABLE; }
   "test"                     { return TEST; }
 
@@ -244,7 +245,9 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "prevrandao"               { return PREVRANDAO; }
   "chainid"                  { return CHAINID; }
   "basefee"                  { return BASEFEE; }
-  "selfbalance"             { return SELFBALANCE; }
+  "selfbalance"              { return SELFBALANCE; }
+  "blobhash"                 { return BLOBHASH; }
+  "blobbasefee"              { return BLOBBASEFEE; }
 
   // Storage and Memory Access
   "sload"                    { return SLOAD; }
@@ -321,7 +324,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   {HEXCODE}                  { return HEXCODE; }
   {DECIMAL}                  { return DECIMAL; }
   {QUOTED_STRING}           { return QUOTED_STRING; }
-  {STRING_IDENTIFIER}        { return STRINGIDENTIFIER; }
+  {STRING_IDENTIFIER}        { return STRING_IDENTIFIER; }
 }
 
 // nested block comments are not supported, so don't track the occurrences of /*

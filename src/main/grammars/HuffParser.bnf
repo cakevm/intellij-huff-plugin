@@ -39,8 +39,8 @@
     EVENT='event'
     MACRO='macro'
     CONSTANT='constant'
-
     JUMPTABLE='jumptable'
+    JUMPTABLE_PACKED='jumptable__packed'
     TABLE='table'
     TEST='test'
 
@@ -88,16 +88,16 @@
     /////////////////////
     // Regex
     /////////////////////
-    comment='regexp:(//.*)|(/\\*(?:.|[\\n\\r])*?\\*/)'
-    nat_spec_tag='regexp:@[a-zA-Z_0-9:]*'
+    COMMENT='regexp:(//.*)|(/\\*(?:.|[\\n\\r])*?\\*/)'
+    NAT_SPEC_TAG='regexp:@[a-zA-Z_0-9:]*'
 
     QUOTED_STRING='regexp:("([^"\r\n\\]|\\.)*")|unicode("([^"])*")'
-    decimal='regexp:[0-9]+'
-    hexcode='regexp:0x[0-9a-fA-F]+'
+    DECIMAL='regexp:[0-9]+'
+    HEXCODE='regexp:0x[0-9a-fA-F]+'
 
-    space='regexp:\s+'
-    label='regexp:[a-zA-Z_]+:'
-    stringIdentifier='regexp:[a-zA-Z_$][a-zA-Z_$0-9]*'
+    SPACE='regexp:\s+'
+    LABEL='regexp:[a-zA-Z_]+:'
+    STRING_IDENTIFIER='regexp:[a-zA-Z_$][a-zA-Z_$0-9]*'
 
     intNumType='regexp:int(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)?'
     uIntNumType='regexp:uint(8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)?'
@@ -110,9 +110,9 @@
   extends(".*TypeName")=TypeName
 }
 
-HuffFile ::= (IncludeDirective | DefineDefinition | MacroDefinition)*
+HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_TAG )*
 
-Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | OpcodeName | stringIdentifier
+Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | OpcodeName | STRING_IDENTIFIER
 
 IncludeDirective ::= INCLUDE QUOTED_STRING
 
@@ -125,8 +125,8 @@ ConstantDefinition ::= CONSTANT Identifier EQUAL (FREE_STORAGE_POINTER | HEXCODE
 ErrorDefinition ::= ERROR Identifier ParameterList
 
 // #define jumptable
-JumpTableBody ::= L_BRACE Identifier Identifier Identifier Identifier R_BRACE
-JumpTableDefinition ::= JUMPTABLE Identifier JumpTableBody
+JumpTableBody ::= L_BRACE Identifier* R_BRACE
+JumpTableDefinition ::= ( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBody
 
 // #define table
 TableBody ::= L_BRACE HEXCODE+ R_BRACE
@@ -139,28 +139,28 @@ MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK  Identifier R_BRACK
 
-MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( (HEXCODE | QUOTED_STRING | Identifier) ( COMMA (HEXCODE | STRING_LITERAL | Identifier) )*)? R_PAREN
-BodyMacroParameter ::= LESS_THAN Identifier GREATER_THAN
+MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | Identifier
+MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
+MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
 MacroLabel ::= Identifier COLON
 MacroLabelReference ::= Identifier
-BodyStatement ::= ( HEXCODE | OpcodeName | MacroConstantReference | MacroCall | BodyMacroParameter | MacroLabel | MacroLabelReference )+
+// https://github.com/huff-language/huff-rs/blob/05d71e4f/huff_lexer/src/lib.rs#L250
+// huff parse true/false as 1/0
+HuffBoolMapping ::= BOOLEANLITERAL
+BodyStatement ::= ( HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroConstantReference | MacroCall | MacroParameterReference | MacroLabel | MacroLabelReference )+
 MacroBody ::= L_BRACE BodyStatement* R_BRACE
-BuildInFnSignature ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN_FN_TABLESTART | BUILD_IN_FN_FUNC_SIG | BUILD_IN_FN_EVENT_HASH | BUILD_IN_FN_ERROR | BUILD_IN_FN_RIGHTPAD | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM)
+BuildInFnSignature ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN_FN_TABLESTART
+  | BUILD_IN_FN_FUNC_SIG | BUILD_IN_FN_EVENT_HASH | BUILD_IN_FN_ERROR | BUILD_IN_FN_RIGHTPAD
+  | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM )
 // #define macro/test/fn
-MacroDefinition ::= MacroDecorator? DEFINE (MACRO | TEST | FN) MacroIdentifierAndParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
+MacroDefinition ::= MacroDecorator? DEFINE (MACRO | TEST | FN) MacroIdentifierAndParameters
+                      EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 // #define macro with decorator
 MacroDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
 
 // All opcode names
-OpcodeName ::= StackManagement
-    | ArithmeticAndLogic
-    | EnvironmentalInformation
-    | StorageAndMemoryAccess
-    | FlowControl
-    | SystemAndCall
-    | Logging
-    | Miscellaneous
-    | GasManagement
+OpcodeName ::= StackManagement | ArithmeticAndLogic | EnvironmentalInformation | StorageAndMemoryAccess
+    | FlowControl | SystemAndCall | Logging | Miscellaneous | GasManagement
 
 // Stack Management Opcodes
 StackManagement ::= PUSH0 |PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH8
@@ -181,12 +181,10 @@ ArithmeticAndLogic ::= ADD | SUB | MUL | DIV | SDIV | MOD | SMOD | ADDMOD | MULM
 
 // Environmental Information Opcodes
 EnvironmentalInformation ::= ADDRESS | BALANCE | ORIGIN | CALLER | CALLVALUE
-    | CALLDATALOAD | CALLDATASIZE | CALLDATACOPY
-    | CODESIZE | CODECOPY
-    | GASPRICE
-    | EXTCODESIZE | EXTCODECOPY | EXTCODEHASH
-    | RETURNDATASIZE | RETURNDATACOPY
-    | BLOCKHASH | COINBASE | TIMESTAMP | NUMBER | DIFFICULTY | GASLIMIT | PREVRANDAO | CHAINID | BASEFEE | SELFBALANCE
+    | CALLDATALOAD | CALLDATASIZE | CALLDATACOPY | CODESIZE | CODECOPY | GASPRICE | EXTCODESIZE
+    | EXTCODECOPY | EXTCODEHASH | RETURNDATASIZE | RETURNDATACOPY | BLOCKHASH | COINBASE
+    | TIMESTAMP | NUMBER | DIFFICULTY | GASLIMIT | PREVRANDAO | CHAINID | BASEFEE | SELFBALANCE
+    | BLOBHASH | BLOBBASEFEE
 
 // Storage and Memory Access Opcodes
 StorageAndMemoryAccess ::= SLOAD | SSTORE | MLOAD | MSTORE | MSTORE8 | MSIZE |TLOAD | TSTORE | MCOPY

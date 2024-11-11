@@ -5,6 +5,11 @@
 ## [Unreleased]
 
 - Create new file action
+- Fix macro call parameter as macro call
+- Fix jump table parsing
+- Fix NatSpec parsing
+- Add `jumptable__packed` parsing
+- Parse macro statement syntax sugar `false`/`true`
 
 ## [0.0.5] - 2024-11-11
 
