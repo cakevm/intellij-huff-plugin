@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.0.6] - 2024-11-11
+
 - Create new file action
 - Fix macro call parameter as macro call
 - Fix jump table parsing
