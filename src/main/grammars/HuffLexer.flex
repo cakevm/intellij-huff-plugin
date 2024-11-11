@@ -37,7 +37,7 @@ import static com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElemen
 EOL=\R
 WHITESPACE=\s+
 DECIMAL=[0-9]+
-STRING_LITERAL=(\"([^\"\r\n\\]|\\.)*\")|(\'([^\'\r\n\\]|\\.)*\')|unicode(\"([^\"])*\")|unicode(\'([^\'])*\')
+QUOTED_STRING=(\"([^\"\r\n\\]|\\.)*\")|(\'([^\'\r\n\\]|\\.)*\')|unicode(\"([^\"])*\")|unicode(\'([^\'])*\')
 STRING_IDENTIFIER=[a-zA-Z_$][a-zA-Z_$0-9]*
 
 HEXCODE=0x[0-9a-fA-F]+
@@ -88,6 +88,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
 
   // Define statements
   "function"                 { return FUNCTION; }
+  "fn"                       { return FN; }
   "event"                    { return EVENT; }
   "error"                    { return ERROR; }
   "macro"                    { return MACRO; }
@@ -307,6 +308,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   // soldity types
   "address"                  { return ADDRESS; }
   "bool"                     { return BOOL; }
+  "string"                   { return STRING; }
   {INTNUMTYPE}               { return INTNUMTYPE; }
   {UINTNUMTYPE}              { return UINTNUMTYPE; }
   {BYTENUMTYPE}              { return BYTENUMTYPE; }
@@ -318,7 +320,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
 // generic
   {HEXCODE}                  { return HEXCODE; }
   {DECIMAL}                  { return DECIMAL; }
-  {STRING_LITERAL}           { return STRING_LITERAL; }
+  {QUOTED_STRING}           { return QUOTED_STRING; }
   {STRING_IDENTIFIER}        { return STRINGIDENTIFIER; }
 }
 

@@ -33,8 +33,10 @@
     DECORATOR_START='#['
 
     // Define statements
-    Function='function'
-    Event='event'
+    FUNCTION='function'
+    FN='fn'
+    ERROR='error'
+    EVENT='event'
     MACRO='macro'
     CONSTANT='constant'
 
@@ -50,7 +52,7 @@
     CONSTRUCTOR='CONSTRUCTOR'
     FALLBACK='FALLBACK'
 
-    // macro optioal returns
+    // macro optional returns
     TAKES='takes'
     RETURNS='returns'
 
@@ -89,7 +91,7 @@
     comment='regexp:(//.*)|(/\\*(?:.|[\\n\\r])*?\\*/)'
     nat_spec_tag='regexp:@[a-zA-Z_0-9:]*'
 
-    string_literal='regexp:("([^"\r\n\\]|\\.)*")|unicode("([^"])*")'
+    QUOTED_STRING='regexp:("([^"\r\n\\]|\\.)*")|unicode("([^"])*")'
     decimal='regexp:[0-9]+'
     hexcode='regexp:0x[0-9a-fA-F]+'
 
@@ -112,24 +114,23 @@ HuffFile ::= (IncludeDirective | DefineDefinition | MacroDefinition)*
 
 Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | OpcodeName | stringIdentifier
 
-ImportPath ::= STRING_LITERAL
-IncludeDirective ::= INCLUDE ImportPath
+IncludeDirective ::= INCLUDE QUOTED_STRING
 
 DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition | TableDefinition)
 
 // #define constant
-ConstantDefinition ::= CONSTANT  Identifier EQUAL (FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier  )
+ConstantDefinition ::= CONSTANT Identifier EQUAL (FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier )
 
 // #define error
-ErrorDefinition ::= ERROR Identifier L_PAREN TypeName R_PAREN
+ErrorDefinition ::= ERROR Identifier ParameterList
 
 // #define jumptable
-JumpTableBody ::= L_BRACE  Identifier  Identifier  Identifier  Identifier R_BRACE
-JumpTableDefinition ::= JUMPTABLE  Identifier JumpTableBody
+JumpTableBody ::= L_BRACE Identifier Identifier Identifier Identifier R_BRACE
+JumpTableDefinition ::= JUMPTABLE Identifier JumpTableBody
 
 // #define table
 TableBody ::= L_BRACE HEXCODE+ R_BRACE
-TableDefinition ::= TABLE  Identifier TableBody
+TableDefinition ::= TABLE Identifier TableBody
 
 // #define macro
 MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier )
@@ -138,18 +139,17 @@ MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK  Identifier R_BRACK
 
-MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( HEXCODE | STRING_LITERAL | Identifier ( COMMA (HEXCODE | STRING_LITERAL | Identifier) )*)? R_PAREN
-BodyMacroParameter ::= LESS_THAN  Identifier GREATER_THAN
+MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( (HEXCODE | QUOTED_STRING | Identifier) ( COMMA (HEXCODE | STRING_LITERAL | Identifier) )*)? R_PAREN
+BodyMacroParameter ::= LESS_THAN Identifier GREATER_THAN
 MacroLabel ::= Identifier COLON
 MacroLabelReference ::= Identifier
 BodyStatement ::= ( HEXCODE | OpcodeName | MacroConstantReference | MacroCall | BodyMacroParameter | MacroLabel | MacroLabelReference )+
-MacroBody ::= L_BRACE (( LINE_COMMENT | BodyStatement )*)? R_BRACE
-BuildInFnSignature ::= (  BUILD_IN_FN_TABLESIZE |  BUILD_IN_FN_CODESIZE |  BUILD_IN_FN_TABLESTART |  BUILD_IN_FN_FUNC_SIG |  BUILD_IN_FN_EVENT_HASH |  BUILD_IN_FN_ERROR |  BUILD_IN_FN_RIGHTPAD |  BUILD_IN_FN_CODECOPY_DYN_ARG |  BUILD_IN_FN_VERBATIM)
-MacroDefinition ::= MacroDecorator? DEFINE (MACRO |TEST) MacroIdentifierAndParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
+MacroBody ::= L_BRACE BodyStatement* R_BRACE
+BuildInFnSignature ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN_FN_TABLESTART | BUILD_IN_FN_FUNC_SIG | BUILD_IN_FN_EVENT_HASH | BUILD_IN_FN_ERROR | BUILD_IN_FN_RIGHTPAD | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM)
+// #define macro/test/fn
+MacroDefinition ::= MacroDecorator? DEFINE (MACRO | TEST | FN) MacroIdentifierAndParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 // #define macro with decorator
 MacroDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
-
-// TODO: Jump label
 
 // All opcode names
 OpcodeName ::= StackManagement
@@ -212,9 +212,9 @@ GasManagement ::= GAS
 ////////////////////////
 // Solidity grammar for functions and events
 ////////////////////////
-EventDefinition ::= event  Identifier IndexedParameterList anonymous? ';'
+EventDefinition ::= event Identifier IndexedParameterList anonymous?
 
-FunctionDefinition ::= (function  Identifier? | fallback | receive )
+FunctionDefinition ::= (function Identifier? | fallback | receive )
                         ParameterList
                         ( FunctionVisibilitySpecifier | StateMutabilitySpecifier )*
                         ( returns ParameterList )?

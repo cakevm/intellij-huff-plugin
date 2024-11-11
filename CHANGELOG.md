@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [0.0.5] - 2024-11-11
+
+- Fix parsing of macro calls
+- Handling error definitions
+- Allow to define macros using `fn`
+
 ## [0.0.4] - 2024-11-11
 
 - Switch lexer and parser to JetBrains Grammar-Kit
