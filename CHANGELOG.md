@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- Create new file action
+
 ## [0.0.5] - 2024-11-11
 
 - Fix parsing of macro calls
