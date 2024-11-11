@@ -4,7 +4,9 @@
 
 ## [Unreleased]
 
-- Refactor to JetBrains Grammar-Kit
+## [0.0.4] - 2024-11-11
+
+- Switch lexer and parser to JetBrains Grammar-Kit
 - Limit autocomplete for opcode names to macro body
 - Add highlighting for labels and references
 - Add missing opcode names
