@@ -112,7 +112,7 @@
 
 HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_TAG )*
 
-Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | OpcodeName | STRING_IDENTIFIER
+Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | OpcodeName | STRING_IDENTIFIER
 
 IncludeDirective ::= INCLUDE QUOTED_STRING
 
@@ -177,7 +177,7 @@ StackManagement ::= PUSH0 |PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7
 ArithmeticAndLogic ::= ADD | SUB | MUL | DIV | SDIV | MOD | SMOD | ADDMOD | MULMOD | EXP | SIGNEXTEND
     | LT | GT | SLT | SGT | EQ | ISZERO
     | AND | OR | XOR | NOT | BYTE
-    | SHL | SHR | SAR | KECCAK256
+    | SHL | SHR | SAR | SHA3
 
 // Environmental Information Opcodes
 EnvironmentalInformation ::= ADDRESS | BALANCE | ORIGIN | CALLER | CALLVALUE

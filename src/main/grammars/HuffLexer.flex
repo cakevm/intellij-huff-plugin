@@ -205,7 +205,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "shr"                      { return SHR; }
   "shl"                      { return SHL; }
   "sar"                      { return SAR; }
-  "keccak256"                { return KECCAK256; }
+  "sha3"                     { return SHA3; } // keccak256
 
   "lt"                       { return LT; }
   "gt"                       { return GT; }
