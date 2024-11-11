@@ -13,7 +13,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiReferenceBase
 import com.intellij.psi.search.FileTypeIndex
 import com.intellij.psi.search.GlobalSearchScope
-import com.intellij.refactoring.suggested.startOffset
+import com.intellij.psi.util.startOffset
 
 class HuffIncludeReference(includeDirective: HuffIncludeDirective, private var textRange: TextRange) :
   PsiReferenceBase<HuffIncludeDirective>(includeDirective, textRange) {

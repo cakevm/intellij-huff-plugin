@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.0.7] - 2024-11-11
+
+- Fix usage of internal IntelliJ API
+
 ## [0.0.6] - 2024-11-11
 
 - Create new file action
