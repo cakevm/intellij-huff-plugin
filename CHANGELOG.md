@@ -6,6 +6,7 @@
 
 - Refactor to JetBrains Grammar-Kit
 - Limit autocomplete for opcode names to macro body
+- Add highlighting for labels and references
 
 ## [0.0.3] - 2024-11-09
 

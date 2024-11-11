@@ -8,6 +8,7 @@ import com.intellij.openapi.util.NlsContexts.AttributeDescriptor
 import java.util.function.Supplier
 
 enum class HuffColor(humanName: Supplier<@AttributeDescriptor String>, default: TextAttributesKey? = null) {
+  // token based highlighting
   COMMENT(HuffBundle.messagePointer("settings.huff.color.line_comment"), Default.LINE_COMMENT),
   BLOCK_COMMENT(HuffBundle.messagePointer("settings.huff.color.block_comment"), Default.BLOCK_COMMENT),
   STRING(HuffBundle.messagePointer("settings.huff.color.string"), Default.STRING),
@@ -16,7 +17,7 @@ enum class HuffColor(humanName: Supplier<@AttributeDescriptor String>, default: 
   DEFINE(HuffBundle.messagePointer("settings.huff.color.define"), Default.KEYWORD),
   INCLUDE(HuffBundle.messagePointer("settings.huff.color.include"), Default.CLASS_REFERENCE),
   BRACES(HuffBundle.messagePointer("settings.huff.color.braces"), Default.BRACES),
-  BUILD_IN_FN(HuffBundle.messagePointer("settings.huff.color.buildin_fn"), Default.STATIC_METHOD),
+  BUILD_IN_FN(HuffBundle.messagePointer("settings.huff.color.build_in_fn"), Default.STATIC_METHOD),
   ARITHMETIC_AND_LOGICAL(HuffBundle.messagePointer("settings.huff.color.arithmetic_and_logical"), Default.HIGHLIGHTED_REFERENCE),
   STACK_MANAGEMENT(HuffBundle.messagePointer("settings.huff.color.stack_management"), Default.HIGHLIGHTED_REFERENCE),
   ENVIRONMENTAL_INFORMATION(HuffBundle.messagePointer("settings.huff.color.environmental_information"), Default.HIGHLIGHTED_REFERENCE),
@@ -25,7 +26,12 @@ enum class HuffColor(humanName: Supplier<@AttributeDescriptor String>, default: 
   SYSTEM_AND_CALL(HuffBundle.messagePointer("settings.huff.color.system_and_call"), Default.HIGHLIGHTED_REFERENCE),
   LOGGING(HuffBundle.messagePointer("settings.huff.color.logging"), Default.HIGHLIGHTED_REFERENCE),
   MISCELLANEOUS(HuffBundle.messagePointer("settings.huff.color.miscellaneous"), Default.HIGHLIGHTED_REFERENCE),
-  GAS_AND_COST_MANAGEMENT(HuffBundle.messagePointer("settings.huff.color.gas_and_cost_management"), Default.HIGHLIGHTED_REFERENCE);
+  GAS_AND_COST_MANAGEMENT(HuffBundle.messagePointer("settings.huff.color.gas_and_cost_management"), Default.HIGHLIGHTED_REFERENCE),
+
+  // rule based highlighting
+  MACRO_CONSTANT_REFERENCE(HuffBundle.messagePointer("settings.huff.color.macro_constant_reference"), Default.TEMPLATE_LANGUAGE_COLOR),
+  MACRO_LABEL(HuffBundle.messagePointer("settings.huff.color.macro_label"), Default.KEYWORD),
+  MACRO_LABEL_REFERENCE(HuffBundle.messagePointer("settings.huff.color.macro_label_reference"), Default.TEMPLATE_LANGUAGE_COLOR);
 
   val textAttributesKey = TextAttributesKey.createTextAttributesKey("run.huff.$name", default)
   val attributesDescriptor = AttributesDescriptor(humanName, textAttributesKey)

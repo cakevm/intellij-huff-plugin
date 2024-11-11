@@ -15,6 +15,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
     return pack(tokenMapping[tokenType])
   }
 
+  // Only token from lexer
   private val tokenMapping: Map<IElementType, TextAttributesKey> =
     mapOf(
         COMMENT to HuffColor.COMMENT,

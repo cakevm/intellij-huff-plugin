@@ -18,11 +18,14 @@
         <lang.parserDefinition language="Huff"
                                implementationClass="com.github.com.cakevm.intellij_huff_plugin.language.parser.HuffParserDefinition"/>
 
+        <!-- syntax highlighting -->
         <lang.syntaxHighlighter language="Huff"
                                 implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffHighlighter"/>
+        <annotator language="Huff" implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffAnnotator"/>
+        <colorSettingsPage
+                implementation="com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColorSettingsPage"/>
 
-        <annotator language="Huff" implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.HuffAnnotator"/>
-
+        <!-- folding -->
         <lang.foldingBuilder language="Huff"
                              implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.folding.HuffMacroFoldingBuilder"/>
         <lang.foldingBuilder language="Huff"
@@ -33,12 +36,5 @@
 
         <completion.contributor language="Huff"
                                 implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.completion.HuffOpcodeNameCompletionContributor"/>
-
-        <externalAnnotator language="Huff"
-                           implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffAnnotator"/>
-
-        <colorSettingsPage
-                implementation="com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColorSettingsPage"/>
-
     </extensions>
 </idea-plugin>

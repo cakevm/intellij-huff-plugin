@@ -134,17 +134,20 @@ TableBody ::= L_BRACE HEXCODE+ R_BRACE
 TableDefinition ::= TABLE  Identifier TableBody
 
 // #define macro
-MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier ) L_PAREN ( Identifier ( COMMA Identifier )*)? R_PAREN  // [MACRO_NAME]
+MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier )
+MacroIdentifierAndParameters ::= MacroIdentifier L_PAREN ( Identifier ( COMMA Identifier )*)? R_PAREN
 MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
-BodyDefinition ::= L_BRACK  Identifier R_BRACK
+MacroConstantReference ::= L_BRACK  Identifier R_BRACK
 
-MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN (HEXCODE | STRING_LITERAL |  Identifier) R_PAREN
+MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( HEXCODE | STRING_LITERAL | Identifier )? R_PAREN
 BodyMacroParameter ::= LESS_THAN  Identifier GREATER_THAN
-BodyStatement ::= ( HEXCODE | OpcodeName | BodyDefinition | MacroIdentifier | MacroCall | BodyMacroParameter | Identifier | COLON )+
+MacroLabel ::= Identifier COLON
+MacroLabelReference ::= Identifier
+BodyStatement ::= ( HEXCODE | OpcodeName | MacroConstantReference | MacroCall | BodyMacroParameter | MacroLabel | MacroLabelReference )+
 MacroBody ::= L_BRACE (( LINE_COMMENT | BodyStatement )*)? R_BRACE
 BuildInFnSignature ::= (  BUILD_IN_FN_TABLESIZE |  BUILD_IN_FN_CODESIZE |  BUILD_IN_FN_TABLESTART |  BUILD_IN_FN_FUNC_SIG |  BUILD_IN_FN_EVENT_HASH |  BUILD_IN_FN_ERROR |  BUILD_IN_FN_RIGHTPAD |  BUILD_IN_FN_CODECOPY_DYN_ARG |  BUILD_IN_FN_VERBATIM)
-MacroDefinition ::= MacroDecorator? DEFINE (MACRO |TEST) MacroIdentifier EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
+MacroDefinition ::= MacroDecorator? DEFINE (MACRO |TEST) MacroIdentifierAndParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 // #define macro with decorator
 MacroDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
 
