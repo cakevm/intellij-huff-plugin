@@ -3,6 +3,8 @@
 [![Build](https://github.com/cakevm/intellij-huff-plugin/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/cakevm/intellij-huff-plugin/actions/workflows/build.yml)
 [![Version](https://img.shields.io/jetbrains/plugin/v/25782-huff-language.svg)](https://plugins.jetbrains.com/plugin/25782-huff-language)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/25782-huff-language.svg)](https://plugins.jetbrains.com/plugin/25782-huff-language)
+[![Telegram Chat](https://img.shields.io/badge/telegram-Intellij_Huff_Plugin-2CA5E0?style=plastic&logo=telegram)](https://t.me/intellij_huff_plugin)
+
 </div>
 
 # IntelliJ Huff Plugin
