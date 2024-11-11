@@ -13,8 +13,6 @@
   elementTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementType"
   tokenTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffTokenType"
 
-  psiImplUtilClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.impl.HuffPsiImplUtil"
-
   tokens = [
     L_PAREN='('
     R_PAREN=')'
@@ -140,7 +138,7 @@ MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK  Identifier R_BRACK
 
-MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( HEXCODE | STRING_LITERAL | Identifier )? R_PAREN
+MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( HEXCODE | STRING_LITERAL | Identifier ( COMMA (HEXCODE | STRING_LITERAL | Identifier) )*)? R_PAREN
 BodyMacroParameter ::= LESS_THAN  Identifier GREATER_THAN
 MacroLabel ::= Identifier COLON
 MacroLabelReference ::= Identifier
@@ -165,7 +163,7 @@ OpcodeName ::= StackManagement
     | GasManagement
 
 // Stack Management Opcodes
-StackManagement ::= PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH8
+StackManagement ::= PUSH0 |PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH8
     | PUSH9 | PUSH10 | PUSH11 | PUSH12 | PUSH13 | PUSH14 | PUSH15 | PUSH16
     | PUSH17 | PUSH18 | PUSH19 | PUSH20 | PUSH21 | PUSH22 | PUSH23 | PUSH24
     | PUSH25 | PUSH26 | PUSH27 | PUSH28 | PUSH29 | PUSH30 | PUSH31 | PUSH32
@@ -179,7 +177,7 @@ StackManagement ::= PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH
 ArithmeticAndLogic ::= ADD | SUB | MUL | DIV | SDIV | MOD | SMOD | ADDMOD | MULMOD | EXP | SIGNEXTEND
     | LT | GT | SLT | SGT | EQ | ISZERO
     | AND | OR | XOR | NOT | BYTE
-    | SHL | SHR | SAR
+    | SHL | SHR | SAR | KECCAK256
 
 // Environmental Information Opcodes
 EnvironmentalInformation ::= ADDRESS | BALANCE | ORIGIN | CALLER | CALLVALUE
@@ -188,10 +186,10 @@ EnvironmentalInformation ::= ADDRESS | BALANCE | ORIGIN | CALLER | CALLVALUE
     | GASPRICE
     | EXTCODESIZE | EXTCODECOPY | EXTCODEHASH
     | RETURNDATASIZE | RETURNDATACOPY
-    | BLOCKHASH | COINBASE | TIMESTAMP | NUMBER | DIFFICULTY | GASLIMIT
+    | BLOCKHASH | COINBASE | TIMESTAMP | NUMBER | DIFFICULTY | GASLIMIT | PREVRANDAO | CHAINID | BASEFEE | SELFBALANCE
 
 // Storage and Memory Access Opcodes
-StorageAndMemoryAccess ::= SLOAD | SSTORE | MLOAD | MSTORE | MSTORE8 | MSIZE
+StorageAndMemoryAccess ::= SLOAD | SSTORE | MLOAD | MSTORE | MSTORE8 | MSIZE |TLOAD | TSTORE | MCOPY
 
 // Flow Control Opcodes
 FlowControl ::= JUMP | JUMPI | PC | JUMPDEST

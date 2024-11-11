@@ -119,6 +119,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
 
   //// OP Codes
   // Stack Management
+  "push0"                    { return PUSH0; }
   "push1"                    { return PUSH1; }
   "push2"                    { return PUSH2; }
   "push3"                    { return PUSH3; }
@@ -202,6 +203,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "shr"                      { return SHR; }
   "shl"                      { return SHL; }
   "sar"                      { return SAR; }
+  "keccak256"                { return KECCAK256; }
 
   "lt"                       { return LT; }
   "gt"                       { return GT; }
@@ -238,6 +240,10 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "number"                   { return NUMBER; }
   "difficulty"               { return DIFFICULTY; }
   "gaslimit"                 { return GASLIMIT; }
+  "prevrandao"               { return PREVRANDAO; }
+  "chainid"                  { return CHAINID; }
+  "basefee"                  { return BASEFEE; }
+  "selfbalance"             { return SELFBALANCE; }
 
   // Storage and Memory Access
   "sload"                    { return SLOAD; }
@@ -246,6 +252,9 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "mstore"                   { return MSTORE; }
   "mstore8"                  { return MSTORE8; }
   "msize"                    { return MSIZE; }
+  "tload"                    { return TLOAD; }
+  "tstore"                   { return TSTORE; }
+  "mcopy"                    { return MCOPY; }
 
   // Flow Control
   "jump"                     { return JUMP; }
