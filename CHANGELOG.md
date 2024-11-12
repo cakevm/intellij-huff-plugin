@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+- Add code folding for labels
+- Structure view for macros
+- Show error for duplicate labels
+
 ## [0.0.7] - 2024-11-11
 
 - Fix usage of internal IntelliJ API

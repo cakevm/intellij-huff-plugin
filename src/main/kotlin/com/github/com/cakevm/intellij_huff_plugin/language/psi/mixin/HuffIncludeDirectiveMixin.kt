@@ -20,7 +20,11 @@ abstract class HuffIncludeDirectiveMixin(node: ASTNode) : HuffElementBase(node),
     return importedPsiFile()?.projectFilePath() ?: "Invalid import"
   }
 
-  override fun getIcon(unused: Boolean): Icon? {
+  override fun getIcon(b: Boolean): Icon? {
     return null
+  }
+
+  override fun getPresentation(): ItemPresentation? {
+    return this
   }
 }
