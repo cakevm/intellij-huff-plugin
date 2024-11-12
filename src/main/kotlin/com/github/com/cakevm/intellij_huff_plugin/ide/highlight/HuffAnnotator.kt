@@ -20,7 +20,7 @@ class HuffAnnotator : Annotator {
           .textAttributes(HuffColor.MACRO_CONSTANT_REFERENCE.textAttributesKey)
           .create()
       }
-      MACRO_LABEL -> {
+      MACRO_LABEL_IDENTIFIER -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)

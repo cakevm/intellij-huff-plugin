@@ -34,7 +34,7 @@ class HuffFileIncludeProvider : FileIncludeProvider() {
     }
 
     return PsiTreeUtil.findChildrenOfType(file, HuffIncludeDirective::class.java)
-      .mapNotNull { import -> import.importPathString()?.let { FileIncludeInfo(it) } }
+      .mapNotNull { import -> FileIncludeInfo(import.importPathString()) }
       .toTypedArray()
   }
 }

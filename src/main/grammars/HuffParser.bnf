@@ -8,6 +8,7 @@
   psiImplClassSuffix="Impl"
   psiPackage="com.github.com.cakevm.intellij_huff_plugin.language.psi"
   psiImplPackage="com.github.com.cakevm.intellij_huff_plugin.language.psi.impl"
+  implements="com.github.com.cakevm.intellij_huff_plugin.language.HuffElement"
 
   elementTypeHolderClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes"
   elementTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementType"
@@ -110,7 +111,7 @@
   extends(".*TypeName")=TypeName
 }
 
-HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_TAG )*
+HuffFile ::= ( IncludeDirective | DefineDefinition | TestDefinition | NAT_SPEC_TAG )*
 
 Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | OpcodeName | STRING_IDENTIFIER
 
@@ -122,7 +123,8 @@ IncludeDirective ::= INCLUDE QuotedString {
   mixin="com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludeDirectiveMixin"
 }
 
-DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition | TableDefinition)
+DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition
+                              | TableDefinition | MacroDefinition )
 
 // #define constant
 ConstantDefinition ::= CONSTANT Identifier EQUAL (FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier )
@@ -136,9 +138,9 @@ JumpTableDefinition ::= ( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBod
 
 // #define table
 TableBody ::= L_BRACE HEXCODE+ R_BRACE
-TableDefinition ::= TABLE Identifier TableBody
+TableDefinition ::= TABLE  Identifier TableBody
 
-// #define macro
+// #define macro  ( fn is handled as macro )
 MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier )
 MacroIdentifierAndParameters ::= MacroIdentifier L_PAREN ( Identifier ( COMMA Identifier )*)? R_PAREN
 MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
@@ -146,23 +148,35 @@ MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK  Identifier R_BRACK
 
 MacroCallParameter ::= HEXCODE | QuotedString | MacroParameterReference | Identifier
-MacroCall ::= ( BuildInFnSignature | Identifier ) L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
+MacroCallIdentifier ::= ( BuildInFnSignature | Identifier )
+MacroCall ::= MacroCallIdentifier L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
-MacroLabel ::= Identifier COLON
+MacroLabelIdentifier ::= Identifier COLON // MacroStatement*
+
 MacroLabelReference ::= Identifier
 // https://github.com/huff-language/huff-rs/blob/05d71e4f/huff_lexer/src/lib.rs#L250
 // huff parse true/false as 1/0
 HuffBoolMapping ::= BOOLEANLITERAL
-BodyStatement ::= ( HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroConstantReference | MacroCall | MacroParameterReference | MacroLabel | MacroLabelReference )+
-MacroBody ::= L_BRACE BodyStatement* R_BRACE
+private MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabelIdentifier | MacroConstantReference
+                | MacroCall | MacroParameterReference | MacroLabelReference
+MacroBody ::= L_BRACE  MacroStatement* R_BRACE
 BuildInFnSignature ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN_FN_TABLESTART
   | BUILD_IN_FN_FUNC_SIG | BUILD_IN_FN_EVENT_HASH | BUILD_IN_FN_ERROR | BUILD_IN_FN_RIGHTPAD
   | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM )
-// #define macro/test/fn
-MacroDefinition ::= MacroDecorator? DEFINE (MACRO | TEST | FN) MacroIdentifierAndParameters
+// #define macro/fn
+MacroType ::= MACRO | FN
+MacroDefinition ::= MacroType MacroIdentifierAndParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
+{
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroDefinitionElement"
+  mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroDefinitionMixin"
+  stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffMacroDefinitionStub"
+  elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
+}
+
+TestDefinition ::= TestDecorator? DEFINE TEST MacroIdentifierAndParameters
                       EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
-// #define macro with decorator
-MacroDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
+// only tests can have a decorator
+TestDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
 
 // All opcode names
 OpcodeName ::= StackManagement | ArithmeticAndLogic | EnvironmentalInformation | StorageAndMemoryAccess
@@ -173,17 +187,14 @@ StackManagement ::= PUSH0 |PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7
     | PUSH9 | PUSH10 | PUSH11 | PUSH12 | PUSH13 | PUSH14 | PUSH15 | PUSH16
     | PUSH17 | PUSH18 | PUSH19 | PUSH20 | PUSH21 | PUSH22 | PUSH23 | PUSH24
     | PUSH25 | PUSH26 | PUSH27 | PUSH28 | PUSH29 | PUSH30 | PUSH31 | PUSH32
-    | POP
-    | DUP1 | DUP2 | DUP3 | DUP4 | DUP5 | DUP6 | DUP7 | DUP8
+    | POP | DUP1 | DUP2 | DUP3 | DUP4 | DUP5 | DUP6 | DUP7 | DUP8
     | DUP9 | DUP10 | DUP11 | DUP12 | DUP13 | DUP14 | DUP15 | DUP16
     | SWAP1 | SWAP2 | SWAP3 | SWAP4 | SWAP5 | SWAP6 | SWAP7 | SWAP8
     | SWAP9 | SWAP10 | SWAP11 | SWAP12 | SWAP13 | SWAP14 | SWAP15 | SWAP16
 
 // Arithmetic and Logic Opcodes
 ArithmeticAndLogic ::= ADD | SUB | MUL | DIV | SDIV | MOD | SMOD | ADDMOD | MULMOD | EXP | SIGNEXTEND
-    | LT | GT | SLT | SGT | EQ | ISZERO
-    | AND | OR | XOR | NOT | BYTE
-    | SHL | SHR | SAR | SHA3
+    | LT | GT | SLT | SGT | EQ | ISZERO | AND | OR | XOR | NOT | BYTE | SHL | SHR | SAR | SHA3
 
 // Environmental Information Opcodes
 EnvironmentalInformation ::= ADDRESS | BALANCE | ORIGIN | CALLER | CALLVALUE
@@ -199,9 +210,7 @@ StorageAndMemoryAccess ::= SLOAD | SSTORE | MLOAD | MSTORE | MSTORE8 | MSIZE |TL
 FlowControl ::= JUMP | JUMPI | PC | JUMPDEST
 
 // System and Call-Related Opcodes
-SystemAndCall ::= CALL | CALLCODE | DELEGATECALL | STATICCALL
-    | CREATE | CREATE2
-    | SELFDESTRUCT
+SystemAndCall ::= CALL | CALLCODE | DELEGATECALL | STATICCALL | CREATE | CREATE2 | SELFDESTRUCT
 
 // Logging Opcodes
 Logging ::= LOG0 | LOG1 | LOG2 | LOG3 | LOG4
@@ -223,9 +232,8 @@ FunctionDefinition ::= (function Identifier? | fallback | receive )
                         ( FunctionVisibilitySpecifier | StateMutabilitySpecifier )*
                         ( returns ParameterList )?
 
-
-VirtualSpecifier ::= virtual {pin=1}
-OverrideSpecifier ::= override ( '(' UserDefinedTypeName (',' UserDefinedTypeName)* ')' )? {pin=1}
+VirtualSpecifier ::= virtual { pin=1 }
+OverrideSpecifier ::= override ( '(' UserDefinedTypeName (',' UserDefinedTypeName)* ')' )? { pin=1 }
 
 UserDefinedTypeName ::= Identifier ( '.' Identifier )*
 
