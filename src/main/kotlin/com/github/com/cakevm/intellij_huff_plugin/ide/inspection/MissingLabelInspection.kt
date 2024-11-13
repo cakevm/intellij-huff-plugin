@@ -1,8 +1,8 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.inspection
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroBody
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroLabelCall
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroLabelIdentifier
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroLabelReference
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
@@ -18,7 +18,7 @@ class MissingLabelInspection : LocalInspectionTool() {
             PsiTreeUtil.findChildrenOfType(element, HuffMacroLabelIdentifier::class.java).associate {
               it.identifier.stringIdentifier?.text to true
             }
-          val labelReferences = PsiTreeUtil.findChildrenOfType(element, HuffMacroLabelReference::class.java)
+          val labelReferences = PsiTreeUtil.findChildrenOfType(element, HuffMacroLabelCall::class.java)
           for (label in labelReferences) {
             if (!labels.containsKey(label.identifier.text)) {
               holder.registerProblem(label, "Label not found")

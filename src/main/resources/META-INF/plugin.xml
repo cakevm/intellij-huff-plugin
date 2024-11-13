@@ -58,6 +58,7 @@
 
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroIndex"/>
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroLabelIndex"/>
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffIncludeIndex"/>
     </extensions>
 

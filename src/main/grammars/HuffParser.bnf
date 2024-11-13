@@ -158,12 +158,16 @@ MacroCall ::= MacroCallIdentifier L_PAREN ( MacroCallParameter ( COMMA MacroCall
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
 MacroLabelIdentifier ::= Identifier COLON // MacroStatement*
 
-MacroLabelReference ::= Identifier
+MacroLabelCall ::= Identifier
+{
+    implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroLabelCallElement"
+    mixin = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroLabelCallMixin"
+}
 // https://github.com/huff-language/huff-rs/blob/05d71e4f/huff_lexer/src/lib.rs#L250
 // huff parse true/false as 1/0
 HuffBoolMapping ::= BOOLEANLITERAL
 private MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabelIdentifier | MacroConstantReference
-                | MacroCall | MacroParameterReference | MacroLabelReference
+                | MacroCall | MacroParameterReference | MacroLabelCall
 MacroBody ::= L_BRACE  MacroStatement* R_BRACE
 BuildInFnSignature ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN_FN_TABLESTART
   | BUILD_IN_FN_FUNC_SIG | BUILD_IN_FN_EVENT_HASH | BUILD_IN_FN_ERROR | BUILD_IN_FN_RIGHTPAD

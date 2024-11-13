@@ -27,11 +27,11 @@ class HuffAnnotator : Annotator {
           .textAttributes(HuffColor.MACRO_LABEL.textAttributesKey)
           .create()
       }
-      MACRO_LABEL_REFERENCE -> {
+      MACRO_LABEL_CALL -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
-          .textAttributes(HuffColor.MACRO_LABEL_REFERENCE.textAttributesKey)
+          .textAttributes(HuffColor.MACRO_LABEL_CALL.textAttributesKey)
           .create()
       }
       // Remove highlighting of lexer tokens for identifiers / parameters
