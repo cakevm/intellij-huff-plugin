@@ -37,8 +37,6 @@
         <completion.contributor language="Huff"
                                 implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.completion.HuffOpcodeNameCompletionContributor"/>
 
-        <include.provider implementation="com.github.com.cakevm.intellij_huff_plugin.language.index.HuffFileIncludeProvider"/>
-
         <lang.psiStructureViewFactory language="Huff"
                                       implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.structure.HuffStructureViewFactory"/>
 
@@ -52,6 +50,11 @@
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.MissingLabelInspection"/>
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Cannot resolve name"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.ResolveNameInspection"/>
 
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroIndex"/>
