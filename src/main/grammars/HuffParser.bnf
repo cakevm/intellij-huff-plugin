@@ -92,7 +92,7 @@
     COMMENT='regexp:(//.*)|(/\\*(?:.|[\\n\\r])*?\\*/)'
     NAT_SPEC_TAG='regexp:@[a-zA-Z_0-9:]*'
 
-    QUOTED_STRING_REGEX='regexp:("([^"\r\n\\]|\\.)*")|unicode("([^"])*")'
+    QUOTED_STRING='regexp:("([^"\r\n\\]|\\.)*")|unicode("([^"])*")'
     DECIMAL='regexp:[0-9]+'
     HEXCODE='regexp:0x[0-9a-fA-F]+'
 
@@ -115,13 +115,14 @@ HuffFile ::= ( IncludeDirective | DefineDefinition | TestDefinition | NAT_SPEC_T
 
 Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | OpcodeName | STRING_IDENTIFIER
 
-QuotedString ::= QUOTED_STRING_REGEX {
-    mixin="com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffQuotedStringMixin"
+IncludePath ::= QUOTED_STRING {
+    implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
+    mixin = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludePathMixin"
+    stubClass = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffIncludePathStub"
+    elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
 }
 
-IncludeDirective ::= INCLUDE QuotedString {
-  mixin="com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludeDirectiveMixin"
-}
+IncludeDirective ::= INCLUDE IncludePath
 
 DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition
                               | TableDefinition | MacroDefinition )
@@ -147,9 +148,13 @@ MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK  Identifier R_BRACK
 
-MacroCallParameter ::= HEXCODE | QuotedString | MacroParameterReference | Identifier
+MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | Identifier
 MacroCallIdentifier ::= ( BuildInFnSignature | Identifier )
 MacroCall ::= MacroCallIdentifier L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
+{
+    implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroCallElement"
+    mixin = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroCallMixin"
+}
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
 MacroLabelIdentifier ::= Identifier COLON // MacroStatement*
 

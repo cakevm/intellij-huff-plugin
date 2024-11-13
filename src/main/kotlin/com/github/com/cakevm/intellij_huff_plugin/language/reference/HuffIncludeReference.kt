@@ -25,7 +25,7 @@ class HuffIncludeReference(includeDirective: HuffIncludeDirective, private var t
   override fun getAbsoluteRange(): TextRange = textRange
 
   override fun getRangeInElement(): TextRange {
-    return element.quotedString.textRange.shiftLeft(element.startOffset - 1)
+    return element.includePath.textRange.shiftLeft(element.startOffset - 1)
   }
 
   override fun getVariants(): Array<LookupElementBuilder> {

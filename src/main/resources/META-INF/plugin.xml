@@ -47,9 +47,15 @@
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.DuplicateLabelInspection"/>
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Missing label"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.MissingLabelInspection"/>
 
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroIndex"/>
-
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffIncludeIndex"/>
     </extensions>
 
     <actions>
