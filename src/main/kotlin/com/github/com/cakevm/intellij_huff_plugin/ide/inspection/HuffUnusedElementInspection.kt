@@ -11,7 +11,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.search.searches.ReferencesSearch
 
-class UnusedElementInspection : LocalInspectionTool() {
+class HuffUnusedElementInspection : LocalInspectionTool() {
   override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
     return object : HuffVisitor() {
       override fun visitIncludeDirective(o: HuffIncludeDirective) {

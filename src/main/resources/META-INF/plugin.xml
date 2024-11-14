@@ -44,19 +44,19 @@
                          displayName="Duplicate label"
                          enabledByDefault="true"
                          level="ERROR"
-                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.DuplicateLabelInspection"/>
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffDuplicateLabelInspection"/>
 
         <localInspection language="Huff" groupName="Huff"
                          displayName="Name can not be resolved"
                          enabledByDefault="true"
                          level="WARNING"
-                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.ResolveHuffNameInspection"/>
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffResolveNameInspection"/>
 
         <localInspection language="Huff" groupName="Huff"
                          displayName="Element is never used"
                          enabledByDefault="true"
                          level="WEAK WARNING"
-                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.UnusedElementInspection"/>
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffUnusedElementInspection"/>
 
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffConstantDefinitionIndex"/>
