@@ -10,6 +10,7 @@
 - Structure view for macros
 - Show error for duplicate labels
 - Follow references for constants, macros and labels
+  - Currently, multiple definitions of the same name are not interpreted correctly
 - Show unused elements
 
 ## [0.0.7] - 2024-11-11
