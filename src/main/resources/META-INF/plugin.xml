@@ -45,19 +45,18 @@
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.DuplicateLabelInspection"/>
-        <!--
-        TODO: label can be defined in caller
+
         <localInspection language="Huff" groupName="Huff"
-                         displayName="Missing label"
+                         displayName="Name can not be resolved"
                          enabledByDefault="true"
-                         level="ERROR"
-                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.MissingLabelInspection"/>
-                         -->
-        <localInspection language="Huff" groupName="Huff"
-                         displayName="Cannot resolve name"
-                         enabledByDefault="true"
-                         level="ERROR"
+                         level="WARNING"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.ResolveNameInspection"/>
+
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Element is never used"
+                         enabledByDefault="true"
+                         level="WEAK WARNING"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.UnusedElementInspection"/>
 
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
         <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffConstantDefinitionIndex"/>

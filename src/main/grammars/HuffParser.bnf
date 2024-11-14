@@ -128,8 +128,9 @@ DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDef
                               | TableDefinition | MacroDefinition )
 
 // #define constant
-ConstantDefinition ::= CONSTANT Identifier EQUAL (FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier ) {
-  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
+ConstantDefinitionIdentifier ::= Identifier
+ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL (FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier ) {
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffConstantDefinitionElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffConstantDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffConstantDefinitionStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"

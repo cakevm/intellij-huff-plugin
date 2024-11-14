@@ -13,11 +13,19 @@ class HuffAnnotator : Annotator {
   override fun annotate(psiElement: PsiElement, holder: AnnotationHolder) {
 
     when (psiElement.elementType) {
+      CONSTANT_DEFINITION_IDENTIFIER -> {
+        holder
+          .newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(psiElement.textRange)
+          .textAttributes(HuffColor.CONSTANT.textAttributesKey)
+          .create()
+      }
+
       MACRO_CONSTANT_REFERENCE -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
-          .textAttributes(HuffColor.MACRO_CONSTANT_REFERENCE.textAttributesKey)
+          .textAttributes(HuffColor.CONSTANT.textAttributesKey)
           .create()
       }
       MACRO_LABEL -> {

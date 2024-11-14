@@ -7,6 +7,8 @@
 - Add code folding for labels
 - Structure view for macros
 - Show error for duplicate labels
+- Follow references for constants, macros and labels
+- Show unused elements
 
 ## [0.0.7] - 2024-11-11
 
