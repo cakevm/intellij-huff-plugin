@@ -21,9 +21,10 @@
         <!-- syntax highlighting -->
         <lang.syntaxHighlighter language="Huff"
                                 implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffHighlighter"/>
-        <annotator language="Huff" implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffAnnotator"/>
+        <annotator language="Huff"
+                   implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.highlight.HuffAnnotator"/>
         <colorSettingsPage
-                implementation="com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColorSettingsPage"/>
+                   implementation="com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColorSettingsPage"/>
 
         <!-- folding -->
         <lang.foldingBuilder language="Huff"
@@ -40,6 +41,8 @@
         <lang.psiStructureViewFactory language="Huff"
                                       implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.structure.HuffStructureViewFactory"/>
 
+        <lang.documentationProvider language="Huff"
+                                    implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.documentation.HuffDocumentationProvider"/>
         <localInspection language="Huff" groupName="Huff"
                          displayName="Duplicate label"
                          enabledByDefault="true"
@@ -58,16 +61,21 @@
                          level="WEAK WARNING"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffUnusedElementInspection"/>
 
-        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
-        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffConstantDefinitionIndex"/>
-        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroDefinitionIndex"/>
-        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroLabelIndex"/>
-        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffIncludeIndex"/>
+        <stubIndex
+                implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
+        <stubIndex
+                implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffConstantDefinitionIndex"/>
+        <stubIndex
+                implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroDefinitionIndex"/>
+        <stubIndex
+                implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroLabelIndex"/>
+        <stubIndex
+                implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffIncludeIndex"/>
     </extensions>
 
     <actions>
         <action id="NewHuffFile" class="com.github.com.cakevm.intellij_huff_plugin.ide.action.CreateNewHuffFileAction">
-            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile" />
+            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>
         </action>
     </actions>
 </idea-plugin>

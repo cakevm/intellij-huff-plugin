@@ -7,7 +7,6 @@ import com.intellij.psi.PsiFile
 
 class HuffStructureViewFactory : PsiStructureViewFactory {
   override fun getStructureViewBuilder(psiFile: PsiFile): StructureViewBuilder {
-    println(psiFile::class.java)
     return object : TreeBasedStructureViewBuilder() {
       // override fun isRootNodeShown() = false
 

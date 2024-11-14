@@ -4,7 +4,13 @@
 
 ## [Unreleased]
 
-## [0.0.9] - 2024-11-12
+- tbd 
+
+## [0.0.11] - 2024-11-12
+
+- Display instructions documentation on hover
+
+## [0.0.10] - 2024-11-12
 
 - Fix all inspection name conflicts by prefixing with `Huff`
 

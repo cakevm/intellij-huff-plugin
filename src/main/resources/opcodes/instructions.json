@@ -1,0 +1,1642 @@
+{
+  "add": {
+    "description": "Addition operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 3,
+    "instrOpcode": 1,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "add"
+  },
+  "addmod": {
+    "description": "Modulo addition operation",
+    "instrArgs": [
+      "a",
+      "b",
+      "mod"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 8,
+    "instrOpcode": 8,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "addmod"
+  },
+  "address": {
+    "description": "Get address of currently executing account.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 48,
+    "instrReturns": [
+      "this.address"
+    ],
+    "name": "address"
+  },
+  "and": {
+    "description": "Bitwise AND operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 22,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "and"
+  },
+  "balance": {
+    "description": "Get balance of the given account.",
+    "instrArgs": [
+      "address"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 20,
+    "instrOpcode": 49,
+    "instrReturns": [
+      "this.balance"
+    ],
+    "name": "balance"
+  },
+  "basefee": {
+    "description": "Get the value of the base fee of the current block.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 72,
+    "instrReturns": [
+      "block.basefee"
+    ],
+    "name": "basefee"
+  },
+  "blockhash": {
+    "description": "Get the hash of one of the 256 most recent complete blocks.",
+    "instrArgs": [
+      "num"
+    ],
+    "instrCategory": "blockinfo",
+    "instrGas": 20,
+    "instrOpcode": 64,
+    "instrReturns": [
+      "block.blockhash"
+    ],
+    "name": "blockhash"
+  },
+  "byte": {
+    "description": "Retrieve single byte from word",
+    "instrArgs": [
+      "th",
+      "value"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 26,
+    "instrReturns": [
+      "byte"
+    ],
+    "name": "byte"
+  },
+  "call": {
+    "description": "Message-call into an account.",
+    "instrArgs": [
+      "gas",
+      "address",
+      "value",
+      "inOffset",
+      "inSize",
+      "retOffset",
+      "retSize"
+    ],
+    "instrCategory": "system",
+    "instrGas": 40,
+    "instrOpcode": 241,
+    "instrReturns": [],
+    "name": "call"
+  },
+  "callcode": {
+    "description": "Message-call into this account with alternative account's code.",
+    "instrArgs": [
+      "gas",
+      "address",
+      "value",
+      "inOffset",
+      "inSize",
+      "retOffset",
+      "retSize"
+    ],
+    "instrCategory": "system",
+    "instrGas": 40,
+    "instrOpcode": 242,
+    "instrReturns": [],
+    "name": "callcode"
+  },
+  "calldatacopy": {
+    "description": "Copy input data in current environment to memory. This pertains to the input data passed with the message call instruction or transaction.",
+    "instrArgs": [
+      "memOffset",
+      "dataOffset",
+      "length"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 3,
+    "instrOpcode": 55,
+    "instrReturns": [],
+    "name": "calldatacopy"
+  },
+  "calldataload": {
+    "description": "Get input data of current environment.",
+    "instrArgs": [
+      "dataOffset"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 3,
+    "instrOpcode": 53,
+    "instrReturns": [
+      "msg.data"
+    ],
+    "name": "calldataload"
+  },
+  "calldatasize": {
+    "description": "Get size of input data in current environment.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 54,
+    "instrReturns": [
+      "msg.data.length"
+    ],
+    "name": "calldatasize"
+  },
+  "caller": {
+    "description": "Get caller address.This is the address of the account that is directly responsible for this execution.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 51,
+    "instrReturns": [
+      "msg.sender"
+    ],
+    "name": "caller"
+  },
+  "callvalue": {
+    "description": "Get deposited value by the instruction/transaction responsible for this execution.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 52,
+    "instrReturns": [
+      "msg.value"
+    ],
+    "name": "callvalue"
+  },
+  "chainid": {
+    "description": "Get the chain id.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 70,
+    "instrReturns": [
+      "chain_id"
+    ],
+    "name": "chainid"
+  },
+  "codecopy": {
+    "description": "Copy code running in current environment to memory.",
+    "instrArgs": [
+      "memOffset",
+      "codeOffset",
+      "length"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 3,
+    "instrOpcode": 57,
+    "instrReturns": [],
+    "name": "codecopy"
+  },
+  "codesize": {
+    "description": "Get size of code running in current environment.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 56,
+    "instrReturns": [
+      "codesize"
+    ],
+    "name": "codesize"
+  },
+  "coinbase": {
+    "description": "Get the block's beneficiary address.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 65,
+    "instrReturns": [
+      "block.coinbase"
+    ],
+    "name": "coinbase"
+  },
+  "create": {
+    "description": "Create a new account with associated code.",
+    "instrArgs": [
+      "value",
+      "offset",
+      "size"
+    ],
+    "instrCategory": "system",
+    "instrGas": 32000,
+    "instrOpcode": 240,
+    "instrReturns": [],
+    "name": "create"
+  },
+  "create2": {
+    "description": "Create a new account with associated code. (Constantinople)",
+    "instrArgs": [
+      "endowment",
+      "offset",
+      "size",
+      "salt"
+    ],
+    "instrCategory": "system",
+    "instrGas": 32000,
+    "instrOpcode": 245,
+    "instrReturns": [],
+    "name": "create2"
+  },
+  "delegatecall": {
+    "description": "Similar to CALLCODE except that it propagates the sender and value from the parent scope to the child scope",
+    "instrArgs": [
+      "gas",
+      "address",
+      "inOffset",
+      "inSize",
+      "retOffset",
+      "retSize"
+    ],
+    "instrCategory": "system",
+    "instrGas": 40,
+    "instrOpcode": 244,
+    "instrReturns": [],
+    "name": "delegatecall"
+  },
+  "difficulty": {
+    "description": "Get the block's difficulty.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 68,
+    "instrReturns": [
+      "block.difficulty"
+    ],
+    "name": "difficulty"
+  },
+  "div": {
+    "description": "Integer division operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 5,
+    "instrOpcode": 4,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "div"
+  },
+  "dup1": {
+    "description": "Duplicate 1st stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 128,
+    "instrReturns": [],
+    "name": "dup1"
+  },
+  "dup10": {
+    "description": "Duplicate 10th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 137,
+    "instrReturns": [],
+    "name": "dup10"
+  },
+  "dup11": {
+    "description": "Duplicate 11th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 138,
+    "instrReturns": [],
+    "name": "dup11"
+  },
+  "dup12": {
+    "description": "Duplicate 12th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 139,
+    "instrReturns": [],
+    "name": "dup12"
+  },
+  "dup13": {
+    "description": "Duplicate 13th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 140,
+    "instrReturns": [],
+    "name": "dup13"
+  },
+  "dup14": {
+    "description": "Duplicate 14th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 141,
+    "instrReturns": [],
+    "name": "dup14"
+  },
+  "dup15": {
+    "description": "Duplicate 15th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 142,
+    "instrReturns": [],
+    "name": "dup15"
+  },
+  "dup16": {
+    "description": "Duplicate 16th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 143,
+    "instrReturns": [],
+    "name": "dup16"
+  },
+  "dup2": {
+    "description": "Duplicate 2nd stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 129,
+    "instrReturns": [],
+    "name": "dup2"
+  },
+  "dup3": {
+    "description": "Duplicate 3rd stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 130,
+    "instrReturns": [],
+    "name": "dup3"
+  },
+  "dup4": {
+    "description": "Duplicate 4th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 131,
+    "instrReturns": [],
+    "name": "dup4"
+  },
+  "dup5": {
+    "description": "Duplicate 5th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 132,
+    "instrReturns": [],
+    "name": "dup5"
+  },
+  "dup6": {
+    "description": "Duplicate 6th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 133,
+    "instrReturns": [],
+    "name": "dup6"
+  },
+  "dup7": {
+    "description": "Duplicate 7th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 134,
+    "instrReturns": [],
+    "name": "dup7"
+  },
+  "dup8": {
+    "description": "Duplicate 8th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 135,
+    "instrReturns": [],
+    "name": "dup8"
+  },
+  "dup9": {
+    "description": "Duplicate 9th stack item.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 136,
+    "instrReturns": [],
+    "name": "dup9"
+  },
+  "eq": {
+    "description": "Equality  comparison",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "comparison",
+    "instrGas": 3,
+    "instrOpcode": 20,
+    "instrReturns": [
+      "flag"
+    ],
+    "name": "eq"
+  },
+  "exp": {
+    "description": "Exponential operation.",
+    "instrArgs": [
+      "base",
+      "exponent"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 10,
+    "instrOpcode": 10,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "exp"
+  },
+  "extcodecopy": {
+    "description": "Copy an account's code to memory.",
+    "instrArgs": [
+      "address",
+      "memOffset",
+      "codeOffset",
+      "length"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 20,
+    "instrOpcode": 60,
+    "instrReturns": [],
+    "name": "extcodecopy"
+  },
+  "extcodehash": {
+    "description": "<TBD> - Constantinople",
+    "instrArgs": [
+      "address"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 400,
+    "instrOpcode": 63,
+    "instrReturns": [],
+    "name": "extcodehash"
+  },
+  "extcodesize": {
+    "description": "Get size of an account's code.",
+    "instrArgs": [
+      "address"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 20,
+    "instrOpcode": 59,
+    "instrReturns": [
+      "extcodesize"
+    ],
+    "name": "extcodesize"
+  },
+  "gas": {
+    "description": "Get the amount of available gas, including the corresponding reduction",
+    "instrArgs": [],
+    "instrCategory": "info",
+    "instrGas": 2,
+    "instrOpcode": 90,
+    "instrReturns": [
+      "gasleft"
+    ],
+    "name": "gas"
+  },
+  "gaslimit": {
+    "description": "Get the block's gas limit.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 69,
+    "instrReturns": [
+      "block.gaslimit"
+    ],
+    "name": "gaslimit"
+  },
+  "gasprice": {
+    "description": "Get price of gas in current environment.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 58,
+    "instrReturns": [
+      "tx.gasprice"
+    ],
+    "name": "gasprice"
+  },
+  "gt": {
+    "description": "Greater-than comparison",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "comparison",
+    "instrGas": 3,
+    "instrOpcode": 17,
+    "instrReturns": [
+      "flag"
+    ],
+    "name": "gt"
+  },
+  "iszero": {
+    "description": "Simple not operator",
+    "instrArgs": [
+      "a"
+    ],
+    "instrCategory": "comparison",
+    "instrGas": 3,
+    "instrOpcode": 21,
+    "instrReturns": [
+      "flag"
+    ],
+    "name": "iszero"
+  },
+  "jump": {
+    "description": "Alter the program counter.",
+    "instrArgs": [
+      "evm.pc"
+    ],
+    "instrCategory": "controlflow",
+    "instrGas": 8,
+    "instrOpcode": 86,
+    "instrReturns": [],
+    "name": "jump"
+  },
+  "jumpdest": {
+    "description": "Mark a valid destination for jumps.",
+    "instrArgs": [],
+    "instrCategory": "label",
+    "instrGas": 1,
+    "instrOpcode": 91,
+    "instrReturns": [],
+    "name": "jumpdest"
+  },
+  "jumpi": {
+    "description": "Conditionally alter the program counter.",
+    "instrArgs": [
+      "evm.pc",
+      "condition"
+    ],
+    "instrCategory": "controlflow",
+    "instrGas": 10,
+    "instrOpcode": 87,
+    "instrReturns": [],
+    "name": "jumpi"
+  },
+  "log0": {
+    "description": "Append log record with no topics.",
+    "instrArgs": [
+      "start",
+      "size"
+    ],
+    "instrCategory": "event",
+    "instrGas": 375,
+    "instrOpcode": 160,
+    "instrReturns": [],
+    "name": "log0"
+  },
+  "log1": {
+    "description": "Append log record with one topic.",
+    "instrArgs": [
+      "start",
+      "size",
+      "topic1"
+    ],
+    "instrCategory": "event",
+    "instrGas": 750,
+    "instrOpcode": 161,
+    "instrReturns": [],
+    "name": "log1"
+  },
+  "log2": {
+    "description": "Append log record with two topics.",
+    "instrArgs": [
+      "start",
+      "size",
+      "topic1",
+      "topic2"
+    ],
+    "instrCategory": "event",
+    "instrGas": 1125,
+    "instrOpcode": 162,
+    "instrReturns": [],
+    "name": "log2"
+  },
+  "log3": {
+    "description": "Append log record with three topics.",
+    "instrArgs": [
+      "start",
+      "size",
+      "topic1",
+      "topic2",
+      "topic3"
+    ],
+    "instrCategory": "event",
+    "instrGas": 1500,
+    "instrOpcode": 163,
+    "instrReturns": [],
+    "name": "log3"
+  },
+  "log4": {
+    "description": "Append log record with four topics.",
+    "instrArgs": [
+      "start",
+      "size",
+      "topic1",
+      "topic2",
+      "topic3",
+      "topic4"
+    ],
+    "instrCategory": "event",
+    "instrGas": 1875,
+    "instrOpcode": 164,
+    "instrReturns": [],
+    "name": "log4"
+  },
+  "lt": {
+    "description": "Lesser-than comparison",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "comparison",
+    "instrGas": 3,
+    "instrOpcode": 16,
+    "instrReturns": [
+      "flag"
+    ],
+    "name": "lt"
+  },
+  "mload": {
+    "description": "Load word from memory.",
+    "instrArgs": [
+      "offset"
+    ],
+    "instrCategory": "memory",
+    "instrGas": 3,
+    "instrOpcode": 81,
+    "instrReturns": [],
+    "name": "mload"
+  },
+  "mod": {
+    "description": "Modulo",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 5,
+    "instrOpcode": 6,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "mod"
+  },
+  "msize": {
+    "description": "Get the size of active memory in bytes.",
+    "instrArgs": [],
+    "instrCategory": "memory",
+    "instrGas": 2,
+    "instrOpcode": 89,
+    "instrReturns": [
+      "memory.length"
+    ],
+    "name": "msize"
+  },
+  "mstore": {
+    "description": "Save word to memory.",
+    "instrArgs": [
+      "offset",
+      "value"
+    ],
+    "instrCategory": "memory",
+    "instrGas": 3,
+    "instrOpcode": 82,
+    "instrReturns": [],
+    "name": "mstore"
+  },
+  "mstore8": {
+    "description": "Save byte to memory.",
+    "instrArgs": [
+      "offset",
+      "value"
+    ],
+    "instrCategory": "memory",
+    "instrGas": 3,
+    "instrOpcode": 83,
+    "instrReturns": [],
+    "name": "mstore8"
+  },
+  "mul": {
+    "description": "Multiplication operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 5,
+    "instrOpcode": 2,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "mul"
+  },
+  "mulmod": {
+    "description": "Modulo multiplication operation",
+    "instrArgs": [
+      "a",
+      "b",
+      "mod"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 8,
+    "instrOpcode": 9,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "mulmod"
+  },
+  "not": {
+    "description": "Bitwise NOT operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 25,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "not"
+  },
+  "number": {
+    "description": "Get the block's number.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 67,
+    "instrReturns": [
+      "block.number"
+    ],
+    "name": "number"
+  },
+  "or": {
+    "description": "Bitwise OR operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 23,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "or"
+  },
+  "origin": {
+    "description": "Get execution origination address.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 50,
+    "instrReturns": [
+      "tx.origin"
+    ],
+    "name": "origin"
+  },
+  "pc": {
+    "description": "Get the value of the program counter prior to the increment.",
+    "instrArgs": [],
+    "instrCategory": "info",
+    "instrGas": 2,
+    "instrOpcode": 88,
+    "instrReturns": [
+      "evm.pc"
+    ],
+    "name": "pc"
+  },
+  "pop": {
+    "description": "Remove item from stack.",
+    "instrArgs": [
+      "#dummy"
+    ],
+    "instrCategory": "stack",
+    "instrGas": 2,
+    "instrOpcode": 80,
+    "instrReturns": [],
+    "name": "pop"
+  },
+  "push1": {
+    "description": "Place 1 byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 96,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push1"
+  },
+  "push10": {
+    "description": "Place 10-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 105,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push10"
+  },
+  "push11": {
+    "description": "Place 11-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 106,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push11"
+  },
+  "push12": {
+    "description": "Place 12-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 107,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push12"
+  },
+  "push13": {
+    "description": "Place 13-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 108,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push13"
+  },
+  "push14": {
+    "description": "Place 14-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 109,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push14"
+  },
+  "push15": {
+    "description": "Place 15-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 110,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push15"
+  },
+  "push16": {
+    "description": "Place 16-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 111,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push16"
+  },
+  "push17": {
+    "description": "Place 17-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 112,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push17"
+  },
+  "push18": {
+    "description": "Place 18-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 113,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push18"
+  },
+  "push19": {
+    "description": "Place 19-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 114,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push19"
+  },
+  "push2": {
+    "description": "Place 2-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 97,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push2"
+  },
+  "push20": {
+    "description": "Place 20-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 115,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push20"
+  },
+  "push21": {
+    "description": "Place 21-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 116,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push21"
+  },
+  "push22": {
+    "description": "Place 22-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 117,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push22"
+  },
+  "push23": {
+    "description": "Place 23-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 118,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push23"
+  },
+  "push24": {
+    "description": "Place 24-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 119,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push24"
+  },
+  "push25": {
+    "description": "Place 25-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 120,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push25"
+  },
+  "push26": {
+    "description": "Place 26-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 121,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push26"
+  },
+  "push27": {
+    "description": "Place 27-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 122,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push27"
+  },
+  "push28": {
+    "description": "Place 28-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 123,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push28"
+  },
+  "push29": {
+    "description": "Place 29-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 124,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push29"
+  },
+  "push3": {
+    "description": "Place 3-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 98,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push3"
+  },
+  "push30": {
+    "description": "Place 30-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 125,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push30"
+  },
+  "push31": {
+    "description": "Place 31-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 126,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push31"
+  },
+  "push32": {
+    "description": "Place 32-byte (full word) item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 127,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push32"
+  },
+  "push4": {
+    "description": "Place 4-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 99,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push4"
+  },
+  "push5": {
+    "description": "Place 5-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 100,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push5"
+  },
+  "push6": {
+    "description": "Place 6-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 101,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push6"
+  },
+  "push7": {
+    "description": "Place 7-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 102,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push7"
+  },
+  "push8": {
+    "description": "Place 8-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 103,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push8"
+  },
+  "push9": {
+    "description": "Place 9-byte item on stack.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 104,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "push9"
+  },
+  "return": {
+    "description": "Halt execution returning output data.",
+    "instrArgs": [
+      "offset",
+      "size"
+    ],
+    "instrCategory": "terminate",
+    "instrGas": 0,
+    "instrOpcode": 243,
+    "instrReturns": [],
+    "name": "return"
+  },
+  "returndatacopy": {
+    "description": "Copy data from the return data buffer.",
+    "instrArgs": [
+      "memOffset",
+      "dataOffset",
+      "length"
+    ],
+    "instrCategory": "envinfo",
+    "instrGas": 3,
+    "instrOpcode": 62,
+    "instrReturns": [],
+    "name": "returndatacopy"
+  },
+  "returndatasize": {
+    "description": "Push the size of the return data buffer onto the stack.",
+    "instrArgs": [],
+    "instrCategory": "envinfo",
+    "instrGas": 2,
+    "instrOpcode": 61,
+    "instrReturns": [
+      "returndatasize"
+    ],
+    "name": "returndatasize"
+  },
+  "revert": {
+    "description": "throw an error",
+    "instrArgs": [
+      "offset",
+      "size"
+    ],
+    "instrCategory": "terminate",
+    "instrGas": 0,
+    "instrOpcode": 253,
+    "instrReturns": [],
+    "name": "revert"
+  },
+  "sar": {
+    "description": "<TBD> Shift arithmetic right",
+    "instrArgs": [
+      "shift",
+      "value"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 29,
+    "instrReturns": [
+      "flag"
+    ],
+    "name": "sar"
+  },
+  "sdiv": {
+    "description": "Signed integer",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 5,
+    "instrOpcode": 5,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "sdiv"
+  },
+  "selfbalance": {
+    "description": "Get own balance.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 5,
+    "instrOpcode": 71,
+    "instrReturns": [
+      "address(this).balance"
+    ],
+    "name": "selfbalance"
+  },
+  "selfdestruct": {
+    "description": "Halt execution and register account for later deletion.",
+    "instrArgs": [
+      "address"
+    ],
+    "instrCategory": "terminate",
+    "instrGas": 0,
+    "instrOpcode": 255,
+    "instrReturns": [],
+    "name": "selfdestruct"
+  },
+  "sgt": {
+    "description": "Signed greater-than comparison",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "comparison",
+    "instrGas": 3,
+    "instrOpcode": 19,
+    "instrReturns": [
+      "flag"
+    ],
+    "name": "sgt"
+  },
+  "sha3": {
+    "description": "Compute Keccak-256 hash.",
+    "instrArgs": [
+      "offset",
+      "size"
+    ],
+    "instrCategory": "cryptographic",
+    "instrGas": 30,
+    "instrOpcode": 32,
+    "instrReturns": [
+      "sha3"
+    ],
+    "name": "sha3"
+  },
+  "shl": {
+    "description": "<TBD> Shift left",
+    "instrArgs": [
+      "shift",
+      "value"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 27,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "shl"
+  },
+  "shr": {
+    "description": "<TBD> Shift Right",
+    "instrArgs": [
+      "shift",
+      "value"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 28,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "shr"
+  },
+  "signextend": {
+    "description": "Extend length of two's complement signed integer.",
+    "instrArgs": [
+      "bits",
+      "num"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 5,
+    "instrOpcode": 11,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "signextend"
+  },
+  "sload": {
+    "description": "Load word from storage.",
+    "instrArgs": [
+      "loc"
+    ],
+    "instrCategory": "storage",
+    "instrGas": 50,
+    "instrOpcode": 84,
+    "instrReturns": [
+      "value"
+    ],
+    "name": "sload"
+  },
+  "slt": {
+    "description": "Signed less-than comparison",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "comparison",
+    "instrGas": 3,
+    "instrOpcode": 18,
+    "instrReturns": [
+      "flag"
+    ],
+    "name": "slt"
+  },
+  "smod": {
+    "description": "Signed modulo",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 5,
+    "instrOpcode": 7,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "smod"
+  },
+  "sstore": {
+    "description": "Save word to storage.",
+    "instrArgs": [
+      "loc",
+      "value"
+    ],
+    "instrCategory": "storage",
+    "instrGas": 0,
+    "instrOpcode": 85,
+    "instrReturns": [],
+    "name": "sstore"
+  },
+  "staticcall": {
+    "description": "Call another contract (or itself) while disallowing any modifications to the state during the call.",
+    "instrArgs": [
+      "gas",
+      "address",
+      "inOffset",
+      "inSize",
+      "retOffset",
+      "retSize"
+    ],
+    "instrCategory": "system",
+    "instrGas": 40,
+    "instrOpcode": 250,
+    "instrReturns": [],
+    "name": "staticcall"
+  },
+  "stop": {
+    "description": "Halts execution.",
+    "instrArgs": [],
+    "instrCategory": "terminate",
+    "instrGas": 0,
+    "instrOpcode": 0,
+    "instrReturns": [],
+    "name": "stop"
+  },
+  "sub": {
+    "description": "Subtraction operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 3,
+    "instrOpcode": 3,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "sub"
+  },
+  "swap1": {
+    "description": "Exchange 1st and 2nd stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 144,
+    "instrReturns": [],
+    "name": "swap1"
+  },
+  "swap10": {
+    "description": "Exchange 1st and 11th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 153,
+    "instrReturns": [],
+    "name": "swap10"
+  },
+  "swap11": {
+    "description": "Exchange 1st and 12th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 154,
+    "instrReturns": [],
+    "name": "swap11"
+  },
+  "swap12": {
+    "description": "Exchange 1st and 13th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 155,
+    "instrReturns": [],
+    "name": "swap12"
+  },
+  "swap13": {
+    "description": "Exchange 1st and 14th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 156,
+    "instrReturns": [],
+    "name": "swap13"
+  },
+  "swap14": {
+    "description": "Exchange 1st and 15th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 157,
+    "instrReturns": [],
+    "name": "swap14"
+  },
+  "swap15": {
+    "description": "Exchange 1st and 16th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 158,
+    "instrReturns": [],
+    "name": "swap15"
+  },
+  "swap16": {
+    "description": "Exchange 1st and 17th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 159,
+    "instrReturns": [],
+    "name": "swap16"
+  },
+  "swap2": {
+    "description": "Exchange 1st and 3rd stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 145,
+    "instrReturns": [],
+    "name": "swap2"
+  },
+  "swap3": {
+    "description": "Exchange 1st and 4th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 146,
+    "instrReturns": [],
+    "name": "swap3"
+  },
+  "swap4": {
+    "description": "Exchange 1st and 5th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 147,
+    "instrReturns": [],
+    "name": "swap4"
+  },
+  "swap5": {
+    "description": "Exchange 1st and 6th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 148,
+    "instrReturns": [],
+    "name": "swap5"
+  },
+  "swap6": {
+    "description": "Exchange 1st and 7th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 149,
+    "instrReturns": [],
+    "name": "swap6"
+  },
+  "swap7": {
+    "description": "Exchange 1st and 8th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 150,
+    "instrReturns": [],
+    "name": "swap7"
+  },
+  "swap8": {
+    "description": "Exchange 1st and 9th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 151,
+    "instrReturns": [],
+    "name": "swap8"
+  },
+  "swap9": {
+    "description": "Exchange 1st and 10th stack items.",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 152,
+    "instrReturns": [],
+    "name": "swap9"
+  },
+  "timestamp": {
+    "description": "Get the block's timestamp.",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 66,
+    "instrReturns": [
+      "block.timestamp"
+    ],
+    "name": "timestamp"
+  },
+  "xor": {
+    "description": "Bitwise XOR operation.",
+    "instrArgs": [
+      "a",
+      "b"
+    ],
+    "instrCategory": "bitwise-logic",
+    "instrGas": 3,
+    "instrOpcode": 24,
+    "instrReturns": [
+      "result"
+    ],
+    "name": "xor"
+  }
+}

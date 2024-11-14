@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.kover) // Gradle Kover Plugin
     id("com.diffplug.spotless") version "7.0.0.BETA4" // Spotless Plugin
     id("org.jetbrains.grammarkit") version "2022.3.2.2" // JetBrains Grammarkit Gradle Plugin
+    kotlin("plugin.serialization") version "2.0.21" // Kotlin Serialization Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -19,6 +20,11 @@ version = providers.gradleProperty("pluginVersion").get()
 // Set the JVM language level used to build the project.
 kotlin {
     jvmToolchain(21)
+}
+
+// Do not include Python files in the JAR
+tasks.jar.configure {
+    exclude("**/*.py")
 }
 
 // Configure project's dependencies
@@ -59,6 +65,7 @@ dependencies {
         zipSigner()
         testFramework(TestFrameworkType.Platform)
     }
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
 }
 
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html

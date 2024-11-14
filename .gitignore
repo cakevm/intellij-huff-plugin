@@ -6,3 +6,4 @@ build
 gen
 *.tokens
 generated-antlr
+.kotlin

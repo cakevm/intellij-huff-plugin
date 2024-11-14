@@ -203,6 +203,9 @@ TestDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
 // All opcode names
 OpcodeName ::= StackManagement | ArithmeticAndLogic | EnvironmentalInformation | StorageAndMemoryAccess
     | FlowControl | SystemAndCall | Logging | Miscellaneous | GasManagement
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffOpcodeElement"
+}
 
 // Stack Management Opcodes
 StackManagement ::= PUSH0 |PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH8
