@@ -7,7 +7,7 @@ import com.intellij.psi.stubs.StubIndexKey
 
 class HuffConstantDefinitionIndex : StringStubIndexExtension<HuffNamedElement>() {
   companion object {
-    val KEY: StubIndexKey<String, HuffNamedElement> = StubIndexKey.createIndexKey(HuffConstantDefinitionIndex::class.java.canonicalName)
+    val KEY: StubIndexKey<String, HuffNamedElement> = StubIndexKey.createIndexKey(HuffConstantDefinitionIndex::class.java.simpleName)
   }
 
   override fun getVersion(): Int = HuffFileStub.Type.stubVersion

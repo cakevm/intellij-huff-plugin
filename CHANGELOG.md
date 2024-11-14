@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+- tbd 
+
+## [0.0.12] - 2024-11-13
+
+- Fix constant references resolution
+
 ## [0.0.11] - 2024-11-12
 
 - Display instructions documentation on hover

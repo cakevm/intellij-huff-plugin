@@ -7,7 +7,7 @@ import com.intellij.psi.stubs.StubIndexKey
 
 class HuffIncludeIndex : StringStubIndexExtension<HuffIncludePathMixin>() {
   companion object {
-    val KEY: StubIndexKey<String, HuffIncludePathMixin> = StubIndexKey.createIndexKey(HuffIncludeIndex::class.java.canonicalName)
+    val KEY: StubIndexKey<String, HuffIncludePathMixin> = StubIndexKey.createIndexKey(HuffIncludeIndex::class.java.simpleName)
   }
 
   override fun getVersion(): Int = HuffFileStub.Type.stubVersion

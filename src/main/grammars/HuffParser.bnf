@@ -116,20 +116,21 @@ HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_
 Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | OpcodeName | STRING_IDENTIFIER
 
 IncludePath ::= QUOTED_STRING {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
-  mixin = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludePathMixin"
-  stubClass = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffIncludePathStub"
+  implements        = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
+  mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludePathMixin"
+  stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffIncludePathStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
 }
 
 IncludeDirective ::= INCLUDE IncludePath
 
-DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition
+private DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition
                               | TableDefinition )
 
 // #define constant
 ConstantDefinitionIdentifier ::= Identifier
-ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL (FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier ) {
+ConstantDefinitionAssignment ::= FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier
+ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL ConstantDefinitionAssignment {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffConstantDefinitionElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffConstantDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffConstantDefinitionStub"
@@ -145,14 +146,14 @@ JumpTableDefinition ::= ( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBod
 
 // #define table
 TableBody ::= L_BRACE HEXCODE+ R_BRACE
-TableDefinition ::= TABLE  Identifier TableBody
+TableDefinition ::= TABLE Identifier TableBody
 
 // #define macro  ( fn is handled as macro )
 MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier )
 MacroParameters ::=  L_PAREN ( Identifier ( COMMA Identifier )*)? R_PAREN
 MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
-MacroConstantReference ::= L_BRACK  Identifier R_BRACK
+MacroConstantReference ::= L_BRACK Identifier R_BRACK
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroConstantReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroConstantReferenceMixin"
@@ -162,10 +163,10 @@ MacroCallIdentifier ::= ( BuildInFnSignature | Identifier )
 MacroCall ::= MacroCallIdentifier L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroCallElement"
-  mixin = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroCallMixin"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroCallMixin"
 }
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
-MacroLabel ::= Identifier COLON // MacroStatement*
+MacroLabel ::= Identifier COLON
 {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroLabelElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroLabelMixin"
@@ -175,7 +176,7 @@ MacroLabel ::= Identifier COLON // MacroStatement*
 MacroLabelGoTo ::= Identifier
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroLabelGoToElement"
-  mixin = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroLabelGoToMixin"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroLabelGoToMixin"
 }
 // https://github.com/huff-language/huff-rs/blob/05d71e4f/huff_lexer/src/lib.rs#L250
 // huff parse true/false as 1/0
@@ -195,7 +196,6 @@ MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParamet
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffMacroDefinitionStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
 }
-
 
 // only tests can have a decorator
 TestDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK

@@ -28,9 +28,5 @@ fun IndexSink.indexMacroLabel(stub: HuffMacroLabelStub) {
 
 fun IndexSink.indexIncludePathDefinition(stub: HuffIncludePathStub) {
   indexNamedStub(stub)
-  indexIncludePath(stub)
-}
-
-private fun IndexSink.indexIncludePath(stub: HuffIncludePathStub) {
   stub.path?.let { occurrence(HuffIncludeIndex.KEY, it) }
 }

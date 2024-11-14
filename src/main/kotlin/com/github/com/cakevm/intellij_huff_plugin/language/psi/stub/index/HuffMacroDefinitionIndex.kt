@@ -7,7 +7,7 @@ import com.intellij.psi.stubs.StubIndexKey
 
 class HuffMacroDefinitionIndex : StringStubIndexExtension<HuffNamedElement>() {
   companion object {
-    val KEY: StubIndexKey<String, HuffNamedElement> = StubIndexKey.createIndexKey(HuffMacroDefinitionIndex::class.java.canonicalName)
+    val KEY: StubIndexKey<String, HuffNamedElement> = StubIndexKey.createIndexKey(HuffMacroDefinitionIndex::class.java.simpleName)
   }
 
   override fun getVersion(): Int = HuffFileStub.Type.stubVersion

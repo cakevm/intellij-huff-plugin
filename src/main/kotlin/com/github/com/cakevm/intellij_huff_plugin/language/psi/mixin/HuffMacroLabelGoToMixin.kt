@@ -8,7 +8,7 @@ import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffReferen
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 
-abstract class HuffMacroLabelGoToMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffMacroLabelGoToElement, HuffMacroLabelGoTo {
+abstract class HuffMacroLabelGoToMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffMacroLabelGoTo, HuffMacroLabelGoToElement {
 
   override val referenceNameElement: PsiElement
     get() = this.identifier
