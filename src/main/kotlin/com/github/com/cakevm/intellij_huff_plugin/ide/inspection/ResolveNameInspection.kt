@@ -11,7 +11,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 
-class ResolveNameInspection : LocalInspectionTool() {
+class ResolveHuffNameInspection : LocalInspectionTool() {
   override fun getDisplayName(): String = ""
 
   private val buildInFns =

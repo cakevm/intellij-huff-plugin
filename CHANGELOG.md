@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [0.0.9] - 2024-11-12
+- Fix plugin name conflict with Soldity plugin for `ResolveName`
+
 ## [0.0.8] - 2024-11-12
 
 - Add code folding for labels

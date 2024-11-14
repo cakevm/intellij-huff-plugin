@@ -50,7 +50,7 @@
                          displayName="Name can not be resolved"
                          enabledByDefault="true"
                          level="WARNING"
-                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.ResolveNameInspection"/>
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.ResolveHuffNameInspection"/>
 
         <localInspection language="Huff" groupName="Huff"
                          displayName="Element is never used"
