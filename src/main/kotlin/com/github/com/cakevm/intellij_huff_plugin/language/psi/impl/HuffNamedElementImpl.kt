@@ -1,8 +1,8 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.impl
 
-import com.github.com.cakevm.intellij_huff_plugin.language.HuffNamedElement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes.IDENTIFIER
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffPsiFactory
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner

@@ -5,6 +5,8 @@ import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.type.HuffStu
 fun factory(name: String): HuffStubElementType<*, *> =
   when (name) {
     "MACRO_DEFINITION" -> HuffMacroDefinitionStub.Type
+    "MACRO_LABEL" -> HuffMacroLabelStub.Type
+    "CONSTANT_DEFINITION" -> HuffConstantDefinitionStub.Type
     "INCLUDE_PATH" -> HuffIncludePathStub.Type
 
     else -> error("Unknown element $name")

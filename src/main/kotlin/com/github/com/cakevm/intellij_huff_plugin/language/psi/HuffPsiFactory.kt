@@ -9,8 +9,7 @@ import com.intellij.psi.PsiParserFacade
 
 class HuffPsiFactory(val project: Project) {
   fun createIdentifier(name: String): PsiElement {
-    return createFromText<HuffMacroDefinition>("macro $name {}")?.macroIdentifierAndParameters?.macroIdentifier
-      ?: error("Failed to create identifier: `$name`")
+    return createFromText<HuffMacroDefinition>("macro $name {}")?.macroIdentifier ?: error("Failed to create identifier: `$name`")
   }
 
   fun createIncludeDirective(content: String, addQuotes: Boolean = true): HuffIncludeDirective {

@@ -14,3 +14,6 @@ inline fun <reified T : PsiElement> PsiElement.childOfType(strict: Boolean = tru
 
 val PsiElement.parentRelativeRange: TextRange
   get() = rangeRelativeTo(parent)
+
+val PsiElement.ancestors: Sequence<PsiElement>
+  get() = generateSequence(this) { it.parent }

@@ -1,8 +1,8 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl
 
-import com.github.com.cakevm.intellij_huff_plugin.language.HuffNamedElement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes.IDENTIFIER
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffPsiFactory
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.HuffNamedStub
 import com.intellij.ide.projectView.PresentationData
 import com.intellij.lang.ASTNode
@@ -21,7 +21,11 @@ S : StubElement<*> {
 
   override fun getNameIdentifier(): PsiElement? = findChildByType(IDENTIFIER)
 
-  override fun getName() = stub?.name ?: nameIdentifier?.text
+  override fun getName(): String? {
+    val name = stub?.name ?: nameIdentifier?.text
+    // println("Stub: $this, &name")
+    return name
+  }
 
   override fun setName(name: String): PsiElement? {
     nameIdentifier?.replace(HuffPsiFactory(project).createIdentifier(name))

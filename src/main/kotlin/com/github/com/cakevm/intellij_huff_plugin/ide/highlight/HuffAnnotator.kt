@@ -20,14 +20,14 @@ class HuffAnnotator : Annotator {
           .textAttributes(HuffColor.MACRO_CONSTANT_REFERENCE.textAttributesKey)
           .create()
       }
-      MACRO_LABEL_IDENTIFIER -> {
+      MACRO_LABEL -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
           .textAttributes(HuffColor.MACRO_LABEL.textAttributesKey)
           .create()
       }
-      MACRO_LABEL_CALL -> {
+      MACRO_LABEL_GO_TO -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
