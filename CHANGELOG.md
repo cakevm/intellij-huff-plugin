@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.0.8] - 2024-11-12
+
 - Add code folding for labels
 - Structure view for macros
 - Show error for duplicate labels
