@@ -37,8 +37,6 @@
         <completion.contributor language="Huff"
                                 implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.completion.HuffOpcodeNameCompletionContributor"/>
 
-        <include.provider implementation="com.github.com.cakevm.intellij_huff_plugin.language.index.HuffFileIncludeProvider"/>
-
         <lang.psiStructureViewFactory language="Huff"
                                       implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.structure.HuffStructureViewFactory"/>
 
@@ -48,8 +46,23 @@
                          level="ERROR"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.DuplicateLabelInspection"/>
 
-        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroIndex"/>
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Name can not be resolved"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.ResolveNameInspection"/>
 
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Element is never used"
+                         enabledByDefault="true"
+                         level="WEAK WARNING"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.UnusedElementInspection"/>
+
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffConstantDefinitionIndex"/>
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroDefinitionIndex"/>
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffMacroLabelIndex"/>
+        <stubIndex implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffIncludeIndex"/>
     </extensions>
 
     <actions>

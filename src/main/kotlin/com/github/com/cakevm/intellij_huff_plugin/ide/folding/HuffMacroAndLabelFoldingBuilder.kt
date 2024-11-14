@@ -2,7 +2,7 @@ package com.github.com.cakevm.intellij_huff_plugin.ide.folding
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroBody
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroLabelIdentifier
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroLabel
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.FoldingBuilderEx
 import com.intellij.lang.folding.FoldingDescriptor
@@ -18,7 +18,7 @@ class HuffMacroAndLabelFoldingBuilder : FoldingBuilderEx() {
         val descriptors = mutableListOf<FoldingDescriptor>()
         descriptors.add(FoldingDescriptor(macro.node, macro.textRange))
 
-        var labels = PsiTreeUtil.findChildrenOfType(macro, HuffMacroLabelIdentifier::class.java)
+        var labels = PsiTreeUtil.findChildrenOfType(macro, HuffMacroLabel::class.java)
         // labels = labels.sortedBy { it.textRange.startOffset }
 
         var previousLabel = labels.firstOrNull()
@@ -53,7 +53,7 @@ class HuffMacroAndLabelFoldingBuilder : FoldingBuilderEx() {
   override fun getPlaceholderText(node: ASTNode): String {
     when (node.elementType) {
       HuffElementTypes.MACRO_BODY -> return "{ ... }"
-      HuffElementTypes.MACRO_LABEL_IDENTIFIER -> return " ..."
+      HuffElementTypes.MACRO_LABEL -> return " ..."
       else -> return "a..."
     }
   }

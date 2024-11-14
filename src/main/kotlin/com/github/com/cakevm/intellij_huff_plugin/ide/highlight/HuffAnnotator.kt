@@ -13,25 +13,33 @@ class HuffAnnotator : Annotator {
   override fun annotate(psiElement: PsiElement, holder: AnnotationHolder) {
 
     when (psiElement.elementType) {
+      CONSTANT_DEFINITION_IDENTIFIER -> {
+        holder
+          .newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(psiElement.textRange)
+          .textAttributes(HuffColor.CONSTANT.textAttributesKey)
+          .create()
+      }
+
       MACRO_CONSTANT_REFERENCE -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
-          .textAttributes(HuffColor.MACRO_CONSTANT_REFERENCE.textAttributesKey)
+          .textAttributes(HuffColor.CONSTANT.textAttributesKey)
           .create()
       }
-      MACRO_LABEL_IDENTIFIER -> {
+      MACRO_LABEL -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
           .textAttributes(HuffColor.MACRO_LABEL.textAttributesKey)
           .create()
       }
-      MACRO_LABEL_REFERENCE -> {
+      MACRO_LABEL_GO_TO -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
-          .textAttributes(HuffColor.MACRO_LABEL_REFERENCE.textAttributesKey)
+          .textAttributes(HuffColor.MACRO_LABEL_CALL.textAttributesKey)
           .create()
       }
       // Remove highlighting of lexer tokens for identifiers / parameters

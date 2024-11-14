@@ -29,9 +29,9 @@ enum class HuffColor(humanName: Supplier<@AttributeDescriptor String>, default: 
   GAS_AND_COST_MANAGEMENT(HuffBundle.messagePointer("settings.huff.color.gas_and_cost_management"), Default.HIGHLIGHTED_REFERENCE),
 
   // rule based highlighting
-  MACRO_CONSTANT_REFERENCE(HuffBundle.messagePointer("settings.huff.color.macro_constant_reference"), Default.TEMPLATE_LANGUAGE_COLOR),
-  MACRO_LABEL(HuffBundle.messagePointer("settings.huff.color.macro_label"), Default.KEYWORD),
-  MACRO_LABEL_REFERENCE(HuffBundle.messagePointer("settings.huff.color.macro_label_reference"), Default.TEMPLATE_LANGUAGE_COLOR),
+  CONSTANT(HuffBundle.messagePointer("settings.huff.color.constant"), Default.CONSTANT),
+  MACRO_LABEL(HuffBundle.messagePointer("settings.huff.color.macro_label"), Default.STATIC_METHOD),
+  MACRO_LABEL_CALL(HuffBundle.messagePointer("settings.huff.color.macro_label_call"), Default.TEMPLATE_LANGUAGE_COLOR),
   IDENTIFIER(HuffBundle.messagePointer("settings.huff.color.identifier"), Default.IDENTIFIER);
 
   val textAttributesKey = TextAttributesKey.createTextAttributesKey("run.huff.$name", default)

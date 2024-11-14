@@ -20,6 +20,18 @@ class HuffHighlighter : SyntaxHighlighterBase() {
     mapOf(
         COMMENT to HuffColor.COMMENT,
         DEFINE to HuffColor.DEFINE,
+
+        // Define statements
+        FUNCTION to HuffColor.DEFINE,
+        FN to HuffColor.DEFINE,
+        ERROR to HuffColor.DEFINE,
+        EVENT to HuffColor.DEFINE,
+        MACRO to HuffColor.DEFINE,
+        CONSTANT to HuffColor.DEFINE,
+        JUMPTABLE to HuffColor.DEFINE,
+        JUMPTABLE_PACKED to HuffColor.DEFINE,
+        TABLE to HuffColor.DEFINE,
+        TEST to HuffColor.DEFINE,
         HEXCODE to HuffColor.HEXCODE,
         STRING to HuffColor.STRING,
         DECIMAL to HuffColor.DECIMAL,
