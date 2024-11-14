@@ -3,6 +3,7 @@
 # IntelliJ Huff Plugin Changelog
 
 ## [Unreleased]
+ - tbd
 
 ## [0.0.8] - 2024-11-12
 
