@@ -111,7 +111,7 @@
   extends(".*TypeName")=TypeName
 }
 
-HuffFile ::= ( IncludeDirective | DefineDefinition | TestDefinition | NAT_SPEC_TAG )*
+HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_TAG )*
 
 Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | OpcodeName | STRING_IDENTIFIER
 
@@ -125,7 +125,7 @@ IncludePath ::= QUOTED_STRING {
 IncludeDirective ::= INCLUDE IncludePath
 
 DefineDefinition ::= DEFINE ( EventDefinition | FunctionDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition
-                              | TableDefinition | MacroDefinition )
+                              | TableDefinition )
 
 // #define constant
 ConstantDefinitionIdentifier ::= Identifier
@@ -187,8 +187,8 @@ BuildInFnSignature ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN
   | BUILD_IN_FN_FUNC_SIG | BUILD_IN_FN_EVENT_HASH | BUILD_IN_FN_ERROR | BUILD_IN_FN_RIGHTPAD
   | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM )
 // #define macro/fn
-MacroType ::= MACRO | FN
-MacroDefinition ::= MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
+MacroType ::= MACRO | FN | TEST
+MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroDefinitionElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroDefinitionMixin"
@@ -196,8 +196,7 @@ MacroDefinition ::= MacroType MacroIdentifier MacroParameters EQUAL MacroTakesPa
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
 }
 
-TestDefinition ::= TestDecorator? DEFINE TEST MacroIdentifier L_BRACE R_BRACE
-                      EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
+
 // only tests can have a decorator
 TestDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
 

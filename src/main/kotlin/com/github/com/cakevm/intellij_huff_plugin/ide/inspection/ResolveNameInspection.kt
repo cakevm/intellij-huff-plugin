@@ -16,6 +16,7 @@ class ResolveNameInspection : LocalInspectionTool() {
 
   private val buildInFns =
     arrayOf(
+        "calldata",
         "__tablesize",
         "__codesize",
         "__tablestart",
