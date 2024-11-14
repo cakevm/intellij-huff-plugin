@@ -1,6 +1,7 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.inspection
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffIncludeDirective
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroCall
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroConstantReference
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroLabelGoTo
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffVisitor
@@ -12,6 +13,20 @@ import com.intellij.psi.PsiElementVisitor
 
 class ResolveNameInspection : LocalInspectionTool() {
   override fun getDisplayName(): String = ""
+
+  private val buildInFns =
+    arrayOf(
+        "__tablesize",
+        "__codesize",
+        "__tablestart",
+        "__FUNC_SIG",
+        "__EVENT_HASH",
+        "__ERROR",
+        "__RIGHTPAD",
+        "__CODECOPY_DYN_ARG",
+        "__VERBATIM",
+      )
+      .associateWith { true }
 
   override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
     return object : HuffVisitor() {
@@ -32,6 +47,14 @@ class ResolveNameInspection : LocalInspectionTool() {
       override fun visitMacroConstantReference(element: HuffMacroConstantReference) {
         checkReference(element) {
           holder.registerProblem(element, "'${element.identifier.text}' constant is undefined", ProblemHighlightType.WARNING)
+        }
+      }
+
+      override fun visitMacroCall(element: HuffMacroCall) {
+        checkReference(element) {
+          if (buildInFns[element.macroCallIdentifier.text] == null) {
+            holder.registerProblem(element, "'${element.macroCallIdentifier.text}' macro is undefined", ProblemHighlightType.WARNING)
+          }
         }
       }
     }
