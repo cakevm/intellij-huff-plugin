@@ -21,7 +21,7 @@ The plugin is available in the [JetBrains Marketplace](https://plugins.jetbrains
 Lexing and parsing of Huff files and basic syntax highlighting is working.
 
 ## Acknowledgements
-The Lexer, Parser and some code for language and ide classes is from or based on [intellij-solidity](https://github.com/intellij-solidity/intellij-solidity). Thank you! The foundation for this plugin is the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template). The icon is taken from [vscode-huff](https://github.com/huff-language/vscode-huff/blob/master/resources/huff.png). hanks Soldity for the [Antlr lexer and parser](https://github.com/ethereum/solidity/blob/develop/docs/grammar/SolidityLexer.g4) definition that helped alot in the beginning.
+The Lexer, Parser and some code for language and ide classes is from or based on [intellij-solidity](https://github.com/intellij-solidity/intellij-solidity). Thank you! The foundation for this plugin is the [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template). The icon is taken from [vscode-huff](https://github.com/huff-language/vscode-huff/blob/master/resources/huff.png). Thanks to the Soldity team for the [Antlr lexer and parser](https://github.com/ethereum/solidity/blob/develop/docs/grammar/SolidityLexer.g4) definition that helped alot in the beginning.
 
 ## Licence
 This project is dual licensed under the [Apache 2.0](./LICENSE-APACHE) or [MIT](./LICENSE-MIT) licenses.
