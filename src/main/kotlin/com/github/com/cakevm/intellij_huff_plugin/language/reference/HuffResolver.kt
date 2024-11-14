@@ -35,7 +35,7 @@ object HuffResolver {
   private fun <T : HuffNamedElement> resolveUsingImports(target: Class<T>, element: PsiElement, file: PsiFile): Set<T> {
     // If the elements has no name or text, we can't resolve it.
     val elementName = element.nameOrText ?: return emptySet()
-    println(elementName)
+    // println(elementName)
 
     // Retrieve all PSI elements with the name we're trying to lookup.
     val elements: Collection<HuffNamedElement> =
@@ -46,7 +46,7 @@ object HuffResolver {
         null, //
         HuffNamedElement::class.java, //
       )
-    println(elements)
+    // println(elements)
 
     val resolvedImportedFiles = collectImports(file)
     val sameNameReferences =
