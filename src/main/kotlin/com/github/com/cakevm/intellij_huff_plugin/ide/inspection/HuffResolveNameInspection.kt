@@ -63,6 +63,14 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         }
       }
 
+      override fun visitBuildInFnEventHashCall(o: HuffBuildInFnEventHashCall) {
+        checkReference(o) {
+          if (o.quotedString == null) {
+            holder.registerProblem(o, "'${o.identifier?.text}' event ABI is undefined", ProblemHighlightType.WARNING)
+          }
+        }
+      }
+
       override fun visitBuildInFnErrorCall(o: HuffBuildInFnErrorCall) {
         checkReference(o) { holder.registerProblem(o, "'${o.identifier.text}' error is undefined", ProblemHighlightType.WARNING) }
       }

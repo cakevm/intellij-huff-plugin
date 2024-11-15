@@ -9,6 +9,7 @@ fun factory(name: String): HuffStubElementType<*, *> =
     "CONSTANT_DEFINITION" -> HuffConstantDefinitionStub.Type
     "INCLUDE_PATH" -> HuffIncludePathStub.Type
     "FUNCTION_ABI_DEFINITION" -> HuffFunctionAbiDefinitionStub.Type
+    "EVENT_ABI_DEFINITION" -> HuffEventAbiDefinitionStub.Type
     "ERROR_DEFINITION" -> HuffErrorDefinitionStub.Type
 
     else -> error("Unknown element $name")

@@ -75,6 +75,8 @@
                 implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffFunctionAbiDefinitionIndex"/>
         <stubIndex
                 implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffErrorDefinitionIndex"/>
+        <stubIndex
+                implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffEventAbiDefinitionIndex"/>
     </extensions>
 
     <actions>

@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.0.14] - 2024-11-15
+
+- Resolve references to error abis
+
 ## [0.0.13] - 2024-11-15
 
 - Resolve references to abi functions and error

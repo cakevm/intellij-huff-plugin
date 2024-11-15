@@ -155,7 +155,8 @@ TableDefinition ::= TABLE Identifier TableBody
 
 // #define macro  ( fn is handled as macro )
 MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier )
-MacroParameters ::=  L_PAREN ( Identifier ( COMMA Identifier )*)? R_PAREN
+MacroParameter ::= Identifier
+MacroParameters ::=  L_PAREN ( MacroParameter ( COMMA MacroParameter )*)? R_PAREN
 MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK Identifier R_BRACK
@@ -173,6 +174,11 @@ BuildInFnErrorCall ::= BUILD_IN_FN_ERROR L_PAREN Identifier R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffBuildInFnErrorCallElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnErrorCallMixin"
+}
+BuildInFnEventHashCall ::= BUILD_IN_FN_EVENT_HASH L_PAREN (QUOTED_STRING | Identifier) R_PAREN
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffBuildInFnEventHashCallElement"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnEventHashCallMixin"
 }
 MacroCallIdentifier ::= ( BuildInFn | Identifier )
 MacroCall ::= MacroCallIdentifier L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
@@ -197,11 +203,10 @@ MacroLabelGoTo ::= Identifier
 // huff parse true/false as 1/0
 HuffBoolMapping ::= BOOLEANLITERAL
 MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabel | MacroConstantReference
-                | BuildInFnFuncSigCall | BuildInFnErrorCall | MacroCall | MacroParameterReference | MacroLabelGoTo
+                | BuildInFnFuncSigCall | BuildInFnErrorCall  | BuildInFnEventHashCall | MacroCall | MacroParameterReference | MacroLabelGoTo
 MacroBody ::= L_BRACE  MacroStatement* R_BRACE
 BuildInFn ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN_FN_TABLESTART
-  | BUILD_IN_FN_EVENT_HASH | BUILD_IN_FN_RIGHTPAD
-  | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM )
+  | BUILD_IN_FN_RIGHTPAD | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM )
 // #define macro/fn
 MacroType ::= MACRO | FN | TEST
 MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
@@ -266,6 +271,12 @@ GasManagement ::= GAS
 // Solidity grammar for functions and events
 ////////////////////////
 EventAbiDefinition ::= event Identifier IndexedParameterList anonymous?
+{
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffEventAbiDefinitionElement"
+  mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffEventAbiDefinitionMixin"
+  stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffEventAbiDefinitionStub"
+  elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
+}
 
 FunctionAbiDefinition ::= function Identifier ParameterList ( FunctionVisibilitySpecifier | StateMutabilitySpecifier )*
                         ( returns ParameterList )?

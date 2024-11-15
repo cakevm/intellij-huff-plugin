@@ -28,6 +28,11 @@ fun IndexSink.indexFunctionAbiDefinition(stub: HuffFunctionAbiDefinitionStub) {
   stub.name?.let { occurrence(HuffFunctionAbiDefinitionIndex.KEY, it) }
 }
 
+fun IndexSink.indexEventAbiDefinition(stub: HuffEventAbiDefinitionStub) {
+  indexNamedStub(stub)
+  stub.name?.let { occurrence(HuffEventAbiDefinitionIndex.KEY, it) }
+}
+
 fun IndexSink.indexMacroLabel(stub: HuffMacroLabelStub) {
   indexNamedStub(stub)
   stub.name?.let { occurrence(HuffMacroLabelIndex.KEY, it) }
