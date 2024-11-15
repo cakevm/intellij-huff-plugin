@@ -3,6 +3,7 @@ package com.github.com.cakevm.intellij_huff_plugin.language.reference
 import com.github.com.cakevm.intellij_huff_plugin.ide.inspection.fix.IncludeFileAction
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffFile
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludePathMixin
+import com.github.com.cakevm.intellij_huff_plugin.language.reference.base.HuffReferenceBase
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiManager

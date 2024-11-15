@@ -23,7 +23,6 @@ S : StubElement<*> {
 
   override fun getName(): String? {
     val name = stub?.name ?: nameIdentifier?.text
-    // println("Stub: $this, &name")
     return name
   }
 

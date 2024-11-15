@@ -11,6 +11,7 @@ fun factory(name: String): HuffStubElementType<*, *> =
     "FUNCTION_ABI_DEFINITION" -> HuffFunctionAbiDefinitionStub.Type
     "EVENT_ABI_DEFINITION" -> HuffEventAbiDefinitionStub.Type
     "ERROR_DEFINITION" -> HuffErrorDefinitionStub.Type
+    "TABLE_DEFINITION" -> HuffTableDefinitionStub.Type
 
     else -> error("Unknown element $name")
   }

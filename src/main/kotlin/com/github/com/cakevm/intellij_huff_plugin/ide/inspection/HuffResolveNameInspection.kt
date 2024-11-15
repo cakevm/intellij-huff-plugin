@@ -74,6 +74,10 @@ class HuffResolveNameInspection : LocalInspectionTool() {
       override fun visitBuildInFnErrorCall(o: HuffBuildInFnErrorCall) {
         checkReference(o) { holder.registerProblem(o, "'${o.identifier.text}' error is undefined", ProblemHighlightType.WARNING) }
       }
+
+      override fun visitBuildInFnTableCall(o: HuffBuildInFnTableCall) {
+        checkReference(o) { holder.registerProblem(o, "'${o.identifier.text}' table is undefined", ProblemHighlightType.WARNING) }
+      }
     }
   }
 }

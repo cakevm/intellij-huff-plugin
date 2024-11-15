@@ -13,6 +13,11 @@ fun IndexSink.indexConstantDefinition(stub: HuffConstantDefinitionStub) {
   stub.name?.let { occurrence(HuffConstantDefinitionIndex.KEY, it) }
 }
 
+fun IndexSink.indexTableDefinition(stub: HuffTableDefinitionStub) {
+  indexNamedStub(stub)
+  stub.name?.let { occurrence(HuffTableDefinitionIndex.KEY, it) }
+}
+
 fun IndexSink.indexMacroDefinition(stub: HuffMacroDefinitionStub) {
   indexNamedStub(stub)
   stub.name?.let { occurrence(HuffMacroDefinitionIndex.KEY, it) }

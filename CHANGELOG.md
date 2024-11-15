@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.0.15] - 2024-11-15
+
+- Resolve references to tables
+
 ## [0.0.14] - 2024-11-15
 
 - Resolve references to error abis

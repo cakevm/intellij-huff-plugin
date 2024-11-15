@@ -3,6 +3,7 @@ package com.github.com.cakevm.intellij_huff_plugin.language.reference
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.*
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex
+import com.github.com.cakevm.intellij_huff_plugin.language.reference.base.HuffReference
 import com.intellij.openapi.util.RecursionManager
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -35,6 +36,9 @@ object HuffResolver {
           }
           is HuffBuildInFnEventHashCall -> {
             resolveUsingImports(HuffEventAbiDefinition::class.java, element, element.containingFile)
+          }
+          is HuffBuildInFnTableCall -> {
+            resolveUsingImports(HuffTableDefinition::class.java, element, element.containingFile)
           }
           else -> emptySet()
         }

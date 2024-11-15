@@ -43,6 +43,10 @@ class HuffUnusedElementInspection : LocalInspectionTool() {
       override fun visitErrorDefinition(o: HuffErrorDefinition) {
         o.identifier.checkForUsage(o, holder, "Error '${o.name}' is never used")
       }
+
+      override fun visitTableDefinition(o: HuffTableDefinition) {
+        o.identifier.checkForUsage(o, holder, "Table '${o.name}' is never used")
+      }
     }
   }
 }

@@ -1,13 +1,13 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin
 
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffBuildInFnErrorCall
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffBuildInFnTableCall
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.impl.HuffNamedElementImpl
-import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffBuildInFnErrorCallReference
+import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffBuildInFnTableCallReference
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.base.HuffReference
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 
-abstract class HuffBuildInFnErrorCallMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffBuildInFnErrorCall {
+abstract class HuffBuildInFnTableCallMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffBuildInFnTableCall {
 
   override val referenceNameElement: PsiElement
     get() = this.identifier ?: this
@@ -17,5 +17,5 @@ abstract class HuffBuildInFnErrorCallMixin(node: ASTNode) : HuffNamedElementImpl
 
   override fun getName(): String? = referenceName
 
-  override fun getReference(): HuffReference = HuffBuildInFnErrorCallReference(this as HuffBuildInFnErrorCall)
+  override fun getReference(): HuffReference = HuffBuildInFnTableCallReference(this as HuffBuildInFnTableCall)
 }
