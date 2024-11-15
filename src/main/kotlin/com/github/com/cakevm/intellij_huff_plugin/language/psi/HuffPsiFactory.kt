@@ -1,7 +1,7 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi
 
-import com.github.com.cakevm.intellij_huff_plugin.language.HuffElement
 import com.github.com.cakevm.intellij_huff_plugin.language.HuffFileType
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory

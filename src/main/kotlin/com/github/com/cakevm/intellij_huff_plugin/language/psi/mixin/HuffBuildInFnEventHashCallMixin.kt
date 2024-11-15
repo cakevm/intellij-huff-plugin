@@ -1,15 +1,13 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffBuildInFnEventHashCall
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffBuildInFnEventHashCallElement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.impl.HuffNamedElementImpl
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffBuildInFnEventHashCallReference
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffReference
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 
-abstract class HuffBuildInFnEventHashCallMixin(node: ASTNode) :
-  HuffNamedElementImpl(node), HuffBuildInFnEventHashCall, HuffBuildInFnEventHashCallElement {
+abstract class HuffBuildInFnEventHashCallMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffBuildInFnEventHashCall {
 
   override val referenceNameElement: PsiElement
     get() = this.identifier ?: this

@@ -1,6 +1,6 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.documentation
 
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffOpcodeElement
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffOpcodeName
 import com.intellij.lang.documentation.AbstractDocumentationProvider
 import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiElement
@@ -21,8 +21,8 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
   }
 
   override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
-    val parent = PsiTreeUtil.getParentOfType(element, HuffOpcodeElement::class.java)
-    if (parent is HuffOpcodeElement) {
+    val parent = PsiTreeUtil.getParentOfType(element, HuffOpcodeName::class.java)
+    if (parent is HuffOpcodeName) {
       val instruction = instructions[element.text.lowercase()]
       if (instruction != null) {
         return instruction.toHtml()
@@ -32,8 +32,8 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
   }
 
   override fun getCustomDocumentationElement(editor: Editor, file: PsiFile, contextElement: PsiElement?, targetOffset: Int): PsiElement? {
-    val parent = PsiTreeUtil.getParentOfType(contextElement, HuffOpcodeElement::class.java)
-    if (parent is HuffOpcodeElement) {
+    val parent = PsiTreeUtil.getParentOfType(contextElement, HuffOpcodeName::class.java)
+    if (parent is HuffOpcodeName) {
       return contextElement
     }
     return null

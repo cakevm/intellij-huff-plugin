@@ -8,7 +8,7 @@
   psiImplClassSuffix="Impl"
   psiPackage="com.github.com.cakevm.intellij_huff_plugin.language.psi"
   psiImplPackage="com.github.com.cakevm.intellij_huff_plugin.language.psi.impl"
-  implements="com.github.com.cakevm.intellij_huff_plugin.language.HuffElement"
+  implements="com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement"
 
   elementTypeHolderClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes"
   elementTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementType"
@@ -131,7 +131,7 @@ private DefineDefinition ::= DEFINE ( EventAbiDefinition | FunctionAbiDefinition
 ConstantDefinitionIdentifier ::= Identifier
 ConstantDefinitionAssignment ::= FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier
 ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL ConstantDefinitionAssignment {
-  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffConstantDefinitionElement"
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffConstantDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffConstantDefinitionStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
@@ -139,7 +139,7 @@ ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL ConstantDefin
 
 // #define error
 ErrorDefinition ::= ERROR Identifier ParameterList {
-  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffErrorDefinitionElement"
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffErrorDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffErrorDefinitionStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
@@ -161,42 +161,42 @@ MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
 MacroConstantReference ::= L_BRACK Identifier R_BRACK
 {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroConstantReferenceElement"
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroConstantReferenceMixin"
 }
 MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | Identifier
 BuildInFnFuncSigCall ::= BUILD_IN_FN_FUNC_SIG L_PAREN (QUOTED_STRING | Identifier) R_PAREN
 {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffBuildInFnFuncSigCallElement"
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnFuncSigCallMixin"
 }
 BuildInFnErrorCall ::= BUILD_IN_FN_ERROR L_PAREN Identifier R_PAREN
 {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffBuildInFnErrorCallElement"
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnErrorCallMixin"
 }
 BuildInFnEventHashCall ::= BUILD_IN_FN_EVENT_HASH L_PAREN (QUOTED_STRING | Identifier) R_PAREN
 {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffBuildInFnEventHashCallElement"
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnEventHashCallMixin"
 }
 MacroCallIdentifier ::= ( BuildInFn | Identifier )
 MacroCall ::= MacroCallIdentifier L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
 {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroCallElement"
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroCallMixin"
 }
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
 MacroLabel ::= Identifier COLON
 {
-  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroLabelElement"
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroLabelMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffMacroLabelStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
 }
 MacroLabelGoTo ::= Identifier
 {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroLabelGoToElement"
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroLabelGoToMixin"
 }
 // https://github.com/huff-language/huff-rs/blob/05d71e4f/huff_lexer/src/lib.rs#L250
@@ -211,7 +211,7 @@ BuildInFn ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_CODESIZE | BUILD_IN_FN_TABLE
 MacroType ::= MACRO | FN | TEST
 MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 {
-  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffMacroDefinitionElement"
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffMacroDefinitionStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
@@ -224,7 +224,7 @@ TestDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
 OpcodeName ::= StackManagement | ArithmeticAndLogic | EnvironmentalInformation | StorageAndMemoryAccess
     | FlowControl | SystemAndCall | Logging | Miscellaneous | GasManagement
 {
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffOpcodeElement"
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement"
 }
 
 // Stack Management Opcodes
@@ -272,7 +272,7 @@ GasManagement ::= GAS
 ////////////////////////
 EventAbiDefinition ::= event Identifier IndexedParameterList anonymous?
 {
-  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffEventAbiDefinitionElement"
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffEventAbiDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffEventAbiDefinitionStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
@@ -281,7 +281,7 @@ EventAbiDefinition ::= event Identifier IndexedParameterList anonymous?
 FunctionAbiDefinition ::= function Identifier ParameterList ( FunctionVisibilitySpecifier | StateMutabilitySpecifier )*
                         ( returns ParameterList )?
 {
-  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffFunctionAbiDefinitionElement"
+  implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffFunctionAbiDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffFunctionAbiDefinitionStub"
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"

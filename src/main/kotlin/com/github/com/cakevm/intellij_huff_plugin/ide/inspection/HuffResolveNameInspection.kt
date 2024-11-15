@@ -1,7 +1,7 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.inspection
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.*
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.base.HuffReferenceElement
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder

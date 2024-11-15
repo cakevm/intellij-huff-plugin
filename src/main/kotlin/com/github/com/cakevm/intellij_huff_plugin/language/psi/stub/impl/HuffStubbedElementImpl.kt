@@ -1,6 +1,6 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl
 
-import com.github.com.cakevm.intellij_huff_plugin.language.HuffElement
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffReference
 import com.intellij.extapi.psi.StubBasedPsiElementBase
 import com.intellij.lang.ASTNode

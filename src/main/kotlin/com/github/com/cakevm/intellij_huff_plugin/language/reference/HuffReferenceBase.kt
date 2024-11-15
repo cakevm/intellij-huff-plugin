@@ -1,9 +1,9 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.reference
 
-import com.github.com.cakevm.intellij_huff_plugin.language.HuffElement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes.IDENTIFIER
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffPsiFactory
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.base.HuffReferenceElement
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementResolveResult

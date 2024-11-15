@@ -1,7 +1,7 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes.QUOTED_STRING
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.base.HuffReferenceElement
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffIncludePathStub
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffStubbedNamedElementImpl
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffIncludePathReference
