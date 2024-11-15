@@ -124,7 +124,7 @@ IncludePath ::= QUOTED_STRING {
 
 IncludeDirective ::= INCLUDE IncludePath
 
-private DefineDefinition ::= DEFINE ( EventAbiDefinition | FunctionAbiDefinition | ConstantDefinition | ErrorDefinition | JumpTableDefinition
+private DefineDefinition ::= DEFINE ( EventAbiDefinition | FunctionAbiDefinition | ConstantDefinition | ErrorDefinition
                               | TableDefinition )
 
 // #define constant
@@ -145,13 +145,9 @@ ErrorDefinition ::= ERROR Identifier ParameterList {
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
 }
 
-// #define jumptable
-JumpTableBody ::= L_BRACE Identifier* R_BRACE
-JumpTableDefinition ::= ( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBody
-
-// #define table
-TableBody ::= L_BRACE HEXCODE+ R_BRACE
-TableDefinition ::= TABLE Identifier TableBody {
+// #define table = code table for hexcode, jumptable = identifiers
+TableBody ::= L_BRACE (HEXCODE+ | Identifier*) R_BRACE
+TableDefinition ::= ( TABLE | JUMPTABLE | JUMPTABLE_PACKED ) Identifier TableBody {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffTableDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffTableDefinitionStub"
