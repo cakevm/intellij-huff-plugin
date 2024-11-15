@@ -35,6 +35,10 @@ class HuffUnusedElementInspection : LocalInspectionTool() {
       override fun visitFunctionAbiDefinition(o: HuffFunctionAbiDefinition) {
         o.identifier.checkForUsage(o, holder, "Function ABI '${o.name}' is never used")
       }
+
+      override fun visitErrorDefinition(o: HuffErrorDefinition) {
+        o.identifier.checkForUsage(o, holder, "Error '${o.name}' is never used")
+      }
     }
   }
 }

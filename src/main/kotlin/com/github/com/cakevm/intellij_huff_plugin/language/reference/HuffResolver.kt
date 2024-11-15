@@ -30,6 +30,9 @@ object HuffResolver {
           is HuffBuildInFnFuncSigCall -> {
             resolveUsingImports(HuffFunctionAbiDefinition::class.java, element, element.containingFile)
           }
+          is HuffBuildInFnErrorCall -> {
+            resolveUsingImports(HuffErrorDefinition::class.java, element, element.containingFile)
+          }
           else -> emptySet()
         }
       CachedValueProvider.Result.create(result, PsiModificationTracker.MODIFICATION_COUNT)

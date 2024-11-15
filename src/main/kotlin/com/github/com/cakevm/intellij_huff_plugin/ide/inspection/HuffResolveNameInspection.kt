@@ -1,10 +1,6 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.inspection
 
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffIncludeDirective
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroCall
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroConstantReference
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroLabelGoTo
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffVisitor
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.*
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.base.HuffReferenceElement
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
@@ -57,6 +53,18 @@ class HuffResolveNameInspection : LocalInspectionTool() {
             holder.registerProblem(element, "'${element.macroCallIdentifier.text}' macro is undefined", ProblemHighlightType.WARNING)
           }
         }
+      }
+
+      override fun visitBuildInFnFuncSigCall(o: HuffBuildInFnFuncSigCall) {
+        checkReference(o) {
+          if (o.quotedString == null) {
+            holder.registerProblem(o, "'${o.identifier?.text}' function ABI is undefined", ProblemHighlightType.WARNING)
+          }
+        }
+      }
+
+      override fun visitBuildInFnErrorCall(o: HuffBuildInFnErrorCall) {
+        checkReference(o) { holder.registerProblem(o, "'${o.identifier.text}' error is undefined", ProblemHighlightType.WARNING) }
       }
     }
   }

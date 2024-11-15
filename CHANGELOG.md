@@ -6,8 +6,9 @@
 
 ## [0.0.13] - 2024-11-15
 
-- Resolve references to abi functions
+- Resolve references to abi functions and error
 - Highlight unused function abis and macros
+- Highlight undefined function abi and macro calls
 
 ## [0.0.12] - 2024-11-14
 
