@@ -18,15 +18,15 @@
 
 - Display instructions documentation on hover
 
-## [0.0.10] - 2024-11-12
+## [0.0.10] - 2024-11-14
 
 - Fix all inspection name conflicts by prefixing with `Huff`
 
-## [0.0.9] - 2024-11-12
+## [0.0.9] - 2024-11-14
 
 - Fix plugin name conflict with Soldity plugin for `ResolveName`
 
-## [0.0.8] - 2024-11-12
+## [0.0.8] - 2024-11-14
 
 - Add code folding for labels
 - Structure view for macros
