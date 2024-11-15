@@ -4,11 +4,16 @@
 
 ## [Unreleased]
 
-## [0.0.12] - 2024-11-13
+## [0.0.13] - 2024-11-15
+
+- Resolve references to abi functions
+- Highlight unused function abis and macros
+
+## [0.0.12] - 2024-11-14
 
 - Fix constant references resolution
 
-## [0.0.11] - 2024-11-12
+## [0.0.11] - 2024-11-14
 
 - Display instructions documentation on hover
 

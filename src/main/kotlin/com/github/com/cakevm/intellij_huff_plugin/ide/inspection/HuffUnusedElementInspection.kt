@@ -1,8 +1,6 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.inspection
 
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffConstantDefinition
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffIncludeDirective
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffVisitor
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.*
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffResolver
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
@@ -12,7 +10,10 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.search.searches.ReferencesSearch
 
 class HuffUnusedElementInspection : LocalInspectionTool() {
+  private val defaultMacros = arrayOf("MAIN", "CONSTRUCTOR", "FALLBACK").associateWith { true }
+
   override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor {
+
     return object : HuffVisitor() {
       override fun visitIncludeDirective(o: HuffIncludeDirective) {
         val used = HuffResolver.collectUsedElements(o)
@@ -23,6 +24,16 @@ class HuffUnusedElementInspection : LocalInspectionTool() {
 
       override fun visitConstantDefinition(o: HuffConstantDefinition) {
         o.constantDefinitionIdentifier.identifier.checkForUsage(o, holder, "Constant '${o.name}' is never used")
+      }
+
+      override fun visitMacroDefinition(o: HuffMacroDefinition) {
+        if (defaultMacros[o.name] == null) {
+          o.macroIdentifier.checkForUsage(o, holder, "Macro '${o.name}' is never used")
+        }
+      }
+
+      override fun visitFunctionAbiDefinition(o: HuffFunctionAbiDefinition) {
+        o.identifier.checkForUsage(o, holder, "Function ABI '${o.name}' is never used")
       }
     }
   }

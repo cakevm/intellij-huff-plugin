@@ -1,10 +1,7 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.HuffNamedStub
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffConstantDefinitionStub
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffIncludePathStub
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffMacroDefinitionStub
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffMacroLabelStub
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.*
 import com.intellij.psi.stubs.IndexSink
 
 private fun IndexSink.indexNamedStub(stub: HuffNamedStub) {
@@ -19,6 +16,11 @@ fun IndexSink.indexConstantDefinition(stub: HuffConstantDefinitionStub) {
 fun IndexSink.indexMacroDefinition(stub: HuffMacroDefinitionStub) {
   indexNamedStub(stub)
   stub.name?.let { occurrence(HuffMacroDefinitionIndex.KEY, it) }
+}
+
+fun IndexSink.indexFunctionAbiDefinition(stub: HuffFunctionAbiDefinitionStub) {
+  indexNamedStub(stub)
+  stub.name?.let { occurrence(HuffFunctionAbiDefinitionIndex.KEY, it) }
 }
 
 fun IndexSink.indexMacroLabel(stub: HuffMacroLabelStub) {

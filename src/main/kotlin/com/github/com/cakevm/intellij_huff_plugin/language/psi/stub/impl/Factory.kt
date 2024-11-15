@@ -8,6 +8,7 @@ fun factory(name: String): HuffStubElementType<*, *> =
     "MACRO_LABEL" -> HuffMacroLabelStub.Type
     "CONSTANT_DEFINITION" -> HuffConstantDefinitionStub.Type
     "INCLUDE_PATH" -> HuffIncludePathStub.Type
+    "FUNCTION_ABI_DEFINITION" -> HuffFunctionAbiDefinitionStub.Type
 
     else -> error("Unknown element $name")
   }

@@ -27,6 +27,9 @@ object HuffResolver {
           is HuffMacroConstantReference -> {
             resolveUsingImports(HuffConstantDefinition::class.java, element, element.containingFile)
           }
+          is HuffBuildInFnFuncSigCall -> {
+            resolveUsingImports(HuffFunctionAbiDefinition::class.java, element, element.containingFile)
+          }
           else -> emptySet()
         }
       CachedValueProvider.Result.create(result, PsiModificationTracker.MODIFICATION_COUNT)
