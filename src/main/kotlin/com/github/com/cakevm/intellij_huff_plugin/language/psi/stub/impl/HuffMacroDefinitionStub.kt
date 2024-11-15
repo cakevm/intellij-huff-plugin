@@ -3,8 +3,8 @@ package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroDefinition
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.impl.HuffMacroDefinitionImpl
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.HuffNamedStub
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.base.HuffStubElementType
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.indexMacroDefinition
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.type.HuffStubElementType
 import com.intellij.psi.stubs.*
 
 class HuffMacroDefinitionStub(parent: StubElement<*>?, elementType: IStubElementType<*, *>, override val name: String?) :

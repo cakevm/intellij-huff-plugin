@@ -11,8 +11,8 @@
   implements="com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement"
 
   elementTypeHolderClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes"
-  elementTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementType"
-  tokenTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffTokenType"
+  elementTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.type.HuffElementType"
+  tokenTypeClass="com.github.com.cakevm.intellij_huff_plugin.language.psi.type.HuffTokenType"
 
   tokens = [
     L_PAREN='('

@@ -1,4 +1,4 @@
-package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl
+package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.base
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffReference

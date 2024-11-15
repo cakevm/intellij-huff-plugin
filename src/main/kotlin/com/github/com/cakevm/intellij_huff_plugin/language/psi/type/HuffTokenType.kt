@@ -1,4 +1,4 @@
-package com.github.com.cakevm.intellij_huff_plugin.language.psi
+package com.github.com.cakevm.intellij_huff_plugin.language.psi.type
 
 import com.github.com.cakevm.intellij_huff_plugin.language.HuffLanguage
 import com.intellij.psi.tree.IElementType

@@ -2,8 +2,8 @@ package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl
 
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.impl.HuffIncludePathImpl
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.HuffNamedStub
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.base.HuffStubElementType
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.indexIncludePathDefinition
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.type.HuffStubElementType
 import com.intellij.psi.stubs.*
 
 class HuffIncludePathStub(parent: StubElement<*>?, elementType: IStubElementType<*, *>, override val name: String?, val path: String?) :

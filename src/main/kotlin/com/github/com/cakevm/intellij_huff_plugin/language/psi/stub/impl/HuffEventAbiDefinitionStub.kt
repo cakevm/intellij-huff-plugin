@@ -3,8 +3,8 @@ package com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffEventAbiDefinition
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.impl.HuffEventAbiDefinitionImpl
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.HuffNamedStub
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.base.HuffStubElementType
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.indexEventAbiDefinition
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.type.HuffStubElementType
 import com.intellij.psi.stubs.*
 
 class HuffEventAbiDefinitionStub(parent: StubElement<*>?, elementType: IStubElementType<*, *>, override val name: String?) :
