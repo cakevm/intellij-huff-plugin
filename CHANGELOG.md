@@ -6,7 +6,7 @@
 
 ## [0.0.16] - 2024-11-27
 
- - Fix highlighting for `push0`
+- Fix highlighting for `push0`
 
 ## [0.0.15] - 2024-11-15
 
@@ -90,7 +90,8 @@
 
 - Initial Huff Grammar + Highlighting
 
-[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.15...HEAD
+[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.16...HEAD
+[0.0.16]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.15...v0.0.16
 [0.0.15]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.14...v0.0.15
 [0.0.14]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.13...v0.0.14
 [0.0.13]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.12...v0.0.13
