@@ -214,7 +214,7 @@ MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | Macro
 MacroBody ::= L_BRACE  MacroStatement* R_BRACE
 BuildInFn ::= ( BUILD_IN_FN_CODESIZE | BUILD_IN_FN_RIGHTPAD | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM )
 // #define macro/fn
-MacroType ::= MACRO | FN | TEST
+MacroType ::= (MACRO | FN | TEST)
 MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
@@ -234,7 +234,7 @@ OpcodeName ::= StackManagement | ArithmeticAndLogic | EnvironmentalInformation |
 }
 
 // Stack Management Opcodes
-StackManagement ::= PUSH0 |PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH8
+StackManagement ::= PUSH0 | PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH8
     | PUSH9 | PUSH10 | PUSH11 | PUSH12 | PUSH13 | PUSH14 | PUSH15 | PUSH16
     | PUSH17 | PUSH18 | PUSH19 | PUSH20 | PUSH21 | PUSH22 | PUSH23 | PUSH24
     | PUSH25 | PUSH26 | PUSH27 | PUSH28 | PUSH29 | PUSH30 | PUSH31 | PUSH32

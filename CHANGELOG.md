@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.0.16] - 2024-11-27
+
+ - Fix highlighting for `push0`
+
 ## [0.0.15] - 2024-11-15
 
 - Resolve references to tables

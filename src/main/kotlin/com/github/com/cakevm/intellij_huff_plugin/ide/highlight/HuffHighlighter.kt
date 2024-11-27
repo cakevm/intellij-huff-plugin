@@ -67,6 +67,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
   private fun opcodeNamesStackManagement() =
     setOf<IElementType>(
       // Stack Management Opcodes
+      PUSH0,
       PUSH1,
       PUSH2,
       PUSH3,
