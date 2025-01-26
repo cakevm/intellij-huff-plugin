@@ -32,6 +32,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
         JUMPTABLE_PACKED to HuffColor.DEFINE,
         TABLE to HuffColor.DEFINE,
         TEST to HuffColor.DEFINE,
+        // literals
         HEXCODE to HuffColor.HEXCODE,
         STRING to HuffColor.STRING,
         DECIMAL to HuffColor.DECIMAL,

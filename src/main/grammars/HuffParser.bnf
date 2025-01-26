@@ -224,7 +224,9 @@ MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParamet
 }
 
 // only tests can have a decorator
-TestDecorator ::= DECORATOR_START (MacroCall (COMMA MacroCall)*)? R_BRACK
+TestDecoratorFlagType ::= CALLDATA | VALUE
+TestDecoratorFlag ::= TestDecoratorFlagType L_PAREN (HEXCODE | QUOTED_STRING) R_PAREN
+TestDecorator ::= DECORATOR_START (TestDecoratorFlag (COMMA TestDecoratorFlag)*)? R_BRACK
 
 // All opcode names
 OpcodeName ::= StackManagement | ArithmeticAndLogic | EnvironmentalInformation | StorageAndMemoryAccess

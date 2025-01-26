@@ -20,7 +20,6 @@ class HuffAnnotator : Annotator {
           .textAttributes(HuffColor.CONSTANT.textAttributesKey)
           .create()
       }
-
       MACRO_CONSTANT_REFERENCE -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
@@ -52,6 +51,13 @@ class HuffAnnotator : Annotator {
       }
       PARAMETER_DEF -> {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(psiElement.textRange).create()
+      }
+      TEST_DECORATOR_FLAG_TYPE -> {
+        holder
+          .newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(psiElement.textRange)
+          .textAttributes(HuffColor.BUILD_IN_FN.textAttributesKey)
+          .create()
       }
       else -> {
         // do nothing

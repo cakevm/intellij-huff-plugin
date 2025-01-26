@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [0.0.17] - 2025-01-26
+
+- Fix parsing for `value` in test decorators
+- Add syntax highlighting for test decorator flags `calldata` and `value`
+
 ## [0.0.16] - 2024-11-27
 
 - Fix highlighting for `push0`

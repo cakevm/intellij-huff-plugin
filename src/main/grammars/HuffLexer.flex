@@ -119,6 +119,9 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "__CODECOPY_DYN_ARG"      { return BUILD_IN_FN_CODECOPY_DYN_ARG; }
   "__VERBATIM"              { return BUILD_IN_FN_VERBATIM; }
 
+   // Test decorator flags
+   "value"                  { return VALUE; }
+
   //// OP Codes
   // Stack Management
   "push0"                    { return PUSH0; }
