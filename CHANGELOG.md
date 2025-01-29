@@ -8,7 +8,7 @@
 
 - Allow to use `__FUNC_SIG` as a parameter for `__RIGHTPAD`.
   - Example: `__RIGHTPAD(__FUNC_SIG('log(bytes)'))`.
-  - Remark: This change allows permits invalid combinations. When `huff-neo` evolves, this will be fixed.
+  - Remark: This change permits invalid combinations. When `huff-neo` evolves, this will be fixed.
 
 ## [0.0.17] - 2025-01-26
 
