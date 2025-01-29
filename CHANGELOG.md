@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ## [0.0.20] - 2025-01-29
+
 - Allow to use built-in function calls in a code table.
 - Restrict usage of only labels in `jumptable` and `jumptable__packed`.
 
@@ -111,7 +112,8 @@
 
 - Initial Huff Grammar + Highlighting
 
-[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.19...HEAD
+[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.20...HEAD
+[0.0.20]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.19...v0.0.20
 [0.0.19]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.18...v0.0.19
 [0.0.18]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.17...v0.0.18
 [0.0.17]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.16...v0.0.17
