@@ -28,16 +28,16 @@ object HuffResolver {
           is HuffMacroConstantReference -> {
             resolveUsingImports(HuffConstantDefinition::class.java, element, element.containingFile)
           }
-          is HuffBuildInFnFuncSigCall -> {
+          is HuffBuiltinFnFuncSigCall -> {
             resolveUsingImports(HuffFunctionAbiDefinition::class.java, element, element.containingFile)
           }
-          is HuffBuildInFnErrorCall -> {
+          is HuffBuiltinFnErrorCall -> {
             resolveUsingImports(HuffErrorDefinition::class.java, element, element.containingFile)
           }
-          is HuffBuildInFnEventHashCall -> {
+          is HuffBuiltinFnEventHashCall -> {
             resolveUsingImports(HuffEventAbiDefinition::class.java, element, element.containingFile)
           }
-          is HuffBuildInFnTableCall -> {
+          is HuffBuiltinFnTableCall -> {
             resolveUsingImports(HuffTableDefinition::class.java, element, element.containingFile)
           }
           else -> emptySet()

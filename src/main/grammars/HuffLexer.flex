@@ -109,15 +109,16 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "returns"                 { return RETURNS; }
 
   // Build-in functions
-  "__tablesize"             { return BUILD_IN_FN_TABLESIZE; }
-  "__codesize"              { return BUILD_IN_FN_CODESIZE; }
-  "__tablestart"            { return BUILD_IN_FN_TABLESTART; }
-  "__FUNC_SIG"              { return BUILD_IN_FN_FUNC_SIG; }
-  "__EVENT_HASH"            { return BUILD_IN_FN_EVENT_HASH; }
-  "__ERROR"                 { return BUILD_IN_FN_ERROR; }
-  "__RIGHTPAD"              { return BUILD_IN_FN_RIGHTPAD; }
-  "__CODECOPY_DYN_ARG"      { return BUILD_IN_FN_CODECOPY_DYN_ARG; }
-  "__VERBATIM"              { return BUILD_IN_FN_VERBATIM; }
+  "__tablesize"             { return BUILTIN_FN_TABLESIZE; }
+  "__codesize"              { return BUILTIN_FN_CODESIZE; }
+  "__tablestart"            { return BUILTIN_FN_TABLESTART; }
+  "__FUNC_SIG"              { return BUILTIN_FN_FUNC_SIG; }
+  "__EVENT_HASH"            { return BUILTIN_FN_EVENT_HASH; }
+  "__ERROR"                 { return BUILTIN_FN_ERROR; }
+  "__RIGHTPAD"              { return BUILTIN_FN_RIGHTPAD; }
+  "__CODECOPY_DYN_ARG"      { return BUILTIN_FN_CODECOPY_DYN_ARG; }
+  "__VERBATIM"              { return BUILTIN_FN_VERBATIM; }
+  "__BYTES"                 { return BUILTIN_FN_BYTES; }
 
    // Test decorator flags
    "value"                  { return VALUE; }

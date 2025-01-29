@@ -10,7 +10,7 @@ import com.intellij.psi.PsiElementVisitor
 class HuffResolveNameInspection : LocalInspectionTool() {
   override fun getDisplayName(): String = ""
 
-  private val buildInFns =
+  private val builtinFns =
     arrayOf(
         "calldata",
         "__tablesize",
@@ -22,6 +22,7 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         "__RIGHTPAD",
         "__CODECOPY_DYN_ARG",
         "__VERBATIM",
+        "__BYTES",
       )
       .associateWith { true }
 
@@ -49,13 +50,13 @@ class HuffResolveNameInspection : LocalInspectionTool() {
 
       override fun visitMacroCall(element: HuffMacroCall) {
         checkReference(element) {
-          if (buildInFns[element.macroCallIdentifier.text] == null) {
+          if (builtinFns[element.macroCallIdentifier.text] == null) {
             holder.registerProblem(element, "'${element.macroCallIdentifier.text}' macro is undefined", ProblemHighlightType.WARNING)
           }
         }
       }
 
-      override fun visitBuildInFnFuncSigCall(o: HuffBuildInFnFuncSigCall) {
+      override fun visitBuiltinFnFuncSigCall(o: HuffBuiltinFnFuncSigCall) {
         checkReference(o) {
           if (o.quotedString == null) {
             holder.registerProblem(o, "'${o.identifier?.text}' function ABI is undefined", ProblemHighlightType.WARNING)
@@ -63,7 +64,7 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         }
       }
 
-      override fun visitBuildInFnEventHashCall(o: HuffBuildInFnEventHashCall) {
+      override fun visitBuiltinFnEventHashCall(o: HuffBuiltinFnEventHashCall) {
         checkReference(o) {
           if (o.quotedString == null) {
             holder.registerProblem(o, "'${o.identifier?.text}' event ABI is undefined", ProblemHighlightType.WARNING)
@@ -71,11 +72,11 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         }
       }
 
-      override fun visitBuildInFnErrorCall(o: HuffBuildInFnErrorCall) {
+      override fun visitBuiltinFnErrorCall(o: HuffBuiltinFnErrorCall) {
         checkReference(o) { holder.registerProblem(o, "'${o.identifier.text}' error is undefined", ProblemHighlightType.WARNING) }
       }
 
-      override fun visitBuildInFnTableCall(o: HuffBuildInFnTableCall) {
+      override fun visitBuiltinFnTableCall(o: HuffBuiltinFnTableCall) {
         checkReference(o) { holder.registerProblem(o, "'${o.identifier.text}' table is undefined", ProblemHighlightType.WARNING) }
       }
     }

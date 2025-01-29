@@ -56,7 +56,7 @@ class HuffAnnotator : Annotator {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
-          .textAttributes(HuffColor.BUILD_IN_FN.textAttributesKey)
+          .textAttributes(HuffColor.BUILTIN_FN.textAttributesKey)
           .create()
       }
       else -> {

@@ -40,7 +40,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
         L_BRACE to HuffColor.BRACES,
         R_BRACE to HuffColor.BRACES,
       )
-      .plus(buildInFns().map { it to HuffColor.BUILD_IN_FN })
+      .plus(buildInFns().map { it to HuffColor.BUILTIN_FN })
       .plus(opcodeNamesStackManagement().map { it to HuffColor.STACK_MANAGEMENT })
       .plus(opcodeNamesEnvironmentalInformation().map { it to HuffColor.ENVIRONMENTAL_INFORMATION })
       .plus(opcodeNamesStorageAndMemoryAccess().map { it to HuffColor.STORAGE_AND_MEMORY_ACCESS })
@@ -53,15 +53,16 @@ class HuffHighlighter : SyntaxHighlighterBase() {
 
   private fun buildInFns() =
     setOf<IElementType>(
-      BUILD_IN_FN_TABLESIZE,
-      BUILD_IN_FN_CODESIZE,
-      BUILD_IN_FN_TABLESTART,
-      BUILD_IN_FN_FUNC_SIG,
-      BUILD_IN_FN_EVENT_HASH,
-      BUILD_IN_FN_ERROR,
-      BUILD_IN_FN_RIGHTPAD,
-      BUILD_IN_FN_CODECOPY_DYN_ARG,
-      BUILD_IN_FN_VERBATIM,
+      BUILTIN_FN_TABLESIZE,
+      BUILTIN_FN_CODESIZE,
+      BUILTIN_FN_TABLESTART,
+      BUILTIN_FN_FUNC_SIG,
+      BUILTIN_FN_EVENT_HASH,
+      BUILTIN_FN_ERROR,
+      BUILTIN_FN_RIGHTPAD,
+      BUILTIN_FN_CODECOPY_DYN_ARG,
+      BUILTIN_FN_VERBATIM,
+      BUILTIN_FN_BYTES,
       FREE_STORAGE_POINTER,
     )
 

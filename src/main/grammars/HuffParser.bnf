@@ -58,15 +58,16 @@
     RETURNS='returns'
 
     // Build-in functions
-    BUILD_IN_FN_TABLESIZE='__tablesize'
-    BUILD_IN_FN_CODESIZE='__codesize'
-    BUILD_IN_FN_TABLESTART='__tablestart'
-    BUILD_IN_FN_FUNC_SIG='__FUNC_SIG'
-    BUILD_IN_FN_EVENT_HASH='__EVENT_HASH'
-    BUILD_IN_FN_ERROR='__ERROR'
-    BUILD_IN_FN_RIGHTPAD='__RIGHTPAD'
-    BUILD_IN_FN_CODECOPY_DYN_ARG='__CODECOPY_DYN_ARG'
-    BUILD_IN_FN_VERBATIM='__VERBATIM'
+    BUILTIN_FN_TABLESIZE='__tablesize'
+    BUILTIN_FN_CODESIZE='__codesize'
+    BUILTIN_FN_TABLESTART='__tablestart'
+    BUILTIN_FN_FUNC_SIG='__FUNC_SIG'
+    BUILTIN_FN_EVENT_HASH='__EVENT_HASH'
+    BUILTIN_FN_ERROR='__ERROR'
+    BUILTIN_FN_RIGHTPAD='__RIGHTPAD'
+    BUILTIN_FN_CODECOPY_DYN_ARG='__CODECOPY_DYN_ARG'
+    BUILTIN_FN_VERBATIM='__VERBATIM'
+    BUILTIN_FN_BYTES='__BYTES'
 
     FROM='from'
     //ERROR='error'
@@ -165,33 +166,35 @@ MacroConstantReference ::= L_BRACK Identifier R_BRACK
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroConstantReferenceMixin"
 }
-MacroCallParameter ::= BuildInFnFuncSigCall | HEXCODE | QUOTED_STRING | MacroParameterReference | Identifier
-BuildInFnFuncSigCall ::= BUILD_IN_FN_FUNC_SIG L_PAREN ( QUOTED_STRING | Identifier ) R_PAREN
+MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | Identifier
+BuiltinFnFuncSigCall ::= BUILTIN_FN_FUNC_SIG L_PAREN ( QUOTED_STRING | Identifier ) R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
-  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnFuncSigCallMixin"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuiltinFnFuncSigCallMixin"
 }
-BuildInFnErrorCall ::= BUILD_IN_FN_ERROR L_PAREN Identifier R_PAREN
+BuiltinFnErrorCall ::= BUILTIN_FN_ERROR L_PAREN Identifier R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
-  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnErrorCallMixin"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuiltinFnErrorCallMixin"
 }
-BuildInFnEventHashCall ::= BUILD_IN_FN_EVENT_HASH L_PAREN ( QUOTED_STRING | Identifier ) R_PAREN
+BuiltinFnEventHashCall ::= BUILTIN_FN_EVENT_HASH L_PAREN ( QUOTED_STRING | Identifier ) R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
-  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnEventHashCallMixin"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuiltinFnEventHashCallMixin"
 }
-BuildInFnTableCall ::= ( BUILD_IN_FN_TABLESIZE | BUILD_IN_FN_TABLESTART ) L_PAREN Identifier R_PAREN
+BuiltinFnTableCall ::= ( BUILTIN_FN_TABLESIZE | BUILTIN_FN_TABLESTART ) L_PAREN Identifier R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
-  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuildInFnTableCallMixin"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuiltinFnTableCallMixin"
 }
-MacroCallIdentifier ::= ( BuildInFn | Identifier )
-MacroCall ::= MacroCallIdentifier L_PAREN ( MacroCallParameter ( COMMA MacroCallParameter )*)? R_PAREN
+BuiltinFnName ::= ( BUILTIN_FN_CODESIZE | BUILTIN_FN_RIGHTPAD | BUILTIN_FN_CODECOPY_DYN_ARG | BUILTIN_FN_VERBATIM | BUILTIN_FN_BYTES )
+MacroCallIdentifier ::= ( BuiltinFnName | Identifier )
+MacroCall ::= MacroCallIdentifier L_PAREN ( ( BuiltinFn | MacroCallParameter ) ( COMMA ( BuiltinFn | MacroCallParameter ) )*)? R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroCallMixin"
 }
+BuiltinFn ::= BuiltinFnFuncSigCall | BuiltinFnErrorCall | BuiltinFnEventHashCall | BuiltinFnTableCall | MacroCall
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
 MacroLabel ::= Identifier COLON
 {
@@ -209,10 +212,8 @@ MacroLabelGoTo ::= Identifier
 // huff parse true/false as 1/0
 HuffBoolMapping ::= BOOLEANLITERAL
 MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabel | MacroConstantReference
-                | BuildInFnFuncSigCall | BuildInFnErrorCall  | BuildInFnEventHashCall | BuildInFnTableCall | MacroCall
-                | MacroParameterReference | MacroLabelGoTo
+                | BuiltinFn | MacroParameterReference | MacroLabelGoTo
 MacroBody ::= L_BRACE  MacroStatement* R_BRACE
-BuildInFn ::= ( BUILD_IN_FN_CODESIZE | BUILD_IN_FN_RIGHTPAD | BUILD_IN_FN_CODECOPY_DYN_ARG | BUILD_IN_FN_VERBATIM )
 // #define macro/fn
 MacroType ::= (MACRO | FN | TEST)
 MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody

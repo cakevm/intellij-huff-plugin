@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [0.0.19] - 2025-01-29
+
+- Add support for built-in `__BYTES("hello")`.
+  - This can also be used here: `__RIGHTPAD(__BYTES("hello"))`.
+- Refactor the parsing and fix spelling errors.
+
 ## [0.0.18] - 2025-01-29
 
 - Allow to use `__FUNC_SIG` as a parameter for `__RIGHTPAD`.
