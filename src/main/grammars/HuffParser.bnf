@@ -147,8 +147,9 @@ ErrorDefinition ::= ERROR Identifier ParameterList {
 }
 
 // #define table = code table for hexcode, jumptable = identifiers
-TableBody ::= L_BRACE (HEXCODE+ | Identifier*) R_BRACE
-TableDefinition ::= ( TABLE | JUMPTABLE | JUMPTABLE_PACKED ) Identifier TableBody {
+CodeTableBody ::= L_BRACE ( ( BuiltinFn | HEXCODE )* )? R_BRACE
+JumpTableBody ::= L_BRACE ( Identifier* )? R_BRACE
+TableDefinition ::= (( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBody ) | ( TABLE Identifier CodeTableBody ) {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffTableDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffTableDefinitionStub"

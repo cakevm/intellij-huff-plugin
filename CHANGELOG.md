@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.0.20] - 2025-01-29
+- Allow to use built-in function calls in a code table.
+- Restrict usage of only labels in `jumptable` and `jumptable__packed`.
+
 ## [0.0.19] - 2025-01-29
 
 - Add support for built-in `__BYTES("hello")`.
