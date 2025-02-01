@@ -174,6 +174,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       CALLDATALOAD,
       CALLDATASIZE,
       CALLDATACOPY,
+      CHAINID,
       CODESIZE,
       CODECOPY,
       GASPRICE,

@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2025-02-01
+
+- Mark this as the first stable release of the IntelliJ Huff Plugin.
+- Highlight `chainid`
+- Allow to use constants in code tables.
+
 ## [0.0.20] - 2025-01-29
 
 - Allow to use built-in function calls in a code table.
