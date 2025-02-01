@@ -64,6 +64,7 @@
     BUILTIN_FN_FUNC_SIG='__FUNC_SIG'
     BUILTIN_FN_EVENT_HASH='__EVENT_HASH'
     BUILTIN_FN_ERROR='__ERROR'
+    BUILTIN_FN_LEFTPAD='__LEFTPAD'
     BUILTIN_FN_RIGHTPAD='__RIGHTPAD'
     BUILTIN_FN_CODECOPY_DYN_ARG='__CODECOPY_DYN_ARG'
     BUILTIN_FN_VERBATIM='__VERBATIM'
@@ -114,7 +115,7 @@
 
 HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_TAG )*
 
-Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | OpcodeName | STRING_IDENTIFIER
+Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | VALUE | OpcodeName | STRING_IDENTIFIER
 
 IncludePath ::= QUOTED_STRING {
   implements        = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
@@ -168,7 +169,7 @@ MacroConstantReference ::= L_BRACK Identifier R_BRACK
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroConstantReferenceMixin"
 }
-MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | Identifier
+MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | MacroConstantReference | Identifier
 BuiltinFnFuncSigCall ::= BUILTIN_FN_FUNC_SIG L_PAREN ( QUOTED_STRING | Identifier ) R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
@@ -189,7 +190,8 @@ BuiltinFnTableCall ::= ( BUILTIN_FN_TABLESIZE | BUILTIN_FN_TABLESTART ) L_PAREN 
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuiltinFnTableCallMixin"
 }
-BuiltinFnName ::= ( BUILTIN_FN_CODESIZE | BUILTIN_FN_RIGHTPAD | BUILTIN_FN_CODECOPY_DYN_ARG | BUILTIN_FN_VERBATIM | BUILTIN_FN_BYTES )
+BuiltinFnName ::= ( BUILTIN_FN_CODESIZE | BUILTIN_FN_LEFTPAD | BUILTIN_FN_RIGHTPAD | BUILTIN_FN_CODECOPY_DYN_ARG
+                  | BUILTIN_FN_VERBATIM | BUILTIN_FN_BYTES )
 MacroCallIdentifier ::= ( BuiltinFnName | Identifier )
 MacroCall ::= MacroCallIdentifier L_PAREN ( ( BuiltinFn | MacroCallParameter ) ( COMMA ( BuiltinFn | MacroCallParameter ) )*)? R_PAREN
 {

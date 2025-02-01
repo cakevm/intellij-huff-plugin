@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-02-01
+
+- Do not highlight `value` as error if used as identifier.
+- Highlight new `__LEFTPAD` as built-in functions.
+- Allow to use a constant reference as a parameter for a built-in function.
+
 ## [1.0.0] - 2025-02-01
 
 - Mark this as the first stable release of the IntelliJ Huff Plugin.

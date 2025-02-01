@@ -59,6 +59,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       BUILTIN_FN_FUNC_SIG,
       BUILTIN_FN_EVENT_HASH,
       BUILTIN_FN_ERROR,
+      BUILTIN_FN_LEFTPAD,
       BUILTIN_FN_RIGHTPAD,
       BUILTIN_FN_CODECOPY_DYN_ARG,
       BUILTIN_FN_VERBATIM,

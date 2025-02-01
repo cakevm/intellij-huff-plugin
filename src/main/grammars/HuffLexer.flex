@@ -115,6 +115,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "__FUNC_SIG"              { return BUILTIN_FN_FUNC_SIG; }
   "__EVENT_HASH"            { return BUILTIN_FN_EVENT_HASH; }
   "__ERROR"                 { return BUILTIN_FN_ERROR; }
+  "__LEFTPAD"               { return BUILTIN_FN_LEFTPAD; }
   "__RIGHTPAD"              { return BUILTIN_FN_RIGHTPAD; }
   "__CODECOPY_DYN_ARG"      { return BUILTIN_FN_CODECOPY_DYN_ARG; }
   "__VERBATIM"              { return BUILTIN_FN_VERBATIM; }

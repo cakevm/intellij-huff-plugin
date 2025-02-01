@@ -19,6 +19,7 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         "__FUNC_SIG",
         "__EVENT_HASH",
         "__ERROR",
+        "__LEFTPAD",
         "__RIGHTPAD",
         "__CODECOPY_DYN_ARG",
         "__VERBATIM",
