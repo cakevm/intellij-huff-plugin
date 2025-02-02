@@ -126,7 +126,8 @@
 
 - Initial Huff Grammar + Highlighting
 
-[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.20...v1.0.0
 [0.0.20]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.19...v0.0.20
 [0.0.19]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.18...v0.0.19
