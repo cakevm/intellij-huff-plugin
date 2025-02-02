@@ -9,6 +9,8 @@
 - Do not highlight `value` as error if used as identifier.
 - Highlight new `__LEFTPAD` as built-in functions.
 - Allow to use a constant reference as a parameter for a built-in function.
+- Allow to use built-in functions in constant assignment.
+  - Example: `#define constant FUNC_TEST = __FUNC_SIG("test(uint256)")`
 
 ## [1.0.0] - 2025-02-01
 

@@ -131,7 +131,7 @@ private DefineDefinition ::= DEFINE ( EventAbiDefinition | FunctionAbiDefinition
 
 // #define constant
 ConstantDefinitionIdentifier ::= Identifier
-ConstantDefinitionAssignment ::= FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier
+ConstantDefinitionAssignment ::= BuiltinFn | FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier
 ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL ConstantDefinitionAssignment {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffConstantDefinitionMixin"
