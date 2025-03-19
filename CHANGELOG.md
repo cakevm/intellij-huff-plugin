@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [1.0.2] - 2025-03-19
+- Add RustRover and WebStorm to the compatible IDEs.
+- Do not highlight tests as unused.
+
 ## [1.0.1] - 2025-02-01
 
 - Do not highlight `value` as error if used as identifier.

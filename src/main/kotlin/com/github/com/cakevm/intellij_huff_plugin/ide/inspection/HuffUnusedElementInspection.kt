@@ -27,7 +27,7 @@ class HuffUnusedElementInspection : LocalInspectionTool() {
       }
 
       override fun visitMacroDefinition(o: HuffMacroDefinition) {
-        if (defaultMacros[o.name] == null) {
+        if (defaultMacros[o.name] == null && o.macroType.text == "macro") {
           o.macroIdentifier.checkForUsage(o, holder, "Macro '${o.name}' is never used")
         }
       }

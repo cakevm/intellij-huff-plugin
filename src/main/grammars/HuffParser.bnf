@@ -218,8 +218,8 @@ HuffBoolMapping ::= BOOLEANLITERAL
 MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabel | MacroConstantReference
                 | BuiltinFn | MacroParameterReference | MacroLabelGoTo
 MacroBody ::= L_BRACE  MacroStatement* R_BRACE
-// #define macro/fn
-MacroType ::= (MACRO | FN | TEST)
+// #define macro/fn/test
+MacroType ::= MACRO | FN | TEST
 MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
