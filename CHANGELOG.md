@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ## [1.0.2] - 2025-03-19
+
 - Add RustRover and WebStorm to the compatible IDEs.
 - Do not highlight tests as unused.
 
@@ -130,7 +131,8 @@
 
 - Initial Huff Grammar + Highlighting
 
-[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.20...v1.0.0
 [0.0.20]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.19...v0.0.20
