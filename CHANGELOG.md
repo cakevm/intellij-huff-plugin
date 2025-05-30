@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [1.0.5] - 2025-05-30
+- Fixes CI issues for the plugin release.
+
 ## [1.0.4] - 2025-05-30
 - Use Java 21 as minimum required JDK version.
 
