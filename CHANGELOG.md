@@ -5,12 +5,15 @@
 ## [Unreleased]
 
 ## [1.0.5] - 2025-05-30
+
 - Fixes CI issues for the plugin release.
 
 ## [1.0.4] - 2025-05-30
+
 - Use Java 21 as minimum required JDK version.
 
 ## [1.0.3] - 2025-05-30
+
 - Update dependencies to the latest version.
 - Use `2025.01` as minimum required IDE version.
 
@@ -141,7 +144,10 @@
 
 - Initial Huff Grammar + Highlighting
 
-[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.4...v1.0.5
+[1.0.4]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.3...v1.0.4
+[1.0.3]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/cakevm/intellij-huff-plugin/compare/v0.0.20...v1.0.0
