@@ -3,6 +3,7 @@ import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
+
 plugins {
     id("java") // Java support
     alias(libs.plugins.kotlin) // Kotlin support
@@ -10,8 +11,8 @@ plugins {
     alias(libs.plugins.changelog) // Gradle Changelog Plugin
     alias(libs.plugins.qodana) // Gradle Qodana Plugin
     alias(libs.plugins.kover) // Gradle Kover Plugin
-    id("com.diffplug.spotless") version "7.0.0.BETA4" // Spotless Plugin
-    id("org.jetbrains.grammarkit") version "2022.3.2.2" // JetBrains Grammarkit Gradle Plugin
+    alias(libs.plugins.spotless) // Gradle Spotless Plugin
+    alias(libs.plugins.grammarkit) // JetBrains Grammarkit Gradle Plugin
     kotlin("plugin.serialization") version "2.0.21" // Kotlin Serialization Plugin
 }
 
@@ -61,12 +62,11 @@ dependencies {
         // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file for plugin from JetBrains Marketplace.
         plugins(providers.gradleProperty("platformPlugins").map { it.split(',') })
 
-        instrumentationTools()
         pluginVerifier()
         zipSigner()
         testFramework(TestFrameworkType.Platform)
     }
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
 }
 
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
@@ -124,8 +124,8 @@ intellijPlatform {
         ides {
             recommended()
             // Configure IDEs that are not automatically recommended
-            ide(IntelliJPlatformType.RustRover,"2024.3")
-            ide(IntelliJPlatformType.WebStorm, "2024.3")
+            ide(IntelliJPlatformType.RustRover,"2025.1")
+            ide(IntelliJPlatformType.WebStorm, "2025.1")
         }
     }
 }
@@ -189,7 +189,7 @@ intellijPlatformTesting {
 
             plugins {
                 robotServerPlugin()
-                plugin("PsiViewer", "242.4697")
+                plugin("PsiViewer", "251.175")
             }
         }
     }
@@ -198,14 +198,14 @@ intellijPlatformTesting {
 spotless {
     kotlin {
         target("**/src/**/*.kt")
-        ktfmt("0.53").googleStyle().configure {
+        ktfmt("0.54").googleStyle().configure {
             it.setMaxWidth(140)
             it.setRemoveUnusedImports(true)
             it.setManageTrailingCommas(true)
         }
         trimTrailingWhitespace()
         endWithNewline()
-        indentWithSpaces()
+        leadingTabsToSpaces()
     }
 }
 tasks.named("spotlessKotlin").configure { dependsOn("generateLexer", "generateParser") }

@@ -15,8 +15,12 @@ abstract class HuffStubbedElementImpl<S : StubElement<*>> : StubBasedPsiElementB
 
   override fun getReference(): HuffReference? = null
 
-  // TODO: Fix Deprecated method StubBasedPsiElementBase.getElementType()
+  // TODO: Enable getElementTypeImpl once it is stable.
   // Wait for stable API in:
   // https://github.com/JetBrains/intellij-community/blob/master/platform/core-api/src/com/intellij/psi/StubBasedPsiElement.java
-  override fun toString(): String = "${javaClass.simpleName}($elementType)"
+  //
+  // I can not find a stable API to get the element type of the stubbed element.
+  // - getElementType() is deprecated
+  // - and is getElementTypeImpl() is experimental
+  // override fun toString(): String = "${javaClass.simpleName}(${elementTypeImpl})"
 }
