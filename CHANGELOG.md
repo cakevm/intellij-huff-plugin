@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [1.0.4] - 2025-05-30
+- Use Java 21 as minimum required JDK version.
+
 ## [1.0.3] - 2025-05-30
 - Update dependencies to the latest version.
 - Use `2025.01` as minimum required IDE version.
