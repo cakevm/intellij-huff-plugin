@@ -161,6 +161,10 @@ TableDefinition ::= (( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBody )
 // #define macro  ( fn is handled as macro )
 MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier )
 MacroParameter ::= Identifier
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroParameterMixin"
+}
 MacroParameters ::=  L_PAREN ( MacroParameter ( COMMA MacroParameter )*)? R_PAREN
 MacroTakesParameters ::= TAKES L_PAREN DECIMAL R_PAREN  // takes(1)
 MacroReturnsParameters ::= RETURNS L_PAREN DECIMAL R_PAREN  // returns(1)
@@ -200,6 +204,10 @@ MacroCall ::= MacroCallIdentifier L_PAREN ( ( BuiltinFn | MacroCallParameter ) (
 }
 BuiltinFn ::= BuiltinFnFuncSigCall | BuiltinFnErrorCall | BuiltinFnEventHashCall | BuiltinFnTableCall | MacroCall
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroParameterReferenceMixin"
+}
 MacroLabel ::= Identifier COLON
 {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"

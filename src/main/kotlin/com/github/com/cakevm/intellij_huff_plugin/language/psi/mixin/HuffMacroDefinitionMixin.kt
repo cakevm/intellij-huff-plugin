@@ -17,7 +17,13 @@ abstract class HuffMacroDefinitionMixin : HuffStubbedNamedElementImpl<HuffMacroD
     return this.macroIdentifier.text
   }
 
-  override fun getPresentation(): PresentationData = PresentationData(macroIdentifier.text, null, null, null)
+  override fun getPresentation(): PresentationData {
+    val name = macroIdentifier.text
+    val params = macroParameters?.macroParameterList?.joinToString(", ") { it.name ?: "?" } ?: ""
+    val signature = if (params.isNotEmpty()) "$name($params)" else name
+    val type = macroType?.text ?: "macro"
+    return PresentationData(signature, type, null, null)
+  }
 
   override fun resolveElement(): HuffNamedElement? = this
 }

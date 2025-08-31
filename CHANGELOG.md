@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+- Add macro parameter resolution with `<param>` syntax navigation and completion
+- Update dependencies: Gradle 9.0.0, Kotlin 2.2.0, IntelliJ Platform 2025.1.5
+
 ## [1.0.5] - 2025-05-30
 
 - Fixes CI issues for the plugin release.
