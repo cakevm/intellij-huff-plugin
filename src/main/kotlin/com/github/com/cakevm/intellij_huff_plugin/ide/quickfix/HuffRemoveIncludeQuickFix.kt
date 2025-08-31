@@ -24,6 +24,13 @@ class HuffRemoveIncludeQuickFix(import: HuffIncludeDirective, val type: Type) : 
 
   override fun invoke(project: Project, file: PsiFile, startElement: PsiElement, endElement: PsiElement) {
     val element = startElement as? HuffIncludeDirective ?: return
+
+    // Check if there's a newline after the include directive and remove it too
+    val nextSibling = element.nextSibling
+    if (nextSibling?.text?.startsWith("\n") == true) {
+      nextSibling.delete()
+    }
+
     element.delete()
   }
 }

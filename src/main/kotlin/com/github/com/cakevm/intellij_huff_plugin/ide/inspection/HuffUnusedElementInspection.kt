@@ -1,5 +1,6 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.inspection
 
+import com.github.com.cakevm.intellij_huff_plugin.ide.quickfix.HuffRemoveIncludeQuickFix
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.*
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffResolver
 import com.intellij.codeInspection.LocalInspectionTool
@@ -18,7 +19,12 @@ class HuffUnusedElementInspection : LocalInspectionTool() {
       override fun visitIncludeDirective(o: HuffIncludeDirective) {
         val used = HuffResolver.collectUsedElements(o)
         if (used.isEmpty()) {
-          holder.registerProblem(o, "Unused import directive", ProblemHighlightType.LIKE_UNUSED_SYMBOL)
+          holder.registerProblem(
+            o,
+            "Unused import directive",
+            ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+            HuffRemoveIncludeQuickFix(o, HuffRemoveIncludeQuickFix.Type.Unused),
+          )
         }
       }
 

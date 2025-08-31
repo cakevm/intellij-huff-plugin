@@ -18,7 +18,7 @@ class HuffMacroAndLabelFoldingBuilder : FoldingBuilderEx() {
         val descriptors = mutableListOf<FoldingDescriptor>()
         descriptors.add(FoldingDescriptor(macro.node, macro.textRange))
 
-        var labels = PsiTreeUtil.findChildrenOfType(macro, HuffMacroLabel::class.java)
+        val labels = PsiTreeUtil.findChildrenOfType(macro, HuffMacroLabel::class.java)
         // labels = labels.sortedBy { it.textRange.startOffset }
 
         var previousLabel = labels.firstOrNull()
@@ -51,10 +51,10 @@ class HuffMacroAndLabelFoldingBuilder : FoldingBuilderEx() {
   }
 
   override fun getPlaceholderText(node: ASTNode): String {
-    when (node.elementType) {
-      HuffElementTypes.MACRO_BODY -> return "{ ... }"
-      HuffElementTypes.MACRO_LABEL -> return " ..."
-      else -> return "a..."
+    return when (node.elementType) {
+      HuffElementTypes.MACRO_BODY -> "{ ... }"
+      HuffElementTypes.MACRO_LABEL -> " ..."
+      else -> "a..."
     }
   }
 

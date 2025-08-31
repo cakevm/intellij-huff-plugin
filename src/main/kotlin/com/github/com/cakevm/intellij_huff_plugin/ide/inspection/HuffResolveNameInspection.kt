@@ -1,5 +1,6 @@
 package com.github.com.cakevm.intellij_huff_plugin.ide.inspection
 
+import com.github.com.cakevm.intellij_huff_plugin.ide.quickfix.HuffRemoveIncludeQuickFix
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.*
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement
 import com.intellij.codeInspection.LocalInspectionTool
@@ -32,7 +33,12 @@ class HuffResolveNameInspection : LocalInspectionTool() {
       override fun visitIncludeDirective(o: HuffIncludeDirective) {
         o.includePath.let { path ->
           if (path.reference?.resolve() == null) {
-            holder.registerProblem(path, "'${path.text}' cannot be resolved", ProblemHighlightType.WARNING)
+            holder.registerProblem(
+              path,
+              "'${path.text}' cannot be resolved",
+              ProblemHighlightType.WARNING,
+              HuffRemoveIncludeQuickFix(o, HuffRemoveIncludeQuickFix.Type.Invalid),
+            )
           }
         }
       }

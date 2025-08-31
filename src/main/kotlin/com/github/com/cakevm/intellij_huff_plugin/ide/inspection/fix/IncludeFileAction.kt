@@ -10,7 +10,6 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.popup.PopupStep
 import com.intellij.openapi.ui.popup.util.BaseListPopupStep
-import com.intellij.openapi.util.RecursionManager
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiDocumentManager
@@ -47,7 +46,7 @@ class IncludeFileAction(val editor: Editor, private val file: PsiFile, private v
 
   private fun chooseFileToImport() {
     val step =
-      object : BaseListPopupStep<PsiFile>("File to import", suggestions.toMutableList()) {
+      object : BaseListPopupStep<PsiFile>("File to Import", suggestions.toMutableList()) {
         override fun isAutoSelectionEnabled(): Boolean {
           return false
         }
@@ -58,7 +57,7 @@ class IncludeFileAction(val editor: Editor, private val file: PsiFile, private v
 
         override fun onChosen(selectedValue: PsiFile?, finalChoice: Boolean): PopupStep<*>? {
           if (selectedValue == null) {
-            return PopupStep.FINAL_CHOICE
+            return FINAL_CHOICE
           }
 
           return doFinalStep {
@@ -98,19 +97,6 @@ class IncludeFileAction(val editor: Editor, private val file: PsiFile, private v
   }
 
   companion object {
-    fun isImportedAlready(file: PsiFile, to: PsiFile): Boolean {
-      return if (file == to) {
-        true
-      } else {
-        RecursionManager.doPreventingRecursion(file, true) {
-          file.children
-            .filterIsInstance<HuffIncludeDirective>()
-            .mapNotNull { nullIfError { it.includePath?.reference?.resolve()?.containingFile } }
-            .any { isImportedAlready(it, to) }
-        } ?: false
-      }
-    }
-
     fun addImport(project: Project, file: PsiFile, to: PsiFile) {
       CommandProcessor.getInstance().runUndoTransparentAction {
         ApplicationManager.getApplication().runWriteAction {
@@ -121,17 +107,6 @@ class IncludeFileAction(val editor: Editor, private val file: PsiFile, private v
           // SolImportOptimizer().processFile(file, false).run()
         }
       }
-    }
-
-    fun createImport(
-      factory: HuffPsiFactory,
-      solUserDefinedTypeName: List<String>,
-      file: VirtualFile,
-      to: VirtualFile,
-    ): HuffIncludeDirective {
-      val content =
-        "${(solUserDefinedTypeName.takeIf { it.isNotEmpty() }?.let { "{${it.joinToString(", ")}} from " } ?: "")}\"${buildImportPath(factory.project, to, file)}\""
-      return factory.createIncludeDirective(content, false)
     }
 
     fun readRemappingsFile(project: Project): Map<String, String> {
@@ -188,13 +163,5 @@ class IncludeFileAction(val editor: Editor, private val file: PsiFile, private v
         }
         .replace("\\", "/")
     }
-  }
-}
-
-fun <T> nullIfError(action: () -> T): T? {
-  return try {
-    action()
-  } catch (e: Throwable) {
-    null
   }
 }

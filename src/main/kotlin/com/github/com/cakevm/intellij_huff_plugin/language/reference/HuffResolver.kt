@@ -63,15 +63,16 @@ object HuffResolver {
 
     val resolvedImportedFiles = collectImports(file)
     val sameNameReferences =
-      elements.filterIsInstance(target).filter { it1 ->
-        val containingFile = it1.containingFile
+      elements.filterIsInstance(target).filter { namedElement ->
+        val containingFile = namedElement.containingFile
         // During completion, IntelliJ copies PSI files, and therefore we need to ensure that we compare
         // files against its original file.
         val originalFile = file.originalFile
         // Below, either include
         containingFile == originalFile ||
-          resolvedImportedFiles.any { it2 ->
-            (containingFile == it2.file) && it2.names.let { it3 -> it3.isEmpty() || it3.any { it4 -> it4.name == elementName } }
+          resolvedImportedFiles.any { importRecord ->
+            (containingFile == importRecord.file) &&
+              importRecord.names.let { names -> names.isEmpty() || names.any { name -> name.name == elementName } }
           }
       }
     return sameNameReferences.toSet()
@@ -104,14 +105,14 @@ object HuffResolver {
     }
 
     val resolvedImportedFiles =
-      imports.mapNotNull {
-        val containingFile = it.includePath.reference?.resolve()?.containingFile ?: return@mapNotNull null
+      imports.mapNotNull { import ->
+        val containingFile = import.includePath.reference?.resolve()?.containingFile ?: return@mapNotNull null
         val names = containingFile.childrenOfType<HuffNamedElement>().toList()
 
         ImportRecord(containingFile, names)
       }
     return resolvedImportedFiles +
-      resolvedImportedFiles.map { collectImports(it.file.childrenOfType<HuffIncludeDirective>(), visited) }.flatten()
+      resolvedImportedFiles.map { record -> collectImports(record.file.childrenOfType<HuffIncludeDirective>(), visited) }.flatten()
   }
 
   fun collectUsedElements(o: HuffIncludeDirective): List<String> {
@@ -123,26 +124,31 @@ object HuffResolver {
     val importScope = GlobalSearchScope.filesScope(o.project, paths.map { it.virtualFile })
 
     val imported =
-      paths.flatMap {
-        CachedValuesManager.getCachedValue(it) {
+      paths.flatMap { path ->
+        CachedValuesManager.getCachedValue(path) {
           val allKeys = HashSet<String>()
-          val scope = GlobalSearchScope.fileScope(it)
+          val scope = GlobalSearchScope.fileScope(path)
           StubIndex.getInstance().processAllKeys(HuffNamedElementIndex.KEY, Processors.cancelableCollectProcessor(allKeys), scope)
           CachedValueProvider.Result.create(
             allKeys
-              .filter {
-                StubIndex.getElements(HuffNamedElementIndex.KEY, it, scope.project!!, scope, HuffNamedElement::class.java).isNotEmpty()
+              .filter { key ->
+                StubIndex.getElements(HuffNamedElementIndex.KEY, key, scope.project!!, scope, HuffNamedElement::class.java).isNotEmpty()
               }
               .toSet(),
             PsiModificationTracker.MODIFICATION_COUNT,
           )
         }
       }
-    val targetNames = importedNames.flatMap { (emptyList<HuffNamedElement>() + it.target + it.ref).mapNotNull { it.name } }.toSet()
+    val targetNames =
+      importedNames
+        .flatMap { includedName ->
+          (emptyList<HuffNamedElement>() + includedName.target + includedName.ref).mapNotNull { element -> element.name }
+        }
+        .toSet()
     val used =
-      imported.intersect(targetNames).filter {
-        StubIndex.getElements(HuffNamedElementIndex.KEY, it, o.project, importScope, HuffNamedElement::class.java).all { e ->
-          exportElements.any { it.isAssignableFrom(e.javaClass) }
+      imported.intersect(targetNames).filter { name ->
+        StubIndex.getElements(HuffNamedElementIndex.KEY, name, o.project, importScope, HuffNamedElement::class.java).all { element ->
+          exportElements.any { exportClass -> exportClass.isAssignableFrom(element.javaClass) }
         }
       }
 
@@ -158,15 +164,15 @@ object HuffResolver {
           .descendants()
           .filter { it.parentOfType<HuffIncludeDirective>() == null }
           .flatMap { ref ->
-            (ref.reference as? HuffReference)?.multiResolve()?.mapNotNull {
-              Pair(ref as? HuffNamedElement ?: return@mapNotNull null, it as? HuffNamedElement ?: return@mapNotNull null)
+            (ref.reference as? HuffReference)?.multiResolve()?.mapNotNull { resolved ->
+              Pair(ref as? HuffNamedElement ?: return@mapNotNull null, resolved as? HuffNamedElement ?: return@mapNotNull null)
             } ?: emptyList()
           }
-          .mapNotNull { (ref, it) ->
+          .mapNotNull { (ref, target) ->
             IncludedName(
               ref,
               when {
-                it.containingFile != root -> it
+                target.containingFile != root -> target
                 else -> null
               } ?: return@mapNotNull null,
             )

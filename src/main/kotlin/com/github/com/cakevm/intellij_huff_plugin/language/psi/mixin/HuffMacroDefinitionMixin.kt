@@ -8,6 +8,7 @@ import com.intellij.ide.projectView.PresentationData
 import com.intellij.lang.ASTNode
 import com.intellij.psi.stubs.IStubElementType
 
+@Suppress("unused")
 abstract class HuffMacroDefinitionMixin : HuffStubbedNamedElementImpl<HuffMacroDefinitionStub>, HuffMacroDefinition {
   constructor(node: ASTNode) : super(node)
 

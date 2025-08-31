@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- Add quick fix to remove unused or invalid `#include` directives
+
 ## [1.0.6] - 2025-08-31
 
 - Add first-class macro support with `<param>()` invocation syntax for passing and calling macros as arguments
