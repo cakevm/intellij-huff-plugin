@@ -202,11 +202,16 @@ MacroCall ::= MacroCallIdentifier L_PAREN ( ( BuiltinFn | MacroCallParameter ) (
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroCallMixin"
 }
-BuiltinFn ::= BuiltinFnFuncSigCall | BuiltinFnErrorCall | BuiltinFnEventHashCall | BuiltinFnTableCall | MacroCall
+BuiltinFn ::= BuiltinFnFuncSigCall | BuiltinFnErrorCall | BuiltinFnEventHashCall | BuiltinFnTableCall | MacroCall | MacroParameterInvocation
 MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroParameterReferenceMixin"
+}
+MacroParameterInvocation ::= LESS_THAN Identifier GREATER_THAN L_PAREN ( ( BuiltinFn | MacroCallParameter ) ( COMMA ( BuiltinFn | MacroCallParameter ) )*)? R_PAREN
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroParameterInvocationMixin"
 }
 MacroLabel ::= Identifier COLON
 {
