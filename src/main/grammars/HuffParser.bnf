@@ -173,7 +173,12 @@ MacroConstantReference ::= L_BRACK Identifier R_BRACK
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroConstantReferenceMixin"
 }
-MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | MacroConstantReference | Identifier
+MacroArgumentReference ::= Identifier
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroArgumentReferenceMixin"
+}
+MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | MacroConstantReference | MacroArgumentReference
 BuiltinFnFuncSigCall ::= BUILTIN_FN_FUNC_SIG L_PAREN ( QUOTED_STRING | Identifier ) R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"

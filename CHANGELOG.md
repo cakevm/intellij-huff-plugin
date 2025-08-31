@@ -4,8 +4,11 @@
 
 ## [Unreleased]
 
+## [1.0.6] - 2025-08-31
+
 - Add first-class macro support with `<param>()` invocation syntax for passing and calling macros as arguments
 - Add macro parameter resolution with `<param>` syntax navigation and completion
+- Add reference resolution for macro names passed as arguments (e.g., `MACRO1(MACRO2)`)
 - Update dependencies: Gradle 9.0.0, Kotlin 2.2.0, IntelliJ Platform 2025.1.5
 
 ## [1.0.5] - 2025-05-30
