@@ -5,7 +5,7 @@
 ## [Unreleased]
 
 ## [1.0.7] - 2025-10-18
-- Add arithmetic expression support in constant definitions (operators: `+`, `-`, `*`, `/`, `%`, minus, and parentheses)
+- Add arithmetic expression support in constant definitions (operators: `+`, `-`, `*`, `/`, `%`)
 - Add unresolved reference highlighting for constants used in expressions
 - Add quick fix to remove unused or invalid `#include` directives
 
