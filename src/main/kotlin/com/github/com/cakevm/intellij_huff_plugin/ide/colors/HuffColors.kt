@@ -17,6 +17,7 @@ enum class HuffColor(humanName: Supplier<@AttributeDescriptor String>, default: 
   DEFINE(HuffBundle.messagePointer("settings.huff.color.define"), Default.KEYWORD),
   INCLUDE(HuffBundle.messagePointer("settings.huff.color.include"), Default.CLASS_REFERENCE),
   BRACES(HuffBundle.messagePointer("settings.huff.color.braces"), Default.BRACES),
+  OPERATOR(HuffBundle.messagePointer("settings.huff.color.operator"), Default.OPERATION_SIGN),
   BUILTIN_FN(HuffBundle.messagePointer("settings.huff.color.builtin_fn"), Default.STATIC_METHOD),
   ARITHMETIC_AND_LOGICAL(HuffBundle.messagePointer("settings.huff.color.arithmetic_and_logical"), Default.HIGHLIGHTED_REFERENCE),
   STACK_MANAGEMENT(HuffBundle.messagePointer("settings.huff.color.stack_management"), Default.HIGHLIGHTED_REFERENCE),

@@ -55,6 +55,12 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         }
       }
 
+      override fun visitConstantReferenceExpression(element: HuffConstantReferenceExpression) {
+        checkReference(element) {
+          holder.registerProblem(element, "'${element.identifier.text}' constant is undefined", ProblemHighlightType.WARNING)
+        }
+      }
+
       override fun visitMacroCall(element: HuffMacroCall) {
         checkReference(element) {
           if (builtinFns[element.macroCallIdentifier.text] == null) {

@@ -28,6 +28,13 @@
     LESS_THAN='<'
     GREATER_THAN='>'
 
+    // Arithmetic operators
+    PLUS='+'
+    MINUS='-'
+    STAR='*'
+    SLASH='/'
+    PERCENT='%'
+
     // Huff specific
     INCLUDE='#include'
     DEFINE='#define'
@@ -131,8 +138,29 @@ private DefineDefinition ::= DEFINE ( EventAbiDefinition | FunctionAbiDefinition
 
 // #define constant
 ConstantDefinitionIdentifier ::= Identifier
-ConstantDefinitionAssignment ::= BuiltinFn | FREE_STORAGE_POINTER | HEXCODE | MacroIdentifier
-ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL ConstantDefinitionAssignment {
+
+// Constant expressions with arithmetic operators
+ConstantExpression ::= AdditiveExpression
+
+private AdditiveExpression ::= MultiplicativeExpression ((PLUS | MINUS) MultiplicativeExpression)*
+
+private MultiplicativeExpression ::= UnaryExpression ((STAR | SLASH | PERCENT) UnaryExpression)*
+
+private UnaryExpression ::= MINUS? PrimaryExpression
+
+ConstantReferenceExpression ::= Identifier
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffConstantReferenceExpressionMixin"
+}
+
+private PrimaryExpression ::= HEXCODE
+                           | ConstantReferenceExpression
+                           | BuiltinFn
+                           | FREE_STORAGE_POINTER
+                           | L_PAREN ConstantExpression R_PAREN
+
+ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL ConstantExpression {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffConstantDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffConstantDefinitionStub"

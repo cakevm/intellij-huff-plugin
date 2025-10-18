@@ -71,6 +71,10 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   ":"                        { return COLON; }
   "<"                        { return LESS_THAN; }
   ">"                        { return GREATER_THAN; }
+  "+"                        { return PLUS; }
+  "-"                        { return MINUS; }
+  "*"                        { return STAR; }
+  "%"                        { return PERCENT; }
 
   "/*"                       {
                                yybegin(IN_BLOCK_COMMENT);
@@ -81,6 +85,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
                                yybegin(IN_EOL_COMMENT);
                                yypushback(2);
                              }
+  "/"                        { return SLASH; }
 
   "#include"                 { return INCLUDE; }
   "#define"                  { return DEFINE; }

@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+## [1.0.7] - 2025-10-18
+- Add arithmetic expression support in constant definitions (operators: `+`, `-`, `*`, `/`, `%`)
+- Add unresolved reference highlighting for constants used in expressions
 - Add quick fix to remove unused or invalid `#include` directives
 
 ## [1.0.6] - 2025-08-31
