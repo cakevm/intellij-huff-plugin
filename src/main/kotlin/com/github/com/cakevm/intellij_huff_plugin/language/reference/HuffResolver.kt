@@ -28,6 +28,9 @@ object HuffResolver {
           is HuffMacroConstantReference -> {
             resolveUsingImports(HuffConstantDefinition::class.java, element, element.containingFile)
           }
+          is HuffConstantReferenceExpression -> {
+            resolveUsingImports(HuffConstantDefinition::class.java, element, element.containingFile)
+          }
           is HuffBuiltinFnFuncSigCall -> {
             resolveUsingImports(HuffFunctionAbiDefinition::class.java, element, element.containingFile)
           }

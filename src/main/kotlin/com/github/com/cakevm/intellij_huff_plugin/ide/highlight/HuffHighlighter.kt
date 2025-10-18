@@ -39,6 +39,12 @@ class HuffHighlighter : SyntaxHighlighterBase() {
         INCLUDE to HuffColor.INCLUDE,
         L_BRACE to HuffColor.BRACES,
         R_BRACE to HuffColor.BRACES,
+        // Arithmetic operators
+        PLUS to HuffColor.OPERATOR,
+        MINUS to HuffColor.OPERATOR,
+        STAR to HuffColor.OPERATOR,
+        SLASH to HuffColor.OPERATOR,
+        PERCENT to HuffColor.OPERATOR,
       )
       .plus(buildInFns().map { it to HuffColor.BUILTIN_FN })
       .plus(opcodeNamesStackManagement().map { it to HuffColor.STACK_MANAGEMENT })
