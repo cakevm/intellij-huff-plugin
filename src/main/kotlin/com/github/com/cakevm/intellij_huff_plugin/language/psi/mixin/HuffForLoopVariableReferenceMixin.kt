@@ -1,13 +1,13 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin
 
-import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffConstantReferenceExpression
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffForLoopVariableReference
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.impl.HuffNamedElementImpl
-import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffConstantReferenceExpressionReference
+import com.github.com.cakevm.intellij_huff_plugin.language.reference.HuffForLoopVariableReferenceImpl
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.base.HuffReference
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 
-abstract class HuffConstantReferenceExpressionMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffConstantReferenceExpression {
+abstract class HuffForLoopVariableReferenceMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffForLoopVariableReference {
 
   override val referenceNameElement: PsiElement
     get() = this.identifier
@@ -17,5 +17,5 @@ abstract class HuffConstantReferenceExpressionMixin(node: ASTNode) : HuffNamedEl
 
   override fun getName(): String? = referenceName
 
-  override fun getReference(): HuffReference = HuffConstantReferenceExpressionReference(this as HuffConstantReferenceExpression)
+  override fun getReference(): HuffReference = HuffForLoopVariableReferenceImpl(this as HuffForLoopVariableReference)
 }

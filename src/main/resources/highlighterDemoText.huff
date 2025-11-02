@@ -2,6 +2,9 @@
 
 // Example from: https://docs.huff.sh/get-started/compiling/
 
+#define constant MY_CONSTANT = 0x42
+#define constant SIZE = 10
+
 #define function add(uint256,uint256) nonpayable returns (uint256)
 
 #define macro MAIN() = {
@@ -13,4 +16,18 @@
    // Return our new number.
    0x00 mstore // Store our number in memory.
    0x20 0x00 return // Return it.
+}
+
+// Macro with parameters
+#define macro TRANSFER(recipient, amount) = takes(0) returns(0) {
+   <recipient>  // Macro parameter reference
+   <amount>     // Macro parameter reference
+   // transfer logic here
+}
+
+// For-loop with variable reference
+#define macro LOOP_EXAMPLE() = takes(0) returns(0) {
+   for(i in 0..[SIZE]) {
+      <i>  // For-loop variable reference
+   }
 }

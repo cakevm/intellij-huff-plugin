@@ -20,7 +20,7 @@ class HuffAnnotator : Annotator {
           .textAttributes(HuffColor.CONSTANT.textAttributesKey)
           .create()
       }
-      MACRO_CONSTANT_REFERENCE -> {
+      CONSTANT_REFERENCE -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
@@ -39,6 +39,20 @@ class HuffAnnotator : Annotator {
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
           .textAttributes(HuffColor.MACRO_LABEL_CALL.textAttributesKey)
+          .create()
+      }
+      MACRO_PARAMETER_REFERENCE -> {
+        holder
+          .newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(psiElement.textRange)
+          .textAttributes(HuffColor.MACRO_PARAMETER.textAttributesKey)
+          .create()
+      }
+      FOR_LOOP_VARIABLE_REFERENCE -> {
+        holder
+          .newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .range(psiElement.textRange)
+          .textAttributes(HuffColor.FOR_LOOP_VARIABLE.textAttributesKey)
           .create()
       }
       // Remove highlighting of lexer tokens for identifiers / parameters

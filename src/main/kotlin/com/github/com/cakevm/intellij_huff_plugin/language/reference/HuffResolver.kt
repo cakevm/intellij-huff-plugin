@@ -25,10 +25,7 @@ object HuffResolver {
           is HuffMacroLabelGoTo -> {
             resolveUsingImports(HuffMacroLabel::class.java, element, element.containingFile)
           }
-          is HuffMacroConstantReference -> {
-            resolveUsingImports(HuffConstantDefinition::class.java, element, element.containingFile)
-          }
-          is HuffConstantReferenceExpression -> {
+          is HuffConstantReference -> {
             resolveUsingImports(HuffConstantDefinition::class.java, element, element.containingFile)
           }
           is HuffBuiltinFnFuncSigCall -> {

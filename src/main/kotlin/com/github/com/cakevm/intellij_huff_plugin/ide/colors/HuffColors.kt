@@ -33,6 +33,8 @@ enum class HuffColor(humanName: Supplier<@AttributeDescriptor String>, default: 
   CONSTANT(HuffBundle.messagePointer("settings.huff.color.constant"), Default.CONSTANT),
   MACRO_LABEL(HuffBundle.messagePointer("settings.huff.color.macro_label"), Default.STATIC_METHOD),
   MACRO_LABEL_CALL(HuffBundle.messagePointer("settings.huff.color.macro_label_call"), Default.TEMPLATE_LANGUAGE_COLOR),
+  MACRO_PARAMETER(HuffBundle.messagePointer("settings.huff.color.macro_parameter"), Default.PARAMETER),
+  FOR_LOOP_VARIABLE(HuffBundle.messagePointer("settings.huff.color.for_loop_variable"), Default.LOCAL_VARIABLE),
   IDENTIFIER(HuffBundle.messagePointer("settings.huff.color.identifier"), Default.IDENTIFIER);
 
   val textAttributesKey = TextAttributesKey.createTextAttributesKey("run.huff.$name", default)

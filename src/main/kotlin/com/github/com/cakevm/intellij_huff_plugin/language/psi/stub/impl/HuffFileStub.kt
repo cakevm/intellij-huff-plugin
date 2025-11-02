@@ -12,7 +12,7 @@ class HuffFileStub(file: HuffFile?) : PsiFileStubImpl<HuffFile>(file) {
 
   object Type : IStubFileElementType<HuffFileStub>(HuffLanguage.INSTANCE) {
     // Update this version number if the stub structure changes
-    override fun getStubVersion() = 7
+    override fun getStubVersion() = 8
 
     override fun getBuilder(): StubBuilder =
       object : DefaultStubBuilder() {

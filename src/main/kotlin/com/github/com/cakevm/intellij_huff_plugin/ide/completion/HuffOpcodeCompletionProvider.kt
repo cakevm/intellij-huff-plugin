@@ -17,6 +17,7 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
         .run {
           listOf(
             // Stack Management
+            "push0",
             "push1",
             "push2",
             "push3",
@@ -108,6 +109,8 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
             "xor",
             "not",
             "byte",
+            "sha3",
+            "clz",
             // Environmental Information
             "address",
             "balance",
@@ -131,6 +134,12 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
             "number",
             "difficulty",
             "gaslimit",
+            "prevrandao",
+            "chainid",
+            "basefee",
+            "selfbalance",
+            "blobhash",
+            "blobbasefee",
             // Storage and Memory Access
             "sload",
             "sstore",
@@ -138,6 +147,9 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
             "mstore",
             "mstore8",
             "msize",
+            "tload",
+            "tstore",
+            "mcopy",
             // Flow Control
             "jump",
             "jumpi",
@@ -160,6 +172,7 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
             // Miscellaneous
             "stop",
             "return",
+            "revert",
             "invalid",
             // Gas and Cost Management
             "gas",

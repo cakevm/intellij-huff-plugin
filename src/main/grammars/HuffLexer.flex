@@ -75,6 +75,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "-"                        { return MINUS; }
   "*"                        { return STAR; }
   "%"                        { return PERCENT; }
+  ".."                       { return DOUBLE_DOT; }
 
   "/*"                       {
                                yybegin(IN_BLOCK_COMMENT);
@@ -102,8 +103,12 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "jumptable__packed"        { return JUMPTABLE_PACKED; }
   "table"                    { return TABLE; }
   "test"                     { return TEST; }
+  "for"                      { return FOR; }
+  "in"                       { return IN; }
+  "step"                     { return STEP; }
 
   "FREE_STORAGE_POINTER()"   { return FREE_STORAGE_POINTER; }
+  "__NOOP"                   { return BUILTIN_CONST_NOOP; }
 
   "MAIN"                    { return MAIN; }
   "CONSTRUCTOR"             { return CONSTRUCTOR; }
@@ -125,6 +130,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "__CODECOPY_DYN_ARG"      { return BUILTIN_FN_CODECOPY_DYN_ARG; }
   "__VERBATIM"              { return BUILTIN_FN_VERBATIM; }
   "__BYTES"                 { return BUILTIN_FN_BYTES; }
+  "__ASSERT_PC"             { return BUILTIN_FN_ASSERT_PC; }
 
    // Test decorator flags
    "value"                  { return VALUE; }
@@ -228,6 +234,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "xor"                      { return XOR; }
   "not"                      { return NOT; }
   "byte"                     { return BYTE; }
+  "clz"                      { return CLZ; }
 
   // Environmental Information
   //"address"               { return ADDRESS; }

@@ -1,0 +1,86 @@
+{
+  "__FUNC_SIG": {
+    "name": "__FUNC_SIG",
+    "description": "At compile time, the invocation of __FUNC_SIG is substituted with PUSH4 function_selector, where function_selector is the 4 byte function selector of the passed function definition or string.",
+    "syntax": "(<string>|<function definition>)",
+    "returns": "PUSH4 function_selector",
+    "example": "__FUNC_SIG(\"transfer(address,uint256)\") → PUSH4 0xa9059cbb"
+  },
+  "__EVENT_HASH": {
+    "name": "__EVENT_HASH",
+    "description": "At compile time, the invocation of __EVENT_HASH is substituted with PUSH32 event_hash, where event_hash is the selector hash of the passed event definition or string.",
+    "syntax": "(<string>|<event definition>)",
+    "returns": "PUSH32 event_hash",
+    "example": "__EVENT_HASH(\"Transfer(address,address,uint256)\") → PUSH32 0xddf252ad..."
+  },
+  "__ERROR": {
+    "name": "__ERROR",
+    "description": "At compile time, the invocation of __ERROR is substituted with PUSH32 error_selector, where error_selector is the left-padded 4 byte error selector of the passed error definition.",
+    "syntax": "(<error definition>)",
+    "returns": "PUSH32 left-padded error_selector",
+    "example": "__ERROR(Unauthorized()) → PUSH32 0x00000000...82b42900"
+  },
+  "__LEFTPAD": {
+    "name": "__LEFTPAD",
+    "description": "At compile time, the invocation of __LEFTPAD is substituted with padded_literal, where padded_literal is the left padded version of the passed input to 32 bytes. This function is only available as constant assignment or in a code table.",
+    "syntax": "(<string>|<hex>|<builtin function>)",
+    "returns": "32-byte left-padded literal",
+    "example": "__LEFTPAD(0x123) → 0x0000000000000000000000000000000000000000000000000000000000000123"
+  },
+  "__RIGHTPAD": {
+    "name": "__RIGHTPAD",
+    "description": "At compile time, the invocation of __RIGHTPAD is substituted with PUSH32 padded_literal, where padded_literal is the right padded version of the passed input to 32 bytes.",
+    "syntax": "(<string>|<hex>|<builtin function>)",
+    "returns": "PUSH32 right-padded literal",
+    "example": "__RIGHTPAD(0x123) → PUSH32 0x1230000000000000000000000000000000000000000000000000000000000000"
+  },
+  "__codesize": {
+    "name": "__codesize",
+    "description": "Pushes the code size of the macro or function passed to the stack. The size is calculated at compile time based on the actual bytecode generated for that macro or function.",
+    "syntax": "(<macro>|<function>)",
+    "returns": "PUSH2 code_size",
+    "example": "__codesize(MAIN) → PUSH2 0x0042"
+  },
+  "__tablestart": {
+    "name": "__tablestart",
+    "description": "Pushes the starting position of the specified table in the bytecode to the stack. This is used with jump tables to calculate the absolute position where the table begins in the compiled bytecode.",
+    "syntax": "(<table>)",
+    "returns": "PUSH2 table_start_position",
+    "example": "__tablestart(MY_TABLE) → PUSH2 0x0100"
+  },
+  "__tablesize": {
+    "name": "__tablesize",
+    "description": "Pushes the size of the specified table in bytes to the stack. For jump tables, this includes all the entries in the table. The size is calculated at compile time.",
+    "syntax": "(<table>)",
+    "returns": "PUSH2 table_size_bytes",
+    "example": "__tablesize(MY_TABLE) → PUSH2 0x0040"
+  },
+  "__VERBATIM": {
+    "name": "__VERBATIM",
+    "description": "This function is used to insert raw hex data into the compiled bytecode. It is useful for inserting raw opcodes or data that should be emitted exactly as specified without any processing or validation by the compiler.",
+    "syntax": "(<hex>)",
+    "returns": "Raw hex bytes",
+    "example": "__VERBATIM(0x6001600101) → 0x6001600101 (PUSH1 01 PUSH1 01 ADD)"
+  },
+  "__BYTES": {
+    "name": "__BYTES",
+    "description": "This function allows to insert a string as UTF-8 encoded bytes into the compiled bytecode. The resulting bytecode is limited to 32 bytes. The string is converted to its UTF-8 byte representation and pushed onto the stack.",
+    "syntax": "(<string>)",
+    "returns": "PUSHX utf8_bytes",
+    "example": "__BYTES(\"hello\") → PUSH5 0x68656c6c6f"
+  },
+  "__ASSERT_PC": {
+    "name": "__ASSERT_PC",
+    "description": "This function is a compile-time assertion that validates the current bytecode position (program counter) matches the expected value. It generates no bytecode - it's purely a compile-time check. If the assertion fails, compilation will stop with an error showing the expected vs actual position. This is useful for ensuring critical instructions (like jump destinations) are positioned at specific bytecode offsets.",
+    "syntax": "(<literal>|<constant>)",
+    "returns": "No bytecode (compile-time only)",
+    "example": "__ASSERT_PC(0x20) → Validates PC is at position 32"
+  },
+  "__CODECOPY_DYN_ARG": {
+    "name": "__CODECOPY_DYN_ARG",
+    "description": "This function is used for dynamic constructor arguments. It inserts code that copies constructor arguments from calldata during contract deployment. This is typically used when you need to handle constructor parameters dynamically at runtime.",
+    "syntax": "()",
+    "returns": "Bytecode for dynamic argument handling",
+    "example": "__CODECOPY_DYN_ARG() → Generates CODECOPY instructions"
+  }
+}

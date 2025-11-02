@@ -49,15 +49,15 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         }
       }
 
-      override fun visitMacroConstantReference(element: HuffMacroConstantReference) {
+      override fun visitConstantReference(element: HuffConstantReference) {
         checkReference(element) {
           holder.registerProblem(element, "'${element.identifier.text}' constant is undefined", ProblemHighlightType.WARNING)
         }
       }
 
-      override fun visitConstantReferenceExpression(element: HuffConstantReferenceExpression) {
+      override fun visitForLoopVariableReference(element: HuffForLoopVariableReference) {
         checkReference(element) {
-          holder.registerProblem(element, "'${element.identifier.text}' constant is undefined", ProblemHighlightType.WARNING)
+          holder.registerProblem(element, "'${element.identifier.text}' for-loop variable is undefined", ProblemHighlightType.WARNING)
         }
       }
 

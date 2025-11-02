@@ -104,6 +104,19 @@
     ],
     "name": "byte"
   },
+  "clz": {
+    "description": "Count leading zero bits. Returns the number of leading zero bits in the value (EIP-7939, Osaka upgrade).",
+    "instrArgs": [
+      "value"
+    ],
+    "instrCategory": "arithmetic",
+    "instrGas": 3,
+    "instrOpcode": 30,
+    "instrReturns": [
+      "count"
+    ],
+    "name": "clz"
+  },
   "call": {
     "description": "Message-call into an account.",
     "instrArgs": [

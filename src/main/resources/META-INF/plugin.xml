@@ -43,6 +43,9 @@
 
         <lang.documentationProvider language="Huff"
                                     implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.documentation.HuffDocumentationProvider"/>
+
+        <internalFileTemplate name="EmptyHuffFile"/>
+
         <localInspection language="Huff" groupName="Huff"
                          displayName="Duplicate label"
                          enabledByDefault="true"

@@ -4,6 +4,23 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-11-01
+- Add support for compile-time for-loops (huff-neo v1.5.0)
+  - Syntax: `for(var in start..end)` and `for(var in start..end step N)`
+  - Loop variable interpolation with `<var>` syntax
+- Add support for new builtin constants and functions (huff-neo v1.5.0)
+  - `__NOOP` builtin constant that generates no bytecode
+  - `__ASSERT_PC` builtin function for compile-time bytecode position assertions
+- Add hover documentation for all builtin functions
+  - Documentation appears when hovering over `__FUNC_SIG`, `__EVENT_HASH`, `__ERROR`, `__LEFTPAD`, `__RIGHTPAD`, `__codesize`, `__tablestart`, `__tablesize`, `__VERBATIM`, `__BYTES`, `__ASSERT_PC`, `__CODECOPY_DYN_ARG`
+  - Shows function syntax, return values, descriptions, and examples
+- Add syntax highlighting for macro parameter references (`<param>`)
+- Add `clz` opcode (Count Leading Zeros) from Osaka upgrade (huff-neo v1.3.10, EIP-7939)
+  - Opcode `clz` with completion, highlighting, and documentation
+- Add missing opcodes to completion and highlighting:
+  - `push0`, `sha3`, `prevrandao`, `chainid`, `basefee`, `selfbalance`
+  - `blobhash`, `blobbasefee`, `tload`, `tstore`, `mcopy`, `revert`
+
 ## [1.0.7] - 2025-10-18
 - Add arithmetic expression support in constant definitions (operators: `+`, `-`, `*`, `/`, `%`)
 - Add unresolved reference highlighting for constants used in expressions

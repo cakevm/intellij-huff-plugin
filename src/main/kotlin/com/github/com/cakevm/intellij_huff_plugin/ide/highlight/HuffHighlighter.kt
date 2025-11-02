@@ -32,6 +32,9 @@ class HuffHighlighter : SyntaxHighlighterBase() {
         JUMPTABLE_PACKED to HuffColor.DEFINE,
         TABLE to HuffColor.DEFINE,
         TEST to HuffColor.DEFINE,
+        FOR to HuffColor.DEFINE,
+        IN to HuffColor.DEFINE,
+        STEP to HuffColor.DEFINE,
         // literals
         HEXCODE to HuffColor.HEXCODE,
         STRING to HuffColor.STRING,
@@ -70,7 +73,9 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       BUILTIN_FN_CODECOPY_DYN_ARG,
       BUILTIN_FN_VERBATIM,
       BUILTIN_FN_BYTES,
+      BUILTIN_FN_ASSERT_PC,
       FREE_STORAGE_POINTER,
+      BUILTIN_CONST_NOOP,
     )
 
   private fun opcodeNamesStackManagement() =
@@ -168,6 +173,8 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       SHL,
       SHR,
       SAR,
+      SHA3,
+      CLZ,
     )
 
   private fun opcodeNamesEnvironmentalInformation() =
@@ -196,6 +203,11 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       NUMBER,
       DIFFICULTY,
       GASLIMIT,
+      PREVRANDAO,
+      BASEFEE,
+      SELFBALANCE,
+      BLOBHASH,
+      BLOBBASEFEE,
     )
 
   private fun opcodeNamesStorageAndMemoryAccess() =
@@ -207,6 +219,9 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       MSTORE,
       MSTORE8,
       MSIZE,
+      TLOAD,
+      TSTORE,
+      MCOPY,
     )
 
   private fun opcodeNamesFlowControl() =
