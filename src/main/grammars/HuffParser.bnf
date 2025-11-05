@@ -55,6 +55,8 @@
     FOR='for'
     IN='in'
     STEP='step'
+    IF='if'
+    ELSE='else'
 
     // Constants
     FREE_STORAGE_POINTER='FREE_STORAGE_POINTER()'
@@ -284,11 +286,21 @@ ForLoopStatement ::= FOR L_PAREN ForLoopVariable IN ForLoopRange ForLoopStep? R_
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffForLoopStatementMixin"
 }
+// If/else statement support
+IfCondition ::= L_PAREN ConstantExpression R_PAREN
+IfBody ::= L_BRACE MacroStatement* R_BRACE
+ElseIfClause ::= ELSE IF IfCondition IfBody
+ElseClause ::= ELSE IfBody
+IfStatement ::= IF IfCondition IfBody ElseIfClause* ElseClause?
+{
+  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement"
+  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIfStatementMixin"
+}
 // https://github.com/huff-language/huff-rs/blob/05d71e4f/huff_lexer/src/lib.rs#L250
 // huff parse true/false as 1/0
 HuffBoolMapping ::= BOOLEANLITERAL
 MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabel | ConstantReference
-                | BuiltinFn | MacroParameterReference | MacroLabelGoTo | ForLoopStatement | ForLoopVariableReference
+                | BuiltinFn | MacroParameterReference | MacroLabelGoTo | ForLoopStatement | ForLoopVariableReference | IfStatement
 MacroBody ::= L_BRACE  MacroStatement* R_BRACE
 // #define macro/fn/test
 MacroType ::= MACRO | FN | TEST

@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+## [1.1.1] - 2025-11-05
+- Add support for compile-time if/else statements (huff-neo v1.5.2)
+  - Syntax: `if ([CONDITION]) { ... } else if ([CONDITION]) { ... } else { ... }`
+- Add error for circular constant references (huff-neo v1.5.1)
+  - Detects direct cycles (A=B, B=A), indirect cycles (A=B, B=C, C=A), and self-references (A=A+1)
+
 ## [1.1.0] - 2025-11-01
 - Add support for compile-time for-loops (huff-neo v1.5.0)
   - Syntax: `for(var in start..end)` and `for(var in start..end step N)`

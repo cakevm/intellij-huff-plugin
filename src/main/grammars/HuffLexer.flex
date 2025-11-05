@@ -106,6 +106,8 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "for"                      { return FOR; }
   "in"                       { return IN; }
   "step"                     { return STEP; }
+  "if"                       { return IF; }
+  "else"                     { return ELSE; }
 
   "FREE_STORAGE_POINTER()"   { return FREE_STORAGE_POINTER; }
   "__NOOP"                   { return BUILTIN_CONST_NOOP; }

@@ -64,6 +64,12 @@
                          level="WEAK WARNING"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffUnusedElementInspection"/>
 
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Circular constant dependency"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffCircularConstantDependencyInspection"/>
+
         <stubIndex
                 implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
         <stubIndex
