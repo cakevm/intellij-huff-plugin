@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [1.1.2] - 2025-11-06
+- Add support for comparison operators in if/else conditions (huff-neo v1.5.2+)
+  - Operators: `==`, `!=`, `<`, `>`, `<=`, `>=`
+  - Example: `if ([MODE] == 0x01) { ... }`
+- Add support for logical NOT operator `!` in if/else conditions (huff-neo v1.5.2+)
+  - Example: `if (![FLAG]) { ... }`
+- Add support for macro arguments in compile-time expressions (huff-neo v1.5.3)
+  - Example: `if (<MODE> == 0x01) { ... }`, `for(i in 0..<count>) { ... }`
+- Add support for for-loop variables in conditional expressions
+  - Example: `for(i in 0..5) { if (<i> == 0x02) { ... } }`
+- Add support for boolean literals (`true`/`false`) in if conditions
+
 ## [1.1.1] - 2025-11-05
 - Add support for compile-time if/else statements (huff-neo v1.5.2)
   - Syntax: `if ([CONDITION]) { ... } else if ([CONDITION]) { ... } else { ... }`

@@ -99,8 +99,20 @@ This is an IntelliJ IDEA plugin that provides support for the Huff language - a 
 - Use `LightPlatformCodeInsightFixtureTestCase` for IDE feature tests
 - Grammar changes require regenerating parser and updating tests
 
+## Code Style and Documentation Guidelines
+
+### Code Formatting
+- Code formatting uses ktfmt with Google style (max width 140 chars)
+- Run `./gradlew spotlessApply` to format code automatically
+
+### Documentation
+- **Behavior-focused**: Write doc strings that describe what the code accomplishes, not how it's implemented
+  - Good: "Resolves a macro reference by searching the current file and all included files"
+  - Avoid: "Uses a loop to iterate through files and calls findMacro on each one"
+- Focus on the purpose, inputs, outputs, and effects rather than implementation details
+- Document public APIs, complex logic, and non-obvious behavior
+
 ## Important Notes
 
 - Generated code is in `src/main/gen/` - do not edit manually
-- Code formatting uses ktfmt with Google style (max width 140 chars)
 - The plugin supports IntelliJ 2025.1+ (platform version 251+)

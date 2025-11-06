@@ -66,10 +66,15 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   ","                        { return COMMA; }
   "{"                        { return L_BRACE; }
   "}"                        { return R_BRACE; }
+  "=="                       { return EQUAL_EQUAL; }
   "="                        { return EQUAL; }
+  "!="                       { return NOT_EQUAL; }
+  "!"                        { return EXCLAMATION; }
   "\""                       { return DOUBLE_QUOTE; }
   ":"                        { return COLON; }
+  "<="                       { return LESS_EQUAL; }
   "<"                        { return LESS_THAN; }
+  ">="                       { return GREATER_EQUAL; }
   ">"                        { return GREATER_THAN; }
   "+"                        { return PLUS; }
   "-"                        { return MINUS; }

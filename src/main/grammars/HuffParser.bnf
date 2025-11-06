@@ -28,6 +28,13 @@
     LESS_THAN='<'
     GREATER_THAN='>'
 
+    // Comparison operators
+    EQUAL_EQUAL='=='
+    NOT_EQUAL='!='
+    LESS_EQUAL='<='
+    GREATER_EQUAL='>='
+    EXCLAMATION='!'
+
     // Arithmetic operators
     PLUS='+'
     MINUS='-'
@@ -147,22 +154,32 @@ private DefineDefinition ::= DEFINE ( EventAbiDefinition | FunctionAbiDefinition
 // #define constant
 ConstantDefinitionIdentifier ::= Identifier
 
-// Constant expressions with arithmetic operators
+// Constant expressions with arithmetic operators only (no comparisons)
+// Used in: constant definitions, for-loop ranges/steps
 ConstantExpression ::= AdditiveExpression
+
+// Conditional expressions with comparison operators
+// Used in: if/else conditions
+ConditionalExpression ::= ComparisonExpression
+
+private ComparisonExpression ::= AdditiveExpression ((EQUAL_EQUAL | NOT_EQUAL | LESS_EQUAL | GREATER_EQUAL | LESS_THAN | GREATER_THAN) AdditiveExpression)*
 
 private AdditiveExpression ::= MultiplicativeExpression ((PLUS | MINUS) MultiplicativeExpression)*
 
 private MultiplicativeExpression ::= UnaryExpression ((STAR | SLASH | PERCENT) UnaryExpression)*
 
-private UnaryExpression ::= MINUS? PrimaryExpression
+private UnaryExpression ::= (MINUS | EXCLAMATION)? PrimaryExpression
 
 private PrimaryExpression ::= HEXCODE
                            | DECIMAL
+                           | BOOLEANLITERAL
                            | ConstantReference
+                           | MacroParameterReference
+                           | ForLoopVariableReference
                            | BuiltinFn
                            | FREE_STORAGE_POINTER
                            | BUILTIN_CONST_NOOP
-                           | L_PAREN ConstantExpression R_PAREN
+                           | L_PAREN ConditionalExpression R_PAREN
 
 ConstantDefinition ::= CONSTANT ConstantDefinitionIdentifier EQUAL ConstantExpression {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
@@ -287,7 +304,7 @@ ForLoopStatement ::= FOR L_PAREN ForLoopVariable IN ForLoopRange ForLoopStep? R_
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffForLoopStatementMixin"
 }
 // If/else statement support
-IfCondition ::= L_PAREN ConstantExpression R_PAREN
+IfCondition ::= L_PAREN ConditionalExpression R_PAREN
 IfBody ::= L_BRACE MacroStatement* R_BRACE
 ElseIfClause ::= ELSE IF IfCondition IfBody
 ElseClause ::= ELSE IfBody
