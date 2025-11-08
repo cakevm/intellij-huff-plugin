@@ -65,6 +65,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       BUILTIN_FN_TABLESIZE,
       BUILTIN_FN_CODESIZE,
       BUILTIN_FN_TABLESTART,
+      BUILTIN_FN_EMBED_TABLE,
       BUILTIN_FN_FUNC_SIG,
       BUILTIN_FN_EVENT_HASH,
       BUILTIN_FN_ERROR,

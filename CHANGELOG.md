@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [1.1.2] - 2025-11-08
+- Add support for `__EMBED_TABLE` builtin function (huff-neo v1.5.5)
+  - Syntax: `__EMBED_TABLE(TABLE_NAME)`
+- Add support for `keccak256` opcode and downgrade `sha3` to an alias (huff-neo v1.5.5)
+
 ## [1.1.1] - 2025-11-06
 - Add support for comparison operators in if/else conditions (huff-neo v1.5.2+)
   - Operators: `==`, `!=`, `<`, `>`, `<=`, `>=`

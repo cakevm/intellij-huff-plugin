@@ -55,6 +55,13 @@
     "returns": "PUSH2 table_size_bytes",
     "example": "__tablesize(MY_TABLE) → PUSH2 0x0040"
   },
+  "__EMBED_TABLE": {
+    "name": "__EMBED_TABLE",
+    "description": "Embeds a code table inline at the current bytecode position instead of appending it at the end of the contract. This allows for more precise control over table placement. Each table can only be embedded once to avoid ambiguity. For embedded tables, __tablestart() returns the inline embedding position. Currently only supports code tables, not jump tables.",
+    "syntax": "(<code_table>)",
+    "returns": "Inline table bytecode",
+    "example": "__EMBED_TABLE(MY_TABLE) → Embeds table data at current position"
+  },
   "__VERBATIM": {
     "name": "__VERBATIM",
     "description": "This function is used to insert raw hex data into the compiled bytecode. It is useful for inserting raw opcodes or data that should be emitted exactly as specified without any processing or validation by the compiler.",

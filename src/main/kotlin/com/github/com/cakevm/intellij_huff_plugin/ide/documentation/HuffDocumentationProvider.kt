@@ -68,11 +68,12 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
 
     val tableCall = PsiTreeUtil.getParentOfType(element, HuffBuiltinFnTableCall::class.java)
     if (tableCall != null) {
-      // Could be __tablesize, __tablestart, or __codesize - check the actual text
+      // Could be __tablesize, __tablestart, __EMBED_TABLE, or __codesize - check the actual text
       val text = element.text
       return when {
         text.contains("tablesize", ignoreCase = true) -> "__tablesize"
         text.contains("tablestart", ignoreCase = true) -> "__tablestart"
+        text.contains("EMBED_TABLE", ignoreCase = false) -> "__EMBED_TABLE"
         text.contains("codesize", ignoreCase = true) -> "__codesize"
         else -> null
       }

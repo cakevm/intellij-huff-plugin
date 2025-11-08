@@ -129,6 +129,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "__tablesize"             { return BUILTIN_FN_TABLESIZE; }
   "__codesize"              { return BUILTIN_FN_CODESIZE; }
   "__tablestart"            { return BUILTIN_FN_TABLESTART; }
+  "__EMBED_TABLE"           { return BUILTIN_FN_EMBED_TABLE; }
   "__FUNC_SIG"              { return BUILTIN_FN_FUNC_SIG; }
   "__EVENT_HASH"            { return BUILTIN_FN_EVENT_HASH; }
   "__ERROR"                 { return BUILTIN_FN_ERROR; }
@@ -228,7 +229,8 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "shr"                      { return SHR; }
   "shl"                      { return SHL; }
   "sar"                      { return SAR; }
-  "sha3"                     { return SHA3; } // keccak256
+  "sha3"                     { return SHA3; } // keccak256 alias (huff-rs backward compatibility)
+  "keccak256"                { return SHA3; }
 
   "lt"                       { return LT; }
   "gt"                       { return GT; }

@@ -110,6 +110,7 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
             "not",
             "byte",
             "sha3",
+            "keccak256",
             "clz",
             // Environmental Information
             "address",
