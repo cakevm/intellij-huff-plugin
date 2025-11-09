@@ -64,17 +64,17 @@
   },
   "__VERBATIM": {
     "name": "__VERBATIM",
-    "description": "This function is used to insert raw hex data into the compiled bytecode. It is useful for inserting raw opcodes or data that should be emitted exactly as specified without any processing or validation by the compiler.",
-    "syntax": "(<hex>)",
+    "description": "This function is used to insert raw hex data into the compiled bytecode. It is useful for inserting raw opcodes or data that should be emitted exactly as specified without any processing or validation by the compiler. It can accept either a direct hex literal or a constant reference.",
+    "syntax": "(<hex>|<constant>)",
     "returns": "Raw hex bytes",
-    "example": "__VERBATIM(0x6001600101) → 0x6001600101 (PUSH1 01 PUSH1 01 ADD)"
+    "example": "__VERBATIM(0x6001600101) → 0x6001600101 (PUSH1 01 PUSH1 01 ADD)\n__VERBATIM([MY_CONST]) → Raw bytes from constant MY_CONST"
   },
   "__BYTES": {
     "name": "__BYTES",
-    "description": "This function allows to insert a string as UTF-8 encoded bytes into the compiled bytecode. The resulting bytecode is limited to 32 bytes. The string is converted to its UTF-8 byte representation and pushed onto the stack.",
-    "syntax": "(<string>)",
+    "description": "This function allows to insert a string as UTF-8 encoded bytes into the compiled bytecode. The resulting bytecode is limited to 32 bytes. The string is converted to its UTF-8 byte representation and pushed onto the stack. It can accept either a direct string literal or a constant reference to a string constant.",
+    "syntax": "(<string>|<constant>)",
     "returns": "PUSHX utf8_bytes",
-    "example": "__BYTES(\"hello\") → PUSH5 0x68656c6c6f"
+    "example": "__BYTES(\"hello\") → PUSH5 0x68656c6c6f\n__BYTES([GREETING]) → PUSH5 0x68656c6c6f (where GREETING = \"hello\")"
   },
   "__ASSERT_PC": {
     "name": "__ASSERT_PC",

@@ -73,4 +73,103 @@ class HuffParserTest : BasePlatformTestCase() {
     val errors = PsiTreeUtil.findChildrenOfType(file, PsiErrorElement::class.java)
     assertTrue("File should parse without errors, but found: ${errors.map { it.errorDescription }}", errors.isEmpty())
   }
+
+  fun testStringLiteralInConstantDefinition() {
+    val file =
+      myFixture.configureByText(
+        HuffFileType.INSTANCE,
+        """
+      #define constant GREETING = "hello"
+      #define constant MSG = "world"
+
+      #define macro MAIN() = takes(0) returns(0) {
+          __BYTES([GREETING])
+          __BYTES([MSG])
+          stop
+      }
+      """
+          .trimIndent(),
+      )
+
+    // Verify no parse errors
+    val errors = PsiTreeUtil.findChildrenOfType(file, PsiErrorElement::class.java)
+    assertTrue("File should parse without errors, but found: ${errors.map { it.errorDescription }}", errors.isEmpty())
+  }
+
+  fun testConstantWithBuiltinInCodeTable() {
+    val file =
+      myFixture.configureByText(
+        HuffFileType.INSTANCE,
+        """
+      #define constant C = __RIGHTPAD(0x1234)
+
+      #define table MY_TABLE {
+          [C]
+          __LEFTPAD(0x5678)
+      }
+
+      #define macro MAIN() = takes(0) returns(0) {
+          __tablestart(MY_TABLE)
+          stop
+      }
+      """
+          .trimIndent(),
+      )
+
+    // Verify no parse errors
+    val errors = PsiTreeUtil.findChildrenOfType(file, PsiErrorElement::class.java)
+    assertTrue("File should parse without errors, but found: ${errors.map { it.errorDescription }}", errors.isEmpty())
+  }
+
+  fun testConstantReferenceInVerbatim() {
+    val file =
+      myFixture.configureByText(
+        HuffFileType.INSTANCE,
+        """
+      #define constant SIG = __FUNC_SIG("transfer(address,uint256)")
+      #define constant MY_CONST = 0x1234
+
+      #define macro MAIN() = takes(0) returns(0) {
+          __VERBATIM([SIG])
+          __VERBATIM([MY_CONST])
+          __VERBATIM(0x6001600101)
+          stop
+      }
+      """
+          .trimIndent(),
+      )
+
+    // Verify no parse errors
+    val errors = PsiTreeUtil.findChildrenOfType(file, PsiErrorElement::class.java)
+    assertTrue("File should parse without errors, but found: ${errors.map { it.errorDescription }}", errors.isEmpty())
+  }
+
+  fun testUnreleasedFeaturesCombined() {
+    val file =
+      myFixture.configureByText(
+        HuffFileType.INSTANCE,
+        """
+      #define constant GREETING = "hello"
+      #define constant C = __RIGHTPAD(0x1234)
+      #define constant SIG = __FUNC_SIG("balanceOf(address)")
+
+      #define table DATA_TABLE {
+          [C]
+          __LEFTPAD(0xffff)
+      }
+
+      #define macro MAIN() = takes(0) returns(0) {
+          __BYTES([GREETING])
+          __VERBATIM([SIG])
+          __tablestart(DATA_TABLE)
+          stop
+      }
+      """
+          .trimIndent(),
+      )
+
+    // Verify no parse errors
+    val errors = PsiTreeUtil.findChildrenOfType(file, PsiErrorElement::class.java)
+    assertTrue("File should parse without errors, but found: ${errors.map { it.errorDescription }}", errors.isEmpty())
+  }
 }

@@ -4,6 +4,16 @@
 
 ## [Unreleased]
 
+## [1.1.3] - 2025-11-09
+- Add support for string literal constants
+  - String literals can now be used in constant definitions: `#define constant GREETING = "hello"`
+  - String constants can be used with `__BYTES` builtin: `__BYTES([GREETING])`
+- Add support for constants with builtins in code tables
+  - Constants defined with builtin functions can now be used in code tables
+  - Example: `#define constant C = __RIGHTPAD(0x1234)` then use `[C]` in a table
+- Add support for constant references in `__VERBATIM` builtin
+  - `__VERBATIM` now accepts constant references: `__VERBATIM([MY_CONST])`
+
 ## [1.1.2] - 2025-11-08
 - Add support for `__EMBED_TABLE` builtin function (huff-neo v1.5.5)
   - Syntax: `__EMBED_TABLE(TABLE_NAME)`

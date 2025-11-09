@@ -70,6 +70,18 @@
                          level="ERROR"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffCircularConstantDependencyInspection"/>
 
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="String constant used without __BYTES"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffStringConstantDirectPushInspection"/>
+
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Invalid __BYTES argument"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffBytesArgumentInspection"/>
+
         <stubIndex
                 implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>
         <stubIndex
