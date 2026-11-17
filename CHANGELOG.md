@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ## [1.2.0] - 2026-11-17
+
 - Add support for IntelliJ IDEA 2026.3
   - The minimum supported version is now IntelliJ IDEA 2026.3
   - Building the plugin now requires JDK 25
@@ -43,6 +44,7 @@
   - Example: `<name>` without a parameter or for-loop variable `name`
 
 ## [1.1.3] - 2025-11-09
+
 - Add support for string literal constants
   - String literals can now be used in constant definitions: `#define constant GREETING = "hello"`
   - String constants can be used with `__BYTES` builtin: `__BYTES([GREETING])`
@@ -53,11 +55,13 @@
   - `__VERBATIM` now accepts constant references: `__VERBATIM([MY_CONST])`
 
 ## [1.1.2] - 2025-11-08
+
 - Add support for `__EMBED_TABLE` builtin function (huff-neo v1.5.5)
   - Syntax: `__EMBED_TABLE(TABLE_NAME)`
 - Add support for `keccak256` opcode and downgrade `sha3` to an alias (huff-neo v1.5.5)
 
 ## [1.1.1] - 2025-11-06
+
 - Add support for comparison operators in if/else conditions (huff-neo v1.5.2+)
   - Operators: `==`, `!=`, `<`, `>`, `<=`, `>=`
   - Example: `if ([MODE] == 0x01) { ... }`
@@ -74,6 +78,7 @@
   - Detects direct cycles (A=B, B=A), indirect cycles (A=B, B=C, C=A), and self-references (A=A+1)
 
 ## [1.1.0] - 2025-11-01
+
 - Add support for compile-time for-loops (huff-neo v1.5.0)
   - Syntax: `for(var in start..end)` and `for(var in start..end step N)`
   - Loop variable interpolation with `<var>` syntax
@@ -91,6 +96,7 @@
   - `blobhash`, `blobbasefee`, `tload`, `tstore`, `mcopy`, `revert`
 
 ## [1.0.7] - 2025-10-18
+
 - Add arithmetic expression support in constant definitions (operators: `+`, `-`, `*`, `/`, `%`)
 - Add unresolved reference highlighting for constants used in expressions
 - Add quick fix to remove unused or invalid `#include` directives
@@ -242,7 +248,14 @@
 
 - Initial Huff Grammar + Highlighting
 
-[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.1.3...v1.2.0
+[1.1.3]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.1.2...v1.1.3
+[1.1.2]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.7...v1.1.0
+[1.0.7]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.6...v1.0.7
+[1.0.6]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/cakevm/intellij-huff-plugin/compare/v1.0.2...v1.0.3
