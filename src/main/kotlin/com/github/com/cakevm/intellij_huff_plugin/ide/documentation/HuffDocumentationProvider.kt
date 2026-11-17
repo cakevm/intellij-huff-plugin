@@ -66,6 +66,9 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
     val assertPcCall = PsiTreeUtil.getParentOfType(element, HuffBuiltinFnAssertPcCall::class.java)
     if (assertPcCall != null) return "__ASSERT_PC"
 
+    val argsStartCall = PsiTreeUtil.getParentOfType(element, HuffBuiltinFnArgsStartCall::class.java)
+    if (argsStartCall != null) return "__argsstart"
+
     val tableCall = PsiTreeUtil.getParentOfType(element, HuffBuiltinFnTableCall::class.java)
     if (tableCall != null) {
       // Could be __tablesize, __tablestart, __EMBED_TABLE, or __codesize - check the actual text
@@ -81,13 +84,12 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
 
     val builtinFnName = PsiTreeUtil.getParentOfType(element, HuffBuiltinFnName::class.java)
     if (builtinFnName != null) {
-      // Could be __codesize, __LEFTPAD, __RIGHTPAD, __CODECOPY_DYN_ARG, __VERBATIM, __BYTES
+      // Could be __codesize, __LEFTPAD, __RIGHTPAD, __VERBATIM, __BYTES
       val text = element.text
       return when {
         text.contains("codesize", ignoreCase = true) -> "__codesize"
         text.contains("LEFTPAD", ignoreCase = false) -> "__LEFTPAD"
         text.contains("RIGHTPAD", ignoreCase = false) -> "__RIGHTPAD"
-        text.contains("CODECOPY_DYN_ARG", ignoreCase = false) -> "__CODECOPY_DYN_ARG"
         text.contains("VERBATIM", ignoreCase = false) -> "__VERBATIM"
         text.contains("BYTES", ignoreCase = false) -> "__BYTES"
         else -> null

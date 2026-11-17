@@ -71,10 +71,10 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       BUILTIN_FN_ERROR,
       BUILTIN_FN_LEFTPAD,
       BUILTIN_FN_RIGHTPAD,
-      BUILTIN_FN_CODECOPY_DYN_ARG,
       BUILTIN_FN_VERBATIM,
       BUILTIN_FN_BYTES,
       BUILTIN_FN_ASSERT_PC,
+      BUILTIN_FN_ARGSSTART,
       FREE_STORAGE_POINTER,
       BUILTIN_CONST_NOOP,
     )
@@ -148,6 +148,9 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       SWAP14,
       SWAP15,
       SWAP16,
+      DUPN,
+      SWAPN,
+      EXCHANGE,
       // Arithmetic and Logic Opcodes
       ADD,
       SUB,
@@ -209,6 +212,7 @@ class HuffHighlighter : SyntaxHighlighterBase() {
       SELFBALANCE,
       BLOBHASH,
       BLOBBASEFEE,
+      SLOTNUM,
     )
 
   private fun opcodeNamesStorageAndMemoryAccess() =

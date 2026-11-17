@@ -22,7 +22,6 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         "__ERROR",
         "__LEFTPAD",
         "__RIGHTPAD",
-        "__CODECOPY_DYN_ARG",
         "__VERBATIM",
         "__BYTES",
       )
@@ -55,9 +54,13 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         }
       }
 
-      override fun visitForLoopVariableReference(element: HuffForLoopVariableReference) {
+      override fun visitMacroParameterReference(element: HuffMacroParameterReference) {
         checkReference(element) {
-          holder.registerProblem(element, "'${element.identifier.text}' for-loop variable is undefined", ProblemHighlightType.WARNING)
+          holder.registerProblem(
+            element,
+            "'${element.parameterName.text}' is neither a macro parameter nor a loop variable",
+            ProblemHighlightType.WARNING,
+          )
         }
       }
 

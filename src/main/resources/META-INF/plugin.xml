@@ -81,6 +81,11 @@
                          enabledByDefault="true"
                          level="ERROR"
                          implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffBytesArgumentInspection"/>
+        <localInspection language="Huff" groupName="Huff"
+                         displayName="Invalid test decorator"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         implementationClass="com.github.com.cakevm.intellij_huff_plugin.ide.inspection.HuffTestDecoratorInspection"/>
 
         <stubIndex
                 implementation="com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.index.HuffNamedElementIndex"/>

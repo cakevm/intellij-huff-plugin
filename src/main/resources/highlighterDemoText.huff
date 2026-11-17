@@ -31,3 +31,8 @@
       <i>  // For-loop variable reference
    }
 }
+// Test with decorators
+#[calldata(__FUNC_SIG(add), 0x01, 0x02), expect_return(0x03)]
+#define test ADD_TEST() = {
+   MAIN()
+}

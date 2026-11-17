@@ -17,7 +17,7 @@ class HuffMacroParameterInvocationReference(element: HuffMacroParameterInvocatio
     return if (identifierStart > 0 && identifierEnd > identifierStart) {
       TextRange(identifierStart, identifierEnd)
     } else {
-      TextRange(1, element.identifier.textLength + 1)
+      TextRange(1, element.parameterName.textLength + 1)
     }
   }
 
@@ -26,7 +26,7 @@ class HuffMacroParameterInvocationReference(element: HuffMacroParameterInvocatio
     val macroDefinition = PsiTreeUtil.getParentOfType(element, HuffMacroDefinition::class.java) ?: return null
 
     // Get the parameter name we're looking for
-    val parameterName = element.identifier.text
+    val parameterName = element.parameterName.text
 
     // Look through the macro's parameters for a matching parameter
     // that should be a macro (being invoked with parentheses)

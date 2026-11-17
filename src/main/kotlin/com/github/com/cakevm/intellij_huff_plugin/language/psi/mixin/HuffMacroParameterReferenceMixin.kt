@@ -10,7 +10,7 @@ import com.intellij.psi.PsiElement
 abstract class HuffMacroParameterReferenceMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffMacroParameterReference {
 
   override val referenceNameElement: PsiElement
-    get() = this.identifier
+    get() = this.parameterName
 
   override val referenceName: String
     get() = referenceNameElement.text

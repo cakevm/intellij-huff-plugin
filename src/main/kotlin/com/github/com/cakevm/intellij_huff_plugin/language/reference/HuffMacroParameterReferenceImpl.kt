@@ -1,39 +1,40 @@
 package com.github.com.cakevm.intellij_huff_plugin.language.reference
 
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffForLoopStatement
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroDefinition
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffMacroParameterReference
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement
 import com.github.com.cakevm.intellij_huff_plugin.language.reference.base.HuffReferenceBase
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 
+/**
+ * Resolves `<name>` to the loop variable of the innermost enclosing for loop with that name, or otherwise to the parameter of the
+ * containing macro.
+ */
 class HuffMacroParameterReferenceImpl(element: HuffMacroParameterReference) : HuffReferenceBase<HuffMacroParameterReference>(element) {
 
   override fun calculateDefaultRangeInElement(): TextRange {
-    // The reference is the identifier between < and >
-    return TextRange(1, element.textLength - 1)
+    // The reference is the name between < and >
+    return TextRange.from(element.parameterName.startOffsetInParent, element.parameterName.textLength)
   }
 
   override fun singleResolve(): PsiElement? {
-    // Find the containing macro definition
-    val macroDefinition = PsiTreeUtil.getParentOfType(element, HuffMacroDefinition::class.java) ?: return null
-
-    // Get the parameter name we're looking for
-    val parameterName = element.identifier.text
-
-    // Look through the macro's parameters
-    val parameters = macroDefinition.macroParameters?.macroParameterList ?: return null
-
-    return parameters.find { it.name == parameterName }
+    val name = element.parameterName.text
+    return enclosingLoopVariables().find { it.name == name } ?: macroParameters().find { it.name == name }
   }
 
-  override fun getVariants(): Array<Any> {
-    // Find the containing macro definition
-    val macroDefinition = PsiTreeUtil.getParentOfType(element, HuffMacroDefinition::class.java) ?: return emptyArray()
+  override fun getVariants(): Array<Any> = (enclosingLoopVariables() + macroParameters()).toTypedArray()
 
-    // Return all parameters from the containing macro
-    val parameters = macroDefinition.macroParameters?.macroParameterList ?: return emptyArray()
+  /** Loop variables of all enclosing for loops, innermost first, so an inner loop variable shadows an outer one. */
+  private fun enclosingLoopVariables(): List<HuffNamedElement> =
+    generateSequence(PsiTreeUtil.getParentOfType(element, HuffForLoopStatement::class.java)) {
+        PsiTreeUtil.getParentOfType(it, HuffForLoopStatement::class.java)
+      }
+      .mapNotNull { it.forLoopVariable }
+      .toList()
 
-    return parameters.toTypedArray()
-  }
+  private fun macroParameters(): List<HuffNamedElement> =
+    PsiTreeUtil.getParentOfType(element, HuffMacroDefinition::class.java)?.macroParameters?.macroParameterList ?: emptyList()
 }
