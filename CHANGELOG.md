@@ -3,6 +3,8 @@
 # IntelliJ Huff Plugin Changelog
 
 ## [Unreleased]
+
+## [1.2.0] - 2026-11-17
 - Add support for IntelliJ IDEA 2026.3
   - The minimum supported version is now IntelliJ IDEA 2026.3
   - Building the plugin now requires JDK 25
