@@ -138,7 +138,7 @@
 
 HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_TAG )*
 
-Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | VALUE | OpcodeName | STRING_IDENTIFIER
+Identifier ::= FROM | ERROR | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | VALUE | OpcodeName | STRING_IDENTIFIER
 
 // Name of a macro parameter, also between `<` and `>`. A parameter may be named like an opcode or a keyword, such as `<pc>` or `<true>`
 ParameterName ::= Identifier | FALLBACK | FOR | IN | STEP | IF | ELSE | BOOLEANLITERAL | TAKES | RETURNS | MACRO | FN | TEST | TABLE

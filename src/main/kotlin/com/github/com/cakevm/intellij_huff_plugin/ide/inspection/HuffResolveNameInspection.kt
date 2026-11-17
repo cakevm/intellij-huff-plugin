@@ -64,6 +64,20 @@ class HuffResolveNameInspection : LocalInspectionTool() {
         }
       }
 
+      override fun visitMacroArgumentReference(element: HuffMacroArgumentReference) {
+        // Opcodes (e.g. `MACRO(add)`) and `calldata` are valid arguments that need no definition
+        if (element.identifier.opcodeName != null || element.identifier.text == "calldata") return
+        // Builtins take their own keywords, e.g. `__codesize(RUNTIME)`
+        if ((element.parent?.parent as? HuffMacroCall)?.macroCallIdentifier?.builtinFnName != null) return
+        checkReference(element) {
+          holder.registerProblem(
+            element,
+            "'${element.identifier.text}' is neither a label, a constant nor a macro",
+            ProblemHighlightType.WARNING,
+          )
+        }
+      }
+
       override fun visitMacroCall(element: HuffMacroCall) {
         checkReference(element) {
           if (builtinFns[element.macroCallIdentifier.text] == null) {
