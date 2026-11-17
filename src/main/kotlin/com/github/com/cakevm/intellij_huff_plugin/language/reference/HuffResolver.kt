@@ -25,6 +25,13 @@ object HuffResolver {
           is HuffMacroLabelGoTo -> {
             resolveUsingImports(HuffMacroLabel::class.java, element, element.containingFile)
           }
+          // A bare identifier passed to a macro is a label, a constant or a macro (first-class macro)
+          is HuffMacroArgumentReference -> {
+            val file = element.containingFile
+            resolveUsingImports(HuffMacroLabel::class.java, element, file) +
+              resolveUsingImports(HuffConstantDefinition::class.java, element, file) +
+              resolveUsingImports(HuffMacroDefinition::class.java, element, file)
+          }
           is HuffConstantReference -> {
             resolveUsingImports(HuffConstantDefinition::class.java, element, element.containingFile)
           }

@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- Add inspection for undefined labels, constants or macros passed as macro arguments, e.g. `MACRO(err)`
+- Fix references for labels and constants passed as macro arguments
 - Fix opcode documentation shown for names spelled like an opcode, e.g. `timestamp` or `caller` in test decorators
 
 ## [1.2.0] - 2026-11-17
