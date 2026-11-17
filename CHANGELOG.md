@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+- Fix opcode documentation shown for names spelled like an opcode, e.g. `timestamp` or `caller` in test decorators
+
 ## [1.2.0] - 2026-11-17
 
 - Add support for IntelliJ IDEA 2026.3
