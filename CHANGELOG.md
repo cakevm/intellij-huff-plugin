@@ -3,6 +3,9 @@
 # IntelliJ Huff Plugin Changelog
 
 ## [Unreleased]
+- Add support for IntelliJ IDEA 2026.3
+  - The minimum supported version is now IntelliJ IDEA 2026.3
+  - Building the plugin now requires JDK 25
 
 ## [1.1.3] - 2025-11-09
 - Add support for string literal constants

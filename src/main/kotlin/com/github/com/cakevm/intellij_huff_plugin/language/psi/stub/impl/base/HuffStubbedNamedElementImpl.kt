@@ -11,9 +11,8 @@ import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.stubs.IStubElementType
 import com.intellij.psi.stubs.StubElement
 
-abstract class HuffStubbedNamedElementImpl<S> : HuffStubbedElementImpl<S>, HuffNamedElement, PsiNameIdentifierOwner where
-S : HuffNamedStub,
-S : StubElement<*> {
+abstract class HuffStubbedNamedElementImpl<S> : HuffStubbedElementImpl<S>, HuffNamedElement, PsiNameIdentifierOwner
+  where S : HuffNamedStub, S : StubElement<*> {
 
   constructor(node: ASTNode) : super(node)
 

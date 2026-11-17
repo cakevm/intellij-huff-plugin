@@ -104,13 +104,12 @@ object HuffResolver {
       return emptySet()
     }
 
-    val resolvedImportedFiles =
-      imports.mapNotNull { import ->
-        val containingFile = import.includePath.reference?.resolve()?.containingFile ?: return@mapNotNull null
-        val names = containingFile.childrenOfType<HuffNamedElement>().toList()
+    val resolvedImportedFiles = imports.mapNotNull { import ->
+      val containingFile = import.includePath.reference?.resolve()?.containingFile ?: return@mapNotNull null
+      val names = containingFile.childrenOfType<HuffNamedElement>().toList()
 
-        ImportRecord(containingFile, names)
-      }
+      ImportRecord(containingFile, names)
+    }
     return resolvedImportedFiles +
       resolvedImportedFiles.map { record -> collectImports(record.file.childrenOfType<HuffIncludeDirective>(), visited) }.flatten()
   }
@@ -123,22 +122,21 @@ object HuffResolver {
     val paths = collectImports(o).map { it.file }
     val importScope = GlobalSearchScope.filesScope(o.project, paths.map { it.virtualFile })
 
-    val imported =
-      paths.flatMap { path ->
-        CachedValuesManager.getCachedValue(path) {
-          val allKeys = HashSet<String>()
-          val scope = GlobalSearchScope.fileScope(path)
-          StubIndex.getInstance().processAllKeys(HuffNamedElementIndex.KEY, Processors.cancelableCollectProcessor(allKeys), scope)
-          CachedValueProvider.Result.create(
-            allKeys
-              .filter { key ->
-                StubIndex.getElements(HuffNamedElementIndex.KEY, key, scope.project!!, scope, HuffNamedElement::class.java).isNotEmpty()
-              }
-              .toSet(),
-            PsiModificationTracker.MODIFICATION_COUNT,
-          )
-        }
+    val imported = paths.flatMap { path ->
+      CachedValuesManager.getCachedValue(path) {
+        val allKeys = HashSet<String>()
+        val scope = GlobalSearchScope.fileScope(path)
+        StubIndex.getInstance().processAllKeys(HuffNamedElementIndex.KEY, Processors.cancelableCollectProcessor(allKeys), scope)
+        CachedValueProvider.Result.create(
+          allKeys
+            .filter { key ->
+              StubIndex.getElements(HuffNamedElementIndex.KEY, key, scope.project!!, scope, HuffNamedElement::class.java).isNotEmpty()
+            }
+            .toSet(),
+          PsiModificationTracker.MODIFICATION_COUNT,
+        )
       }
+    }
     val targetNames =
       importedNames
         .flatMap { includedName ->

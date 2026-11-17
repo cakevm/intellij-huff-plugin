@@ -115,4 +115,4 @@ This is an IntelliJ IDEA plugin that provides support for the Huff language - a 
 ## Important Notes
 
 - Generated code is in `src/main/gen/` - do not edit manually
-- The plugin supports IntelliJ 2025.1+ (platform version 251+)
+- The plugin supports IntelliJ 2026.3+ (platform version 263+)
