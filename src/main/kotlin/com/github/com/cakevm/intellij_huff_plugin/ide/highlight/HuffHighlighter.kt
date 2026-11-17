@@ -11,7 +11,7 @@ import com.intellij.psi.tree.IElementType
 class HuffHighlighter : SyntaxHighlighterBase() {
   override fun getHighlightingLexer(): Lexer = HuffLexer()
 
-  override fun getTokenHighlights(tokenType: IElementType?): Array<TextAttributesKey> {
+  override fun getTokenHighlights(tokenType: IElementType): Array<TextAttributesKey> {
     return pack(tokenMapping[tokenType])
   }
 

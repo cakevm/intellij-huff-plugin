@@ -6,7 +6,7 @@ import org.jetbrains.annotations.PropertyKey
 
 @NonNls private const val BUNDLE = "messages.HuffBundle"
 
-object HuffBundle : DynamicBundle(BUNDLE) {
+object HuffBundle : DynamicBundle(HuffBundle::class.java, BUNDLE) {
 
   @JvmStatic fun message(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any) = getMessage(key, *params)
 

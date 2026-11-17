@@ -1,5 +1,7 @@
+import com.diffplug.spotless.kotlin.KtfmtStep
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
 
 
@@ -12,7 +14,7 @@ plugins {
     alias(libs.plugins.kover) // Gradle Kover Plugin
     alias(libs.plugins.spotless) // Gradle Spotless Plugin
     alias(libs.plugins.grammarkit) // JetBrains Grammarkit Gradle Plugin
-    kotlin("plugin.serialization") version "2.2.0" // Kotlin Serialization Plugin
+    kotlin("plugin.serialization") version libs.versions.kotlin.get() // Kotlin Serialization Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -20,7 +22,7 @@ version = providers.gradleProperty("pluginVersion").get()
 
 // Set the JVM language level used to build the project.
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(25)
 }
 
 // Do not include Python files in the JAR
@@ -67,7 +69,7 @@ dependencies {
 
         testFramework(TestFrameworkType.Platform)
     }
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.13.0")
 }
 
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
@@ -124,7 +126,7 @@ intellijPlatform {
 
     pluginVerification {
         ides {
-            ide("IC-2025.2.3")
+            create(IntelliJPlatformType.IntellijIdea, providers.gradleProperty("platformVersion"))
         }
     }
 }
@@ -188,7 +190,7 @@ intellijPlatformTesting {
 
             plugins {
                 robotServerPlugin()
-                plugin("PsiViewer", "251.175")
+                plugin("PsiViewer", "2026.3-EAP.6800.24")
             }
         }
     }
@@ -196,11 +198,11 @@ intellijPlatformTesting {
 
 spotless {
     kotlin {
-        target("**/src/**/*.kt")
-        ktfmt("0.54").googleStyle().configure {
+        target("src/**/*.kt")
+        ktfmt("0.64").googleStyle().configure {
             it.setMaxWidth(140)
             it.setRemoveUnusedImports(true)
-            it.setManageTrailingCommas(true)
+            it.setTrailingCommaManagementStrategy(KtfmtStep.TrailingCommaManagementStrategy.COMPLETE)
         }
         trimTrailingWhitespace()
         endWithNewline()
