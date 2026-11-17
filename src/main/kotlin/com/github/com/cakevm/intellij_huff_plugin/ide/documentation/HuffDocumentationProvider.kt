@@ -32,8 +32,7 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
 
   override fun generateDoc(element: PsiElement, originalElement: PsiElement?): String? {
     // Check for opcodes
-    val opcodeParent = PsiTreeUtil.getParentOfType(element, HuffOpcodeName::class.java)
-    if (opcodeParent is HuffOpcodeName) {
+    if (isOpcode(element)) {
       val instruction = instructions[element.text.lowercase()]
       if (instruction != null) {
         return instruction.toHtml()
@@ -50,6 +49,15 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
     }
 
     return null
+  }
+
+  /**
+   * Whether the element is an instruction. Opcode names also serve as names, e.g. the `timestamp` flag in `#[timestamp(1)]` or a macro
+   * called `pc`, and those are not instructions.
+   */
+  private fun isOpcode(element: PsiElement): Boolean {
+    val opcode = PsiTreeUtil.getParentOfType(element, HuffOpcodeName::class.java, false) ?: return false
+    return PsiTreeUtil.getParentOfType(opcode, HuffIdentifier::class.java) == null
   }
 
   private fun getBuiltinFunctionName(element: PsiElement): String? {
@@ -101,8 +109,7 @@ class HuffDocumentationProvider : AbstractDocumentationProvider() {
 
   override fun getCustomDocumentationElement(editor: Editor, file: PsiFile, contextElement: PsiElement?, targetOffset: Int): PsiElement? {
     // Check for opcodes
-    val opcodeParent = PsiTreeUtil.getParentOfType(contextElement, HuffOpcodeName::class.java)
-    if (opcodeParent is HuffOpcodeName) {
+    if (contextElement != null && isOpcode(contextElement)) {
       return contextElement
     }
 
