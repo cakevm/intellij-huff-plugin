@@ -6,6 +6,39 @@
 - Add support for IntelliJ IDEA 2026.3
   - The minimum supported version is now IntelliJ IDEA 2026.3
   - Building the plugin now requires JDK 25
+- Add compatibility with huff-neo v1.7
+- Add support for Amsterdam opcodes `slotnum`, `dupn`, `swapn` and `exchange`
+  - Syntax: `dupn 17`, `swapn [DEPTH]`, `exchange 1 2`
+- Add support for constants, macro arguments, loop variables and expressions as opcode operands
+  - Example: `push2 [SIZE]`, `dupn <depth>`, `dupn (<i> + 17)`
+- Add support for decimal and boolean literals in macro arguments
+  - Example: `MACRO(18)`, `MACRO(true)`
+- Add support for comparison operators in constant expressions
+  - Example: `#define constant C = [A] > [B]`
+- Add support for expressions in `__ASSERT_PC` builtin
+  - Example: `__ASSERT_PC([BASE] + <i> * 3)`
+- Add support for all test decorator flags and arguments
+  - Example: `#[calldata(__FUNC_SIG(transfer), caller, 100), store([OWNER_SLOT], 0xbeef, at = 0x1000)]`
+- Add support for stacked test decorator blocks and trailing commas
+  - Example: `#[calldata("0x01")] #[value(0x01),]`
+- Add warning for invalid test decorators
+  - Detects unknown flags, unknown identifiers (only `this` and `caller` are allowed), and decorators on a `macro` or `fn`
+- Add support for `__argsstart()` builtin function
+- Remove `__CODECOPY_DYN_ARG` builtin function
+- Add support for `__codesize(RUNTIME)`
+- Add support for tuple types in function, event and error definitions
+  - Example: `#define function fill((address maker, uint256 amount) order)`
+- Add support for fixed-size array types in function, event and error definitions
+  - Example: `uint256[3]`
+- Add support for `()` and `=` after a table name
+  - Example: `#define table CODE_TABLE() = { 0x6080 }`
+- Add support for macro parameters named like an opcode or a keyword
+  - Example: `#define macro M(pc, true) = { <pc> <true> }`
+- Add support for nested block comments
+- Add documentation for opcodes `push0`, `keccak256`, `prevrandao`, `blobhash`, `blobbasefee`, `tload`, `tstore`, `mcopy` and `invalid`
+- Fix for-loop variables not resolved in expressions, macro arguments and if conditions
+- Add warning for undefined macro arguments and for-loop variables
+  - Example: `<name>` without a parameter or for-loop variable `name`
 
 ## [1.1.3] - 2025-11-09
 - Add support for string literal constants

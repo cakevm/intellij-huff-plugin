@@ -88,10 +88,10 @@
     BUILTIN_FN_ERROR='__ERROR'
     BUILTIN_FN_LEFTPAD='__LEFTPAD'
     BUILTIN_FN_RIGHTPAD='__RIGHTPAD'
-    BUILTIN_FN_CODECOPY_DYN_ARG='__CODECOPY_DYN_ARG'
     BUILTIN_FN_VERBATIM='__VERBATIM'
     BUILTIN_FN_BYTES='__BYTES'
     BUILTIN_FN_ASSERT_PC='__ASSERT_PC'
+    BUILTIN_FN_ARGSSTART='__argsstart'
 
     FROM='from'
     //ERROR='error'
@@ -140,6 +140,10 @@ HuffFile ::= ( IncludeDirective | DefineDefinition | MacroDefinition | NAT_SPEC_
 
 Identifier ::= FROM | ERROR | REVERT | GLOBAL | TRANSIENT | CALLDATA | CONSTANT | CONSTRUCTOR | MAIN | VALUE | OpcodeName | STRING_IDENTIFIER
 
+// Name of a macro parameter, also between `<` and `>`. A parameter may be named like an opcode or a keyword, such as `<pc>` or `<true>`
+ParameterName ::= Identifier | FALLBACK | FOR | IN | STEP | IF | ELSE | BOOLEANLITERAL | TAKES | RETURNS | MACRO | FN | TEST | TABLE
+                | JUMPTABLE | JUMPTABLE_PACKED | FUNCTION | EVENT | INDEXED | MEMORY | STORAGE | VIEW | PURE | PAYABLE | NONPAYABLE
+
 IncludePath ::= QUOTED_STRING {
   implements        = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffIncludePathMixin"
@@ -155,12 +159,11 @@ private DefineDefinition ::= DEFINE ( EventAbiDefinition | FunctionAbiDefinition
 // #define constant
 ConstantDefinitionIdentifier ::= Identifier
 
-// Constant expressions with arithmetic operators only (no comparisons)
+// Compile-time expressions; comparisons evaluate to 1 (true) or 0 (false)
 // Used in: constant definitions, for-loop ranges/steps
-ConstantExpression ::= AdditiveExpression
+ConstantExpression ::= ComparisonExpression
 
-// Conditional expressions with comparison operators
-// Used in: if/else conditions
+// Used in: if/else conditions, parenthesized opcode operands, __ASSERT_PC
 ConditionalExpression ::= ComparisonExpression
 
 private ComparisonExpression ::= AdditiveExpression ((EQUAL_EQUAL | NOT_EQUAL | LESS_EQUAL | GREATER_EQUAL | LESS_THAN | GREATER_THAN) AdditiveExpression)*
@@ -169,7 +172,7 @@ private AdditiveExpression ::= MultiplicativeExpression ((PLUS | MINUS) Multipli
 
 private MultiplicativeExpression ::= UnaryExpression ((STAR | SLASH | PERCENT) UnaryExpression)*
 
-private UnaryExpression ::= (MINUS | EXCLAMATION)? PrimaryExpression
+private UnaryExpression ::= (MINUS | EXCLAMATION)* PrimaryExpression
 
 private PrimaryExpression ::= HEXCODE
                            | DECIMAL
@@ -177,7 +180,6 @@ private PrimaryExpression ::= HEXCODE
                            | QUOTED_STRING
                            | ConstantReference
                            | MacroParameterReference
-                           | ForLoopVariableReference
                            | BuiltinFn
                            | FREE_STORAGE_POINTER
                            | BUILTIN_CONST_NOOP
@@ -202,7 +204,9 @@ ErrorDefinition ::= ERROR Identifier ParameterList {
 CodeTableStatement ::= BuiltinFn | ConstantReference | HEXCODE
 CodeTableBody ::= L_BRACE ( CodeTableStatement* )? R_BRACE
 JumpTableBody ::= L_BRACE ( Identifier* )? R_BRACE
-TableDefinition ::= (( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBody ) | ( TABLE Identifier CodeTableBody ) {
+// Optional `()` and `=` after a table name
+private TableSuffix ::= ( L_PAREN R_PAREN )? EQUAL?
+TableDefinition ::= (( JUMPTABLE | JUMPTABLE_PACKED ) Identifier TableSuffix JumpTableBody ) | ( TABLE Identifier TableSuffix CodeTableBody ) {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffTableDefinitionMixin"
   stubClass          = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.HuffTableDefinitionStub"
@@ -211,7 +215,7 @@ TableDefinition ::= (( JUMPTABLE | JUMPTABLE_PACKED ) Identifier JumpTableBody )
 
 // #define macro  ( fn is handled as macro )
 MacroIdentifier ::= ( MAIN | CONSTRUCTOR | FALLBACK | Identifier )
-MacroParameter ::= Identifier
+MacroParameter ::= ParameterName
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroParameterMixin"
@@ -229,7 +233,8 @@ MacroArgumentReference ::= Identifier
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroArgumentReferenceMixin"
 }
-MacroCallParameter ::= HEXCODE | QUOTED_STRING | MacroParameterReference | ConstantReference | MacroArgumentReference | BUILTIN_CONST_NOOP
+MacroCallParameter ::= HEXCODE | DECIMAL | BOOLEANLITERAL | QUOTED_STRING | MacroParameterReference | ConstantReference | MacroArgumentReference
+                     | BUILTIN_CONST_NOOP
 BuiltinFnFuncSigCall ::= BUILTIN_FN_FUNC_SIG L_PAREN ( QUOTED_STRING | Identifier ) R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
@@ -250,26 +255,29 @@ BuiltinFnTableCall ::= ( BUILTIN_FN_TABLESIZE | BUILTIN_FN_TABLESTART | BUILTIN_
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuiltinFnTableCallMixin"
 }
-BuiltinFnAssertPcCall ::= BUILTIN_FN_ASSERT_PC L_PAREN ( HEXCODE | ConstantReference ) R_PAREN
+BuiltinFnAssertPcCall ::= BUILTIN_FN_ASSERT_PC L_PAREN ConditionalExpression R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffBuiltinFnAssertPcCallMixin"
 }
-BuiltinFnName ::= ( BUILTIN_FN_CODESIZE | BUILTIN_FN_LEFTPAD | BUILTIN_FN_RIGHTPAD | BUILTIN_FN_CODECOPY_DYN_ARG
-                  | BUILTIN_FN_VERBATIM | BUILTIN_FN_BYTES )
+// Offset of the constructor arguments
+BuiltinFnArgsStartCall ::= BUILTIN_FN_ARGSSTART L_PAREN R_PAREN
+BuiltinFnName ::= ( BUILTIN_FN_CODESIZE | BUILTIN_FN_LEFTPAD | BUILTIN_FN_RIGHTPAD | BUILTIN_FN_VERBATIM | BUILTIN_FN_BYTES )
 MacroCallIdentifier ::= ( BuiltinFnName | Identifier )
 MacroCall ::= MacroCallIdentifier L_PAREN ( ( BuiltinFn | MacroCallParameter ) ( COMMA ( BuiltinFn | MacroCallParameter ) )*)? R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroCallMixin"
 }
-BuiltinFn ::= BuiltinFnFuncSigCall | BuiltinFnErrorCall | BuiltinFnEventHashCall | BuiltinFnTableCall | BuiltinFnAssertPcCall | MacroCall | MacroParameterInvocation
-MacroParameterReference ::= LESS_THAN Identifier GREATER_THAN
+BuiltinFn ::= BuiltinFnFuncSigCall | BuiltinFnErrorCall | BuiltinFnEventHashCall | BuiltinFnTableCall | BuiltinFnAssertPcCall | BuiltinFnArgsStartCall
+            | MacroCall | MacroParameterInvocation
+// <name> is the loop variable of an enclosing for loop or a macro parameter
+MacroParameterReference ::= LESS_THAN ParameterName GREATER_THAN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroParameterReferenceMixin"
 }
-MacroParameterInvocation ::= LESS_THAN Identifier GREATER_THAN L_PAREN ( ( BuiltinFn | MacroCallParameter ) ( COMMA ( BuiltinFn | MacroCallParameter ) )*)? R_PAREN
+MacroParameterInvocation ::= LESS_THAN ParameterName GREATER_THAN L_PAREN ( ( BuiltinFn | MacroCallParameter ) ( COMMA ( BuiltinFn | MacroCallParameter ) )*)? R_PAREN
 {
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroParameterInvocationMixin"
@@ -292,11 +300,6 @@ ForLoopVariable ::= Identifier
   implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffNamedElement"
   mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffForLoopVariableMixin"
 }
-ForLoopVariableReference ::= LESS_THAN Identifier GREATER_THAN
-{
-  implements = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffReferenceElement"
-  mixin      = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffForLoopVariableReferenceMixin"
-}
 ForLoopRange ::= ConstantExpression DOUBLE_DOT ConstantExpression
 ForLoopStep ::= STEP ConstantExpression
 ForLoopBody ::= L_BRACE MacroStatement* R_BRACE
@@ -318,12 +321,21 @@ IfStatement ::= IF IfCondition IfBody ElseIfClause* ElseClause?
 // https://github.com/huff-language/huff-rs/blob/05d71e4f/huff_lexer/src/lib.rs#L250
 // huff parse true/false as 1/0
 HuffBoolMapping ::= BOOLEANLITERAL
-MacroStatement ::= HEXCODE | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabel | ConstantReference
-                | BuiltinFn | MacroParameterReference | MacroLabelGoTo | ForLoopStatement | ForLoopVariableReference | IfStatement
+// Compile-time operand of an opcode with immediate data, e.g. 17, 0x11, [DEPTH], <depth>, ([BASE] + 1)
+OpcodeOperand ::= HEXCODE | DECIMAL | ConstantReference | MacroParameterReference | L_PAREN ConditionalExpression R_PAREN
+// dupn 17, swapn [DEPTH], exchange 1 <m>, push2 [SIZE], push1 0x10
+OpcodeWithOperand ::= ( PushOpcodeName | StackImmediateOpcodeName ) OpcodeOperand | ExchangeOpcodeName OpcodeOperand OpcodeOperand
+PushOpcodeName ::= PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH7 | PUSH8 | PUSH9 | PUSH10 | PUSH11 | PUSH12 | PUSH13 | PUSH14
+                 | PUSH15 | PUSH16 | PUSH17 | PUSH18 | PUSH19 | PUSH20 | PUSH21 | PUSH22 | PUSH23 | PUSH24 | PUSH25 | PUSH26
+                 | PUSH27 | PUSH28 | PUSH29 | PUSH30 | PUSH31 | PUSH32 { extends = OpcodeName }
+StackImmediateOpcodeName ::= DUPN | SWAPN { extends = OpcodeName }
+ExchangeOpcodeName ::= EXCHANGE { extends = OpcodeName }
+MacroStatement ::= HEXCODE | OpcodeWithOperand | OpcodeName | NAT_SPEC_TAG | HuffBoolMapping | MacroLabel | ConstantReference
+                | BuiltinFn | MacroParameterReference | MacroLabelGoTo | ForLoopStatement | IfStatement
 MacroBody ::= L_BRACE  MacroStatement* R_BRACE
 // #define macro/fn/test
 MacroType ::= MACRO | FN | TEST
-MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
+MacroDefinition ::= TestDecorator* DEFINE MacroType MacroIdentifier MacroParameters EQUAL MacroTakesParameters? MacroReturnsParameters? MacroBody
 {
   implements         = "com.github.com.cakevm.intellij_huff_plugin.language.psi.element.HuffCallableElement"
   mixin              = "com.github.com.cakevm.intellij_huff_plugin.language.psi.mixin.HuffMacroDefinitionMixin"
@@ -331,10 +343,16 @@ MacroDefinition ::= TestDecorator? DEFINE MacroType MacroIdentifier MacroParamet
   elementTypeFactory = "com.github.com.cakevm.intellij_huff_plugin.language.psi.stub.impl.FactoryKt.factory"
 }
 
-// only tests can have a decorator
-TestDecoratorFlagType ::= CALLDATA | VALUE
-TestDecoratorFlag ::= TestDecoratorFlagType L_PAREN (HEXCODE | QUOTED_STRING) R_PAREN
-TestDecorator ::= DECORATOR_START (TestDecoratorFlag (COMMA TestDecoratorFlag)*)? R_BRACK
+// Test decorators, e.g. #[calldata(__FUNC_SIG(transfer), caller, 100), store([SLOT], 0x01, at = 0x1000)] #[expect_revert]
+// Stacked blocks are merged in source order. Any flag name is accepted; the test runner decides which flags and arguments are valid.
+// The comma between flags is optional for compatibility with earlier versions.
+TestDecorator ::= DECORATOR_START (TestDecoratorFlag (COMMA? TestDecoratorFlag)* COMMA?)? R_BRACK
+TestDecoratorFlag ::= TestDecoratorFlagName (L_PAREN (TestDecoratorArgument (COMMA TestDecoratorArgument)* COMMA?)? R_PAREN)?
+TestDecoratorFlagName ::= Identifier
+TestDecoratorArgument ::= (TestDecoratorArgumentName EQUAL)? TestDecoratorValue
+TestDecoratorArgumentName ::= Identifier
+// A bare identifier is a label, macro or error name, or a keyword such as `this` or `caller`
+TestDecoratorValue ::= HEXCODE | DECIMAL | QUOTED_STRING | BOOLEANLITERAL | ConstantReference | BuiltinFn | Identifier
 
 // All opcode names
 OpcodeName ::= StackManagement | ArithmeticAndLogic | EnvironmentalInformation | StorageAndMemoryAccess
@@ -352,6 +370,7 @@ StackManagement ::= PUSH0 | PUSH1 | PUSH2 | PUSH3 | PUSH4 | PUSH5 | PUSH6 | PUSH
     | DUP9 | DUP10 | DUP11 | DUP12 | DUP13 | DUP14 | DUP15 | DUP16
     | SWAP1 | SWAP2 | SWAP3 | SWAP4 | SWAP5 | SWAP6 | SWAP7 | SWAP8
     | SWAP9 | SWAP10 | SWAP11 | SWAP12 | SWAP13 | SWAP14 | SWAP15 | SWAP16
+    | DUPN | SWAPN | EXCHANGE
 
 // Arithmetic and Logic Opcodes
 ArithmeticAndLogic ::= ADD | SUB | MUL | DIV | SDIV | MOD | SMOD | ADDMOD | MULMOD | EXP | SIGNEXTEND
@@ -362,7 +381,7 @@ EnvironmentalInformation ::= ADDRESS | BALANCE | ORIGIN | CALLER | CALLVALUE
     | CALLDATALOAD | CALLDATASIZE | CALLDATACOPY | CODESIZE | CODECOPY | GASPRICE | EXTCODESIZE
     | EXTCODECOPY | EXTCODEHASH | RETURNDATASIZE | RETURNDATACOPY | BLOCKHASH | COINBASE
     | TIMESTAMP | NUMBER | DIFFICULTY | GASLIMIT | PREVRANDAO | CHAINID | BASEFEE | SELFBALANCE
-    | BLOBHASH | BLOBBASEFEE
+    | BLOBHASH | BLOBBASEFEE | SLOTNUM
 
 // Storage and Memory Access Opcodes
 StorageAndMemoryAccess ::= SLOAD | SSTORE | MLOAD | MSTORE | MSTORE8 | MSIZE |TLOAD | TSTORE | MCOPY
@@ -426,8 +445,12 @@ private MappingKey ::= (BytesArrayTypeName | ElementaryTypeName | UserDefinedTyp
 private MappingValue ::= TypeName Identifier?
 MappingTypeName ::= mapping '(' MappingKey '=>' MappingValue ')'
 
-//ArrayTypeName ::= TypeName '[' Expression? ']' StorageLocationSpecifier?
-ArrayTypeName ::= TypeName '[]' StorageLocationSpecifier?
+// uint256[], uint256[3], (address,bool)[]
+ArrayTypeName ::= TypeName L_BRACK DECIMAL? R_BRACK StorageLocationSpecifier?
+
+// The ABI form of a struct; component names are optional, e.g. (address maker, (bool,bytes) data)
+TupleTypeName ::= '(' TupleComponent (',' TupleComponent)* ')'
+TupleComponent ::= TypeName StorageLocationSpecifier? Identifier?
 
 TypeName ::= MappingTypeName
         // | UserDefinedLocationTypeName
@@ -435,6 +458,7 @@ TypeName ::= MappingTypeName
          | ArrayTypeName
          | ElementaryTypeName
          | FunctionTypeName
+         | TupleTypeName
 
 IndexedParameterList ::= '(' (  IndexedParamDef (',' IndexedParamDef )*)? ')'
 IndexedParamDef ::= TypeName indexed?  Identifier?

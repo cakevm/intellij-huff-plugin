@@ -1651,5 +1651,152 @@
       "result"
     ],
     "name": "xor"
+  },
+  "blobbasefee": {
+    "description": "Get the blob base fee of the current block (EIP-7516, Cancun upgrade).",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 74,
+    "instrReturns": [
+      "blobbasefee"
+    ],
+    "name": "blobbasefee"
+  },
+  "blobhash": {
+    "description": "Get the versioned hash of the blob at the given index of the current transaction (EIP-4844, Cancun upgrade).",
+    "instrArgs": [
+      "index"
+    ],
+    "instrCategory": "blockinfo",
+    "instrGas": 3,
+    "instrOpcode": 73,
+    "instrReturns": [
+      "hash"
+    ],
+    "name": "blobhash"
+  },
+  "dupn": {
+    "description": "Duplicate the n-th stack item, for n from 17 to 235. The stack position is an immediate operand resolved at compile time: `dupn 17`, `dupn [DEPTH]`, `dupn <i>` (EIP-8024, Amsterdam upgrade).",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 230,
+    "instrReturns": [
+      "item"
+    ],
+    "name": "dupn"
+  },
+  "exchange": {
+    "description": "Exchange the (n+1)-th and (m+1)-th stack items, with 1 <= n < m and n + m <= 30. Both stack positions are immediate operands resolved at compile time: `exchange 1 2` (EIP-8024, Amsterdam upgrade).",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 232,
+    "instrReturns": [],
+    "name": "exchange"
+  },
+  "invalid": {
+    "description": "Designated invalid instruction, consumes all remaining gas.",
+    "instrArgs": [],
+    "instrCategory": "terminate",
+    "instrGas": 0,
+    "instrOpcode": 254,
+    "instrReturns": [],
+    "name": "invalid"
+  },
+  "keccak256": {
+    "description": "Compute Keccak-256 hash. Alias of `sha3`.",
+    "instrArgs": [
+      "offset",
+      "size"
+    ],
+    "instrCategory": "cryptographic",
+    "instrGas": 30,
+    "instrOpcode": 32,
+    "instrReturns": [
+      "hash"
+    ],
+    "name": "keccak256"
+  },
+  "mcopy": {
+    "description": "Copy memory areas (EIP-5656, Cancun upgrade).",
+    "instrArgs": [
+      "destOffset",
+      "offset",
+      "size"
+    ],
+    "instrCategory": "memory",
+    "instrGas": 3,
+    "instrOpcode": 94,
+    "instrReturns": [],
+    "name": "mcopy"
+  },
+  "prevrandao": {
+    "description": "Get the previous block's RANDAO mix, replaces `difficulty` since the merge (EIP-4399, Paris upgrade).",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 68,
+    "instrReturns": [
+      "prevrandao"
+    ],
+    "name": "prevrandao"
+  },
+  "push0": {
+    "description": "Place the constant value 0 on the stack (EIP-3855, Shanghai upgrade).",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 2,
+    "instrOpcode": 95,
+    "instrReturns": [
+      "zero"
+    ],
+    "name": "push0"
+  },
+  "slotnum": {
+    "description": "Get the current slot number (EIP-7843, Amsterdam upgrade).",
+    "instrArgs": [],
+    "instrCategory": "blockinfo",
+    "instrGas": 2,
+    "instrOpcode": 75,
+    "instrReturns": [
+      "slot"
+    ],
+    "name": "slotnum"
+  },
+  "swapn": {
+    "description": "Swap the top stack item with the (n+1)-th stack item, for n from 17 to 235. The stack position is an immediate operand resolved at compile time: `swapn 17`, `swapn [DEPTH]` (EIP-8024, Amsterdam upgrade).",
+    "instrArgs": [],
+    "instrCategory": "stack",
+    "instrGas": 3,
+    "instrOpcode": 231,
+    "instrReturns": [],
+    "name": "swapn"
+  },
+  "tload": {
+    "description": "Load a word from transient storage (EIP-1153, Cancun upgrade).",
+    "instrArgs": [
+      "key"
+    ],
+    "instrCategory": "storage",
+    "instrGas": 100,
+    "instrOpcode": 92,
+    "instrReturns": [
+      "value"
+    ],
+    "name": "tload"
+  },
+  "tstore": {
+    "description": "Save a word to transient storage (EIP-1153, Cancun upgrade).",
+    "instrArgs": [
+      "key",
+      "value"
+    ],
+    "instrCategory": "storage",
+    "instrGas": 100,
+    "instrOpcode": 93,
+    "instrReturns": [],
+    "name": "tstore"
   }
 }

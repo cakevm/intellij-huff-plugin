@@ -6,9 +6,9 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 
 abstract class HuffMacroParameterMixin(node: ASTNode) : HuffNamedElementImpl(node), HuffMacroParameter {
-  override fun getName(): String? = identifier?.text
+  override fun getName(): String? = parameterName.text
 
   override fun setName(name: String): PsiElement = this
 
-  override fun getNameIdentifier(): PsiElement? = identifier
+  override fun getNameIdentifier(): PsiElement? = parameterName
 }

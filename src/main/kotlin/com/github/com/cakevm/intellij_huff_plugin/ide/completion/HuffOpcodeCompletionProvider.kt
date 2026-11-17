@@ -83,6 +83,9 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
             "swap14",
             "swap15",
             "swap16",
+            "dupn",
+            "swapn",
+            "exchange",
             // Arithmetic and Logic
             "add",
             "sub",
@@ -141,6 +144,7 @@ class HuffOpcodeCompletionProvider : CompletionProvider<CompletionParameters>() 
             "selfbalance",
             "blobhash",
             "blobbasefee",
+            "slotnum",
             // Storage and Memory Access
             "sload",
             "sstore",

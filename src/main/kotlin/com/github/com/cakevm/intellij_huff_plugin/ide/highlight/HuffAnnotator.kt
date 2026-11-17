@@ -2,6 +2,7 @@ package com.github.com.cakevm.intellij_huff_plugin.ide.highlight
 
 import com.github.com.cakevm.intellij_huff_plugin.ide.colors.HuffColor
 import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElementTypes.*
+import com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffForLoopVariable
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.lang.annotation.HighlightSeverity
@@ -42,21 +43,19 @@ class HuffAnnotator : Annotator {
           .create()
       }
       MACRO_PARAMETER_REFERENCE -> {
+        // `<name>` refers to a loop variable or a macro parameter, which have their own colors
+        val isLoopVariable = psiElement.reference?.resolve() is HuffForLoopVariable
+        val color = if (isLoopVariable) HuffColor.FOR_LOOP_VARIABLE else HuffColor.MACRO_PARAMETER
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
-          .textAttributes(HuffColor.MACRO_PARAMETER.textAttributesKey)
+          .textAttributes(color.textAttributesKey)
           .create()
       }
-      FOR_LOOP_VARIABLE_REFERENCE -> {
-        holder
-          .newSilentAnnotation(HighlightSeverity.INFORMATION)
-          .range(psiElement.textRange)
-          .textAttributes(HuffColor.FOR_LOOP_VARIABLE.textAttributesKey)
-          .create()
-      }
-      // Remove highlighting of lexer tokens for identifiers / parameters
-      IDENTIFIER -> {
+      // Remove highlighting of lexer tokens for identifiers / parameters, except for decorator flag names which are highlighted below
+      IDENTIFIER,
+      PARAMETER_NAME -> {
+        if (psiElement.parent.elementType == TEST_DECORATOR_FLAG_NAME) return
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)
@@ -66,7 +65,7 @@ class HuffAnnotator : Annotator {
       PARAMETER_DEF -> {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION).range(psiElement.textRange).create()
       }
-      TEST_DECORATOR_FLAG_TYPE -> {
+      TEST_DECORATOR_FLAG_NAME -> {
         holder
           .newSilentAnnotation(HighlightSeverity.INFORMATION)
           .range(psiElement.textRange)

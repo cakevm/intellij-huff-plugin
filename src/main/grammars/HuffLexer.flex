@@ -19,6 +19,8 @@ import static com.github.com.cakevm.intellij_huff_plugin.language.psi.HuffElemen
 %{
   // indicates the start of the comment
   private int zzBlockCommentStarted = -1;
+  // nesting depth of block comments, a block comment ends when every nested comment is closed
+  private int zzBlockCommentDepth = 0;
 %}
 
 %public
@@ -86,6 +88,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
                                yybegin(IN_BLOCK_COMMENT);
                                yypushback(2);
                                zzBlockCommentStarted = zzCurrentPos;
+                              zzBlockCommentDepth = 0;
                              }
   "//"                       {
                                yybegin(IN_EOL_COMMENT);
@@ -135,10 +138,10 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "__ERROR"                 { return BUILTIN_FN_ERROR; }
   "__LEFTPAD"               { return BUILTIN_FN_LEFTPAD; }
   "__RIGHTPAD"              { return BUILTIN_FN_RIGHTPAD; }
-  "__CODECOPY_DYN_ARG"      { return BUILTIN_FN_CODECOPY_DYN_ARG; }
   "__VERBATIM"              { return BUILTIN_FN_VERBATIM; }
   "__BYTES"                 { return BUILTIN_FN_BYTES; }
   "__ASSERT_PC"             { return BUILTIN_FN_ASSERT_PC; }
+  "__argsstart"             { return BUILTIN_FN_ARGSSTART; }
 
    // Test decorator flags
    "value"                  { return VALUE; }
@@ -180,6 +183,9 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "push32"                   { return PUSH32; }
 
   "pop"                      { return POP; }
+  "dupn"                     { return DUPN; }
+  "swapn"                    { return SWAPN; }
+  "exchange"                 { return EXCHANGE; }
   "dup1"                     { return DUP1; }
   "dup2"                     { return DUP2; }
   "dup3"                     { return DUP3; }
@@ -274,6 +280,7 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "selfbalance"              { return SELFBALANCE; }
   "blobhash"                 { return BLOBHASH; }
   "blobbasefee"              { return BLOBBASEFEE; }
+  "slotnum"                  { return SLOTNUM; }
 
   // Storage and Memory Access
   "sload"                    { return SLOAD; }
@@ -353,8 +360,9 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   {STRING_IDENTIFIER}        { return STRING_IDENTIFIER; }
 }
 
-// nested block comments are not supported, so don't track the occurrences of /*
 <IN_BLOCK_COMMENT> {
+  "/*"                    { zzBlockCommentDepth++; }
+
   // to avoid tokenizing by whitespaces, and only split the comment into parts if
   // NatSpec tags are included.
   " @"                    {
@@ -365,8 +373,11 @@ NAT_SPEC_TAG=@[a-zA-Z_0-9:]*
   "*/"                    {
                             // do not treat /*/ as a comment
                             if (zzCurrentPos - zzBlockCommentStarted >= 2) {
-                                yybegin(YYINITIAL);
-                                return COMMENT;
+                                zzBlockCommentDepth--;
+                                if (zzBlockCommentDepth <= 0) {
+                                    yybegin(YYINITIAL);
+                                    return COMMENT;
+                                }
                             }
                           }
 

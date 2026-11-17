@@ -36,10 +36,10 @@
   },
   "__codesize": {
     "name": "__codesize",
-    "description": "Pushes the code size of the macro or function passed to the stack. The size is calculated at compile time based on the actual bytecode generated for that macro or function.",
-    "syntax": "(<macro>|<function>)",
+    "description": "Pushes the code size of the macro or function passed to the stack. The size is calculated at compile time based on the actual bytecode generated for that macro or function. `__codesize(RUNTIME)` pushes the size of the runtime section, MAIN with its appended tables, and can be used in MAIN and CONSTRUCTOR.",
+    "syntax": "(<macro>|<function>|RUNTIME)",
     "returns": "PUSH2 code_size",
-    "example": "__codesize(MAIN) → PUSH2 0x0042"
+    "example": "__codesize(MAIN) → PUSH2 0x0042\n__codesize(RUNTIME) → PUSH2 runtime_size"
   },
   "__tablestart": {
     "name": "__tablestart",
@@ -64,10 +64,10 @@
   },
   "__VERBATIM": {
     "name": "__VERBATIM",
-    "description": "This function is used to insert raw hex data into the compiled bytecode. It is useful for inserting raw opcodes or data that should be emitted exactly as specified without any processing or validation by the compiler. It can accept either a direct hex literal or a constant reference.",
-    "syntax": "(<hex>|<constant>)",
+    "description": "This function is used to insert raw hex data into the compiled bytecode. It is useful for inserting raw opcodes or data that should be emitted exactly as specified without any processing or validation by the compiler. It can accept a hex literal, a constant reference, or a builtin function that pushes a value (`__FUNC_SIG`, `__EVENT_HASH`, `__ERROR`, `__BYTES`, `__RIGHTPAD`, `__LEFTPAD`), whose PUSH opcode is stripped.",
+    "syntax": "(<hex>|<constant>|<builtin function>)",
     "returns": "Raw hex bytes",
-    "example": "__VERBATIM(0x6001600101) → 0x6001600101 (PUSH1 01 PUSH1 01 ADD)\n__VERBATIM([MY_CONST]) → Raw bytes from constant MY_CONST"
+    "example": "__VERBATIM(0x6001600101) → 0x6001600101 (PUSH1 01 PUSH1 01 ADD)\n__VERBATIM([MY_CONST]) → Raw bytes from constant MY_CONST\n__VERBATIM(__FUNC_SIG(\"withdraw(uint256)\")) → Raw 4-byte selector without PUSH4"
   },
   "__BYTES": {
     "name": "__BYTES",
@@ -79,15 +79,15 @@
   "__ASSERT_PC": {
     "name": "__ASSERT_PC",
     "description": "This function is a compile-time assertion that validates the current bytecode position (program counter) matches the expected value. It generates no bytecode - it's purely a compile-time check. If the assertion fails, compilation will stop with an error showing the expected vs actual position. This is useful for ensuring critical instructions (like jump destinations) are positioned at specific bytecode offsets.",
-    "syntax": "(<literal>|<constant>)",
+    "syntax": "(<expression>)",
     "returns": "No bytecode (compile-time only)",
-    "example": "__ASSERT_PC(0x20) → Validates PC is at position 32"
+    "example": "__ASSERT_PC(0x20) → Validates PC is at position 32\n__ASSERT_PC([BASE] + <i> * 3) → Constants, macro arguments and loop variables can be combined in an expression"
   },
-  "__CODECOPY_DYN_ARG": {
-    "name": "__CODECOPY_DYN_ARG",
-    "description": "This function is used for dynamic constructor arguments. It inserts code that copies constructor arguments from calldata during contract deployment. This is typically used when you need to handle constructor parameters dynamically at runtime.",
+  "__argsstart": {
+    "name": "__argsstart",
+    "description": "Pushes the offset in the deployment bytecode where the constructor arguments start, so the constructor can copy and decode them as Solidity does. The arguments are the code from this offset to the end, so `codesize` minus the offset is their length. Only valid in the CONSTRUCTOR and the macros it invokes.",
     "syntax": "()",
-    "returns": "Bytecode for dynamic argument handling",
-    "example": "__CODECOPY_DYN_ARG() → Generates CODECOPY instructions"
+    "returns": "PUSH2 arguments_offset",
+    "example": "__argsstart() dup1 codesize sub swap1 0x00 codecopy → Copies the constructor arguments to memory 0x00"
   }
 }
